@@ -30,7 +30,8 @@ namespace DiagnosticoDeMatematicas.Controllers
             }
             else
             {
-                responses = db.Responses.Where(r => r.UserID == (string)Session.Contents["Email"]).Include(r => r.Exam).Include(r => r.User).ToList();
+                var email = (string)Session.Contents["Email"];
+                responses = db.Responses.Where(r => r.UserID == email).Include(r => r.Exam).Include(r => r.User).ToList();
             }
             
             return View(responses);
@@ -43,11 +44,25 @@ namespace DiagnosticoDeMatematicas.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Response response = db.Responses.Find(id);
+
+            if (Session.Contents["Email"] == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
             if (response == null)
             {
                 return HttpNotFound();
             }
+
+            if ((Role)Session.Contents["Role"] != Role.Administrador &&
+                response.UserID != (string)Session.Contents["Email"])
+            {
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
             return View(response);
         }
 
@@ -56,7 +71,7 @@ namespace DiagnosticoDeMatematicas.Controllers
         {
             if (Session.Contents["Email"] == null)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("SignIn", "Home");
             }
 
             if (ExamId == null || db.Exams.Find(ExamId.Value) == null)
@@ -122,10 +137,22 @@ namespace DiagnosticoDeMatematicas.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Response response = db.Responses.Find(id);
             if (response == null)
             {
                 return HttpNotFound();
+            }
+
+            if (Session.Contents["Email"] == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            if ((Role)Session.Contents["Role"] != Role.Administrador &&
+                response.UserID != (string)Session.Contents["Email"])
+            {
+                return RedirectToAction("AccessDenied", "Home");
             }
             return View(response);
         }

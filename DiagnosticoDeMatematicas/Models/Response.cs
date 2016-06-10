@@ -34,7 +34,7 @@ namespace DiagnosticoDeMatematicas.Models
                 {
                     var count = 0.0;
                     foreach (Answer answer in Answers) if (answer.IsCorrect) count++;
-                    return count / Answers.Count;
+                    return count / Answers.Count * 100;
                 }
                 return 0;
             }

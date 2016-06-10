@@ -21,9 +21,16 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Examenes", "Index", "Exams")</li>
-                    <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
-                    <li>@Html.ActionLink("Historial de respuestas", "Index", "Responses")</li>
+                    @if (Session.Contents["Email"] != null &&
+                        (DiagnosticoDeMatematicas.Models.Role)Session.Contents["Role"] == DiagnosticoDeMatematicas.Models.Role.Administrador)
+                    {
+                        <li>@Html.ActionLink("Examenes", "Index", "Exams")</li>
+                        <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
+                    }
+                    @if (Session.Contents["Email"] != null)
+                    {
+                        <li>@Html.ActionLink("Historial de respuestas", "Index", "Responses")</li>
+                    }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (Session.Contents["Email"] == null)

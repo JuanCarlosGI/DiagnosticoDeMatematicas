@@ -18,6 +18,11 @@ namespace DiagnosticoDeMatematicas.Controllers
         // GET: Users
         public ActionResult Index()
         {
+            if ((Role)Session.Contents["Role"] != Role.Administrador)
+            {
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
             return View(db.Users.ToList());
         }
 
@@ -33,6 +38,18 @@ namespace DiagnosticoDeMatematicas.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (Session.Contents["Email"] == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            if ((Role)Session.Contents["Role"] != Role.Administrador &&
+                user.Email != (string)Session.Contents["Email"])
+            {
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
             return View(user);
         }
 
@@ -71,6 +88,18 @@ namespace DiagnosticoDeMatematicas.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (Session.Contents["Email"] == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            if ((Role)Session.Contents["Role"] != Role.Administrador &&
+                user.Email != (string)Session.Contents["Email"])
+            {
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
             return View(user);
         }
 
@@ -102,6 +131,17 @@ namespace DiagnosticoDeMatematicas.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (Session.Contents["Email"] == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            if ((Role)Session.Contents["Role"] != Role.Administrador)
+            {
+                return RedirectToAction("AccessDenied", "Home");
+            }
+
             return View(user);
         }
 
