@@ -1,0 +1,100 @@
+﻿@model DiagnosticoDeMatematicas.Models.Response
+
+@{
+    ViewBag.Title = "Details";
+    var AnswerDummy = new DiagnosticoDeMatematicas.Models.Answer();
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Response</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Exam.ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exam.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Grade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Grade)
+        </dd>
+
+    </dl>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(modelItem => AnswerDummy.Question.Description)
+        </th>
+        <th>
+            Eleccion
+        </th>
+        <th>
+            Es correcta
+        </th>
+        <th>
+            Retroalimentacion
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Answers)
+    {
+        <tr>
+            @{ 
+                var questionNotation = item.Question.CopyWithNoNotation();
+            }
+            <td>
+                @{
+                    string parameter = questionNotation.Description.Replace("%", "").Replace("|", "");
+                }
+                @Html.DisplayFor(subitem => parameter)
+            </td>
+            <td>
+                @{ 
+                    string[] options = { questionNotation.OptionA, questionNotation.OptionB, questionNotation.OptionC, questionNotation.OptionD };
+                    var option = options[item.Choice - DiagnosticoDeMatematicas.Models.Choice.A];
+                }
+                @Html.DisplayFor(m => option)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.IsCorrect)
+            </td>
+            <td>
+                @{
+                    string[] feedbacks = { item.Question.OptionAFeedback, item.Question.OptionBFeedback, item.Question.OptionCFeedback, item.Question.OptionDFeedback };
+                    var feedback = feedbacks[item.Choice - DiagnosticoDeMatematicas.Models.Choice.A];
+                }
+                @Html.DisplayFor(m => feedback)
+            </td>
+        </tr>
+    }
+</table>
+
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,80 @@
+﻿@model DiagnosticoDeMatematicas.Models.ResponseWithAnswers
+
+@{
+    ViewBag.Title = "Create";
+    var counter = 0;
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Response</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => Model.ExamID)
+        @Html.HiddenFor(model => Model.UserID)
+
+        @foreach (var question in Model.Exam.Questions)
+        {
+            var questionEvaluated = question.CopyEvaluatedWithRandomValues();
+
+            <div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><h6>Pregunta @(counter + 1)</h6></div>
+                    <div class="panel-body">@questionEvaluated.Description</div>
+                    @Html.HiddenFor(m => Model.Choices[counter].QuestionID)
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-3">
+                                @Html.RadioButtonFor(m => Model.Choices[counter].SelectedOption, 0)
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                @questionEvaluated.OptionA
+                                <br /><br />
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                @Html.RadioButtonFor(m => Model.Choices[counter].SelectedOption, 1)
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                @questionEvaluated.OptionB
+                                <br /><br />
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                @Html.RadioButtonFor(m => Model.Choices[counter].SelectedOption, 2)
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                @questionEvaluated.OptionC
+                                <br /><br />
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                @Html.RadioButtonFor(m => Model.Choices[counter].SelectedOption, 3)
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                @questionEvaluated.OptionD
+                                <br /><br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+
+            counter++;
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

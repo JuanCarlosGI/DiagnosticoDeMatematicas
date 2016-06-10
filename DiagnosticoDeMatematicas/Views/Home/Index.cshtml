@@ -1,0 +1,22 @@
+﻿@model List<DiagnosticoDeMatematicas.Models.Exam>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Bienvenido</h1>
+    <p class="lead">Bienvenido a la plataforma.</p>
+</div>
+<div class="row">
+    @foreach(var exam in Model)
+    {
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h2>@Html.DisplayFor(m => exam.Name)</h2></div>
+                <div class="panel-body"> @Html.DisplayFor(m => exam.Description) </div>
+                <div class="panel-footer">@Html.ActionLink("Contestar examen", "Create", "Responses", new { ExamId = exam.ID }, new { @class = "btn btn-default" })</div>
+            </div>
+        </div>
+    }
+</div>

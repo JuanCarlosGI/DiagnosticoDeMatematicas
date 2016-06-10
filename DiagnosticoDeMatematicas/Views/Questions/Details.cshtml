@@ -1,0 +1,183 @@
+﻿@model DiagnosticoDeMatematicas.Models.Question
+
+@{
+    ViewBag.Title = "Pregunta";
+    var VariableDummy = new DiagnosticoDeMatematicas.Models.Variable();
+    var RangeDummy = new DiagnosticoDeMatematicas.Models.Range();
+}
+
+<h2>Pregunta</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Exam.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exam.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionACorrect)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionACorrect)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionAFeedback)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionAFeedback)
+        </dd>
+    </dl>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionBCorrect)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionBCorrect)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionBFeedback)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionBFeedback)
+        </dd>
+    </dl>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionCCorrect)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionCCorrect)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionCFeedback)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionCFeedback)
+        </dd>
+    </dl>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionDCorrect)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionDCorrect)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptionDFeedback)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptionDFeedback)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Regresar a examen", "Details", "Exams", new { id = Model.ExamID}, null)
+</p>
+
+<h3>Variables</h3>
+@Html.ActionLink("Agregar variable", "Create", "Variables", new { QuestionID = Model.ID }, null)
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(modelitem => VariableDummy.Symbol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(modelitem => RangeDummy.Minimum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(modelitem => RangeDummy.Maximum)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Variables)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(subitem => item.Symbol)
+                </td>
+                <td></td>
+                <td></td>
+                <td>
+                    @Html.ActionLink("Detalles", "Details", "Variables", new { QuestionID = item.QuestionID, Symbol = item.Symbol }, null) |
+                    @Html.ActionLink("Borrar", "Delete", "Variables", new { QuestionID = item.QuestionID, Symbol = item.Symbol }, null) |
+                </td>
+            </tr>
+            foreach (var range in item.Ranges)
+            {
+                <tr></tr>
+                <tr>
+                    <td></td>
+                    <td>@Html.DisplayFor(subitem => range.Minimum)</td>
+                    <td>@Html.DisplayFor(subitem => range.Maximum)</td>
+                    <td></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

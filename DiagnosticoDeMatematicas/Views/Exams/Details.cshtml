@@ -1,0 +1,67 @@
+﻿@model DiagnosticoDeMatematicas.Models.Exam
+
+@{
+    ViewBag.Title = Model.Name;
+    var QuestionDummy = new DiagnosticoDeMatematicas.Models.Question();
+}
+
+<h2>@Model.Name</h2>
+
+<div>
+    <h4>Datalles</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Active)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Active)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar examen", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Regresar a lista de examenes.", "Index")
+</p>
+
+<h3>Preguntas</h3>
+
+<p>
+    @Html.ActionLink("Agregar pregunta", "Create", "Questions", new { ExamId = Model.ID }, null)
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(modelItem => QuestionDummy.Description)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Questions)
+    {
+        <tr>
+            <td>
+                @{ 
+                    string parameter = item.Description.Replace("%", "").Replace("|", "");
+                }
+                @Html.DisplayFor(subitem => parameter)
+            </td>
+            <td>
+                @Html.ActionLink("Detalles", "Details", "Questions", new { id = item.ID }, null) |
+                @Html.ActionLink("Editar", "Edit", "Questions", new { id = item.ID }, null) |
+                @Html.ActionLink("Eliminar", "Delete", "Questions", new { id = item.ID }, null)
+            </td>
+        </tr>
+    }
+</table>
