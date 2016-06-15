@@ -21,6 +21,8 @@ namespace DiagnosticoDeMatematicas.Models
         {
             get
             {
+                if (Responses == null) return 0;
+
                 var sum = 0.0;
                 foreach(var response in Responses)
                 {

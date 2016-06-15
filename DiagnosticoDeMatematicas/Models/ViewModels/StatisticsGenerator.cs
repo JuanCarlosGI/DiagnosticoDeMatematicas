@@ -55,7 +55,7 @@ namespace DiagnosticoDeMatematicas.Models.ViewModels
                 {
                     sum += response.Grade;
                 }
-                return sum / responses.Count();
+                return Math.Round(sum / responses.Count(), 2);
             }
         }
 
