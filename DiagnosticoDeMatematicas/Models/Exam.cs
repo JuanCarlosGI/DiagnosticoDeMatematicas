@@ -17,6 +17,19 @@ namespace DiagnosticoDeMatematicas.Models
         [Display(Name = "Activo")]
         public bool Active { get; set; }
 
+        public decimal AverageGrade
+        {
+            get
+            {
+                var sum = 0.0;
+                foreach(var response in Responses)
+                {
+                    sum += response.Grade;
+                }
+                return (decimal)(sum / Responses.Count);
+            }
+        }
+
         public virtual ICollection<Question> Questions { get; set; }
         public virtual ICollection<Response> Responses { get; set; }
     }

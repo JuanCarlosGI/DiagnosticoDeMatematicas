@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using DiagnosticoDeMatematicas.DAL;
 using DiagnosticoDeMatematicas.Models;
+using System.Drawing;
+using System.Web.UI.DataVisualization.Charting;
+using System.IO;
 
 namespace DiagnosticoDeMatematicas.Controllers
 {
@@ -34,6 +37,87 @@ namespace DiagnosticoDeMatematicas.Controllers
                 responses = db.Responses.Where(r => r.UserID == email).Include(r => r.Exam).Include(r => r.User).ToList();
             }
             
+            return View(responses);
+        }
+
+        public ActionResult StatisticDetails()
+        {
+            ViewBag.ExamID = new SelectList(db.Exams, "ID", "Name", "");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult StatisticDetails([Bind(Include = "ExamID,StartDate,EndDate")]Models.ViewModels.StatisticsDetails details)
+        {
+            if (details.StartDate != null && details.EndDate != null && details.StartDate.Value > details.EndDate.Value)
+            {
+                ModelState.AddModelError("EndDate", "La fecha de terminación debe ser igual o mayor a la fecha de inicio.");
+            }
+            else
+            {
+                if (!details.ExamID.HasValue)
+                {
+                    return RedirectToAction("GlobalStatistics", "Responses", details);
+                }
+                return RedirectToAction("Statistics", "Responses", details);
+            }
+
+            details.ExamID = 0;
+            ViewBag.ExamID = new SelectList(db.Exams, "ID", "Name");
+            return View(details);
+        }
+
+        public ActionResult Statistics(Models.ViewModels.StatisticsDetails details)
+        {
+            var responses = from r in db.Responses
+                        where !details.ExamID.HasValue || r.ExamID == details.ExamID.Value
+                        where !details.StartDate.HasValue || r.Date >= details.StartDate.Value
+                        where !details.EndDate.HasValue || r.Date <= details.EndDate.Value
+                        select r;
+
+            var statistics = new Models.ViewModels.StatisticsGenerator { responses = responses, Exam = db.Exams.Find(details.ExamID.Value) };
+
+            var chart1 = new Chart();
+            chart1.Width = 1000;
+            chart1.Height = 400;
+            chart1.ChartAreas.Add("xAxis").BackColor = Color.White;
+            chart1.Series.Add("xAxis");
+
+            var counter = 0;
+            foreach (var result in statistics.GradeRanges)
+            {
+                chart1.Series["xAxis"].Points.AddXY(counter.ToString(), result);
+                counter++;
+            }
+
+            chart1.Series["xAxis"].IsValueShownAsLabel = true;
+            chart1.Series["xAxis"].LabelForeColor = Color.Black;
+            chart1.Series["xAxis"].LabelFormat = "{0:0.00}%";
+            chart1.ChartAreas[0].AxisX.Title = "Reactivos correctos (n de cada 20)";
+            chart1.ChartAreas[0].AxisX.Interval = 1;
+            chart1.ChartAreas[0].AxisX.IsMarginVisible = true;
+            chart1.ChartAreas[0].AxisY.Title = "Porcentaje de alumnos";
+            chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
+            chart1.ChartAreas[0].AxisY.Maximum = (Math.Ceiling(statistics.GradeRanges.Max() / 10) + 1 ) * 10;
+            chart1.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
+            chart1.BackColor = Color.White;
+
+            MemoryStream imageStream = new MemoryStream();
+            chart1.SaveImage(imageStream, ChartImageFormat.Png);
+            byte[] arrbyte = imageStream.ToArray();
+            ViewBag.Chart = Convert.ToBase64String(arrbyte);
+
+            return View(statistics);
+        }
+
+        public ActionResult GlobalStatistics(Models.ViewModels.StatisticsDetails details)
+        {
+            var responses = from r in db.Responses
+                            where !details.StartDate.HasValue || r.Date >= details.StartDate.Value
+                            where !details.EndDate.HasValue || r.Date <= details.EndDate.Value
+                            select r;
+
             return View(responses);
         }
 
