@@ -72,7 +72,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                         where !details.EndDate.HasValue || r.Date <= details.EndDate.Value
                         select r;
 
-            var statistics = new Models.ViewModels.StatisticsGenerator { responses = responses, Exam = db.Exams.Find(details.ExamID.Value) };
+            var statistics = new Models.ViewModels.StatisticsGenerator { responses = responses, Exam = db.Exams.Find(details.ExamID.Value), StartDate = details.StartDate, EndDate = details.EndDate  };
 
             var chart1 = new Chart();
             chart1.Width = 1000;
@@ -113,6 +113,43 @@ namespace DiagnosticoDeMatematicas.Controllers
                             where !details.StartDate.HasValue || r.Date >= details.StartDate.Value
                             where !details.EndDate.HasValue || r.Date <= details.EndDate.Value
                             select r;
+
+            var chart1 = new Chart();
+            chart1.Width = 600;
+            chart1.Height = 600;
+            chart1.ChartAreas.Add("xAxis").BackColor = Color.White;
+            chart1.Series.Add("xAxis");
+
+            foreach (var exam in db.Exams)
+            {
+                var responsesForExam = responses.Where(r => r.ExamID == exam.ID);
+
+                var sum = 0.0;
+                foreach(var response in responsesForExam)
+                {
+                    sum += response.Grade;
+                }
+                var average = sum / responsesForExam.Count();
+
+                chart1.Series["xAxis"].Points.AddXY(exam.Name, average / 100.0 * 20.0);
+            }
+            chart1.Series["xAxis"].Points.AddXY("test", 15);
+
+            chart1.Series["xAxis"].ChartType = SeriesChartType.Radar;
+            chart1.Series["xAxis"].LabelForeColor = Color.Black;
+            chart1.Series["xAxis"].LabelFormat = "{0:0.00}%";
+            chart1.ChartAreas[0].AxisX.Interval = 1;
+            chart1.ChartAreas[0].AxisX.IsMarginVisible = true;
+            chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
+            chart1.ChartAreas[0].AxisY.Maximum = 20;
+            chart1.ChartAreas[0].AxisY.Interval = 2;
+            chart1.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
+            chart1.BackColor = Color.White;
+
+            MemoryStream imageStream = new MemoryStream();
+            chart1.SaveImage(imageStream, ChartImageFormat.Png);
+            byte[] arrbyte = imageStream.ToArray();
+            ViewBag.Chart = Convert.ToBase64String(arrbyte);
 
             return View(responses);
         }

@@ -6,6 +6,18 @@
 }
 
 <h2>@Model.Exam.Name</h2>
+@if (Model.StartDate.HasValue)
+{
+    <p>
+        Desde la fecha: @Model.StartDate.Value
+    </p>
+}
+@if (Model.EndDate.HasValue)
+{
+    <p>
+        Hasta la fecha: @Model.EndDate.Value
+    </p>
+}
 
 <dl class="dl-horizontal">
     <dt>

@@ -10,6 +10,8 @@ namespace DiagnosticoDeMatematicas.Models.ViewModels
     {
         public IEnumerable<Response> responses { get; set; }
         public Exam Exam { set; get; }
+        public DateTime? StartDate { set; get; }
+        public DateTime? EndDate { set; get; }
 
         public Dictionary<int,Tuple<int,int,int,int>> QuestionResponses
         {
