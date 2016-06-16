@@ -9,7 +9,7 @@ namespace DiagnosticoDeMatematicas.Models
 {
     public class Response
     {
-        [Display(Name = "Contestacion")]
+        [Display(Name = "Respuesta")]
         public int ID { get; set; }
         [Required]
         [ForeignKey("User")]

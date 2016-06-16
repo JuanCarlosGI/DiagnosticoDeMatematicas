@@ -260,6 +260,7 @@
     <Content Include="Views\Responses\StatisticDetails.cshtml" />
     <Content Include="Views\Responses\Statistics.cshtml" />
     <Content Include="Views\Responses\GlobalStatistics.cshtml" />
+    <Content Include="Views\Responses\ThankYou.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

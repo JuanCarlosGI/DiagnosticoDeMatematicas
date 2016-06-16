@@ -26,16 +26,12 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            List<Response> responses;
-            if ((Role)Session.Contents["Role"] == Role.Administrador)
+            if ((Role)Session.Contents["Role"] != Role.Administrador)
             {
-                responses = db.Responses.Include(r => r.Exam).Include(r => r.User).ToList();
+                return RedirectToAction("AccessDenied", "Home");
             }
-            else
-            {
-                var email = (string)Session.Contents["Email"];
-                responses = db.Responses.Where(r => r.UserID == email).Include(r => r.Exam).Include(r => r.User).ToList();
-            }
+
+            var responses = db.Responses.Include(r => r.Exam).Include(r => r.User).ToList();
             
             return View(responses);
         }
@@ -206,12 +202,17 @@ namespace DiagnosticoDeMatematicas.Controllers
                 }
                 db.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("ThankYou");
             }
 
             ViewBag.ExamID = new SelectList(db.Exams, "ID", "Name", response.ExamID);
             ViewBag.UserID = new SelectList(db.Users, "Email", "FullName", response.UserID);
             return View(response);
+        }
+
+        public ActionResult ThankYou()
+        {
+            return View();
         }
 
         // GET: Responses/Delete/5

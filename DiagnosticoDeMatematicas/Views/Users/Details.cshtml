@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Detalles de cuenta";
+    var ResponseDummy = new DiagnosticoDeMatematicas.Models.Response();
 }
 
 <h2>@Model.FullName</h2>
@@ -91,8 +92,66 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.Email.ToString() + "/" }) |
-    @Html.ActionLink("Borrar", "Delete", new { id = Model.Email.ToString() + "/" })
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@if ((DiagnosticoDeMatematicas.Models.Role)Session.Contents["Role"] == DiagnosticoDeMatematicas.Models.Role.Administrador)
+{
+    <p>
+        @Html.ActionLink("Editar", "Edit", new { id = Model.Email.ToString() + "/" }) |
+        @Html.ActionLink("Borrar", "Delete", new { id = Model.Email.ToString() + "/" }) |
+        @Html.ActionLink("Regresar a lista de usuarios", "Index")
+    </p>
+}
+
+<h2>Historial de respuestas</h2>
+
+<table class="table table-hover table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => ResponseDummy.ExamID)
+        </th>
+        <th>
+            Número de intento
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => ResponseDummy.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => ResponseDummy.Grade)
+        </th>
+    </tr>
+    @{ 
+        var counter = 0;
+        int? lastExam = null;
+    }
+    @foreach (var item in Model.Responses.OrderBy(m => m.ExamID).ThenBy(m => m.Date))
+    {
+        if (lastExam == null)
+        {
+            lastExam = item.ExamID;
+        }
+
+        if (item.ExamID != lastExam.Value)
+        {
+            counter = 0;
+        }
+
+        lastExam = item.ExamID;
+
+        counter++;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Exam.Name)
+            </td>
+            <td>
+                @counter
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grade)
+            </td>
+        </tr>
+    }
+
+</table>
+
