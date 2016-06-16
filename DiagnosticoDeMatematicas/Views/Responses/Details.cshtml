@@ -1,14 +1,13 @@
 ﻿@model DiagnosticoDeMatematicas.Models.Response
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalles de respuesta";
     var AnswerDummy = new DiagnosticoDeMatematicas.Models.Answer();
 }
 
-<h2>Details</h2>
+<h2>Detalles de respuesta</h2>
 
 <div>
-    <h4>Response</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -20,11 +19,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.User.FirstName)
+            @Html.DisplayNameFor(model => model.User.FullName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.User.FirstName)
+            @Html.DisplayFor(model => model.User.FullName)
         </dd>
 
         <dt>

@@ -18,6 +18,11 @@ namespace DiagnosticoDeMatematicas.Controllers
         // GET: Users
         public ActionResult Index()
         {
+            if (Session.Contents["Email"] == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
             if ((Role)Session.Contents["Role"] != Role.Administrador)
             {
                 return RedirectToAction("AccessDenied", "Home");
@@ -56,7 +61,8 @@ namespace DiagnosticoDeMatematicas.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
-            return View();
+            var user = new User { Role = Role.Usuario, DateOfBirth = DateTime.Now };
+            return View(user);
         }
 
         // POST: Users/Create
@@ -70,7 +76,7 @@ namespace DiagnosticoDeMatematicas.Controllers
             {
                 db.Users.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("SignIn", "Home");
             }
 
             return View(user);
