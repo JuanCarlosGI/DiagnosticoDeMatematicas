@@ -44,7 +44,7 @@ namespace DiagnosticoDeMatematicas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult StatisticDetails([Bind(Include = "ExamID,StartDate,EndDate")]Models.ViewModels.StatisticsDetails details)
+        public ActionResult StatisticDetails([Bind(Include = "ExamID,StartDate,EndDate")]Models.ViewModels.StatisticDetailsViewModel details)
         {
             if (details.StartDate != null && details.EndDate != null && details.StartDate.Value > details.EndDate.Value)
             {
@@ -64,94 +64,28 @@ namespace DiagnosticoDeMatematicas.Controllers
             return View(details);
         }
 
-        public ActionResult Statistics(Models.ViewModels.StatisticsDetails details)
+        public ActionResult Statistics(Models.ViewModels.StatisticDetailsViewModel details)
         {
-            var responses = from r in db.Responses
-                        where !details.ExamID.HasValue || r.ExamID == details.ExamID.Value
-                        where !details.StartDate.HasValue || r.Date >= details.StartDate.Value
-                        where !details.EndDate.HasValue || r.Date <= details.EndDate.Value
-                        select r;
-
-            var statistics = new Models.ViewModels.StatisticsGenerator { responses = responses, Exam = db.Exams.Find(details.ExamID.Value), StartDate = details.StartDate, EndDate = details.EndDate  };
-
-            var chart1 = new Chart();
-            chart1.Width = 1000;
-            chart1.Height = 400;
-            chart1.ChartAreas.Add("xAxis").BackColor = Color.White;
-            chart1.Series.Add("xAxis");
-
-            var counter = 0;
-            foreach (var result in statistics.GradeRanges)
-            {
-                chart1.Series["xAxis"].Points.AddXY(counter.ToString(), result);
-                counter++;
-            }
-
-            chart1.Series["xAxis"].IsValueShownAsLabel = true;
-            chart1.Series["xAxis"].LabelForeColor = Color.Black;
-            chart1.Series["xAxis"].LabelFormat = "{0:0.00}%";
-            chart1.ChartAreas[0].AxisX.Title = "Reactivos correctos (n de cada 20)";
-            chart1.ChartAreas[0].AxisX.Interval = 1;
-            chart1.ChartAreas[0].AxisX.IsMarginVisible = true;
-            chart1.ChartAreas[0].AxisY.Title = "Porcentaje de alumnos";
-            chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
-            chart1.ChartAreas[0].AxisY.Maximum = (Math.Ceiling(statistics.GradeRanges.Max() / 10) + 1 ) * 10;
-            chart1.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
-            chart1.BackColor = Color.White;
-
-            MemoryStream imageStream = new MemoryStream();
-            chart1.SaveImage(imageStream, ChartImageFormat.Png);
-            byte[] arrbyte = imageStream.ToArray();
-            ViewBag.Chart = Convert.ToBase64String(arrbyte);
+            var statistics = new Models.ViewModels.StatisticsViewModel {
+                Responses = db.Responses.ToList(),
+                Exam = db.Exams.Find(details.ExamID.Value),
+                StartDate = details.StartDate,
+                EndDate = details.EndDate
+            };
 
             return View(statistics);
         }
 
-        public ActionResult GlobalStatistics(Models.ViewModels.StatisticsDetails details)
+        public ActionResult GlobalStatistics(Models.ViewModels.StatisticDetailsViewModel details)
         {
-            var responses = from r in db.Responses
-                            where !details.StartDate.HasValue || r.Date >= details.StartDate.Value
-                            where !details.EndDate.HasValue || r.Date <= details.EndDate.Value
-                            select r;
-
-            var chart1 = new Chart();
-            chart1.Width = 600;
-            chart1.Height = 600;
-            chart1.ChartAreas.Add("xAxis").BackColor = Color.White;
-            chart1.Series.Add("xAxis");
-
-            foreach (var exam in db.Exams)
+            var model = new Models.ViewModels.GlobalStatisticsViewModel
             {
-                var responsesForExam = responses.Where(r => r.ExamID == exam.ID);
+                Responses = db.Responses.ToList(),
+                StartDate = details.StartDate,
+                EndDate = details.EndDate
+            };
 
-                var sum = 0.0;
-                foreach(var response in responsesForExam)
-                {
-                    sum += response.Grade;
-                }
-                var average = sum / responsesForExam.Count();
-
-                chart1.Series["xAxis"].Points.AddXY(exam.Name, average / 100.0 * 20.0);
-            }
-            chart1.Series["xAxis"].Points.AddXY("test", 15);
-
-            chart1.Series["xAxis"].ChartType = SeriesChartType.Radar;
-            chart1.Series["xAxis"].LabelForeColor = Color.Black;
-            chart1.Series["xAxis"].LabelFormat = "{0:0.00}%";
-            chart1.ChartAreas[0].AxisX.Interval = 1;
-            chart1.ChartAreas[0].AxisX.IsMarginVisible = true;
-            chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
-            chart1.ChartAreas[0].AxisY.Maximum = 20;
-            chart1.ChartAreas[0].AxisY.Interval = 2;
-            chart1.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
-            chart1.BackColor = Color.White;
-
-            MemoryStream imageStream = new MemoryStream();
-            chart1.SaveImage(imageStream, ChartImageFormat.Png);
-            byte[] arrbyte = imageStream.ToArray();
-            ViewBag.Chart = Convert.ToBase64String(arrbyte);
-
-            return View(responses);
+            return View(model);
         }
 
         // GET: Responses/Details/5

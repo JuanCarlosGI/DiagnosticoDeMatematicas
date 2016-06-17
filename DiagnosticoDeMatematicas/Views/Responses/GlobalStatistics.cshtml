@@ -1,8 +1,55 @@
-﻿
+﻿@model DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel
 @{
-    ViewBag.Title = "GlobalStatistics";
+    ViewBag.Title = "Estadísticas globales";
 }
 
-<h2>GlobalStatistics</h2>
+<h2>Estadísticas globales</h2>
 
-<img src="data:image/png;base64,@ViewBag.Chart" />
+<dl class="dl-horizontal">
+    @if (Model.StartDate.HasValue)
+    {
+        <dt>
+            @Html.DisplayNameFor(m => m.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(m => m.StartDate)
+        </dd>
+    }
+    @if (Model.EndDate.HasValue)
+    {
+        <dt>
+            @Html.DisplayNameFor(m => m.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(m => m.EndDate)
+        </dd>
+    }
+</dl>
+
+<hr />
+<div class="row">
+    <div class="col col-lg-3 col-lg-offset-1">
+        <h4>Cantidad de exámenes</h4>
+        <dl class="dl-horizontal">
+            @foreach (var exam in Model.Exams)
+            {
+                <dt>
+                    @Html.DisplayFor(m => exam.Name)
+                </dt>
+
+                <dd>
+                    @Model.AmountOfResponses(exam.ID)
+                </dd>
+            }
+        </dl>
+    </div>
+    <div class="col col-lg-8">
+        <img style="float:left" src="data:image/png;base64,@Model.RadarChart" />
+    </div>
+</div>
+
+<hr />
+
+<img src="data:image/png;base64,@Model.MulticolumnChart" />

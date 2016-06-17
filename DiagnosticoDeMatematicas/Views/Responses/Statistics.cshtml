@@ -1,4 +1,4 @@
-﻿@model DiagnosticoDeMatematicas.Models.ViewModels.StatisticsGenerator
+﻿@model DiagnosticoDeMatematicas.Models.ViewModels.StatisticsViewModel
 
 @{
     ViewBag.Title = @Model.Exam.Name;
@@ -6,18 +6,28 @@
 }
 
 <h2>@Model.Exam.Name</h2>
-@if (Model.StartDate.HasValue)
-{
-    <p>
-        Desde la fecha: @Model.StartDate.Value
-    </p>
-}
-@if (Model.EndDate.HasValue)
-{
-    <p>
-        Hasta la fecha: @Model.EndDate.Value
-    </p>
-}
+<dl class="dl-horizontal">
+    @if (Model.StartDate.HasValue)
+    {
+        <dt>
+            @Html.DisplayNameFor(m => m.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(m => m.StartDate)
+        </dd>
+    }
+    @if (Model.EndDate.HasValue)
+    {
+        <dt>
+            @Html.DisplayNameFor(m => m.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(m => m.EndDate)
+        </dd>
+    }
+</dl>
 
 <dl class="dl-horizontal">
     <dt>
@@ -29,15 +39,15 @@
     </dd>
 
     <dt>
-        Cantidad de examenes
+        @Html.DisplayNameFor(m => m.AmountOfResponses)
     </dt>
 
     <dd>
-        @Model.responses.Count()
+        @Html.DisplayFor(m => m.AmountOfResponses)
     </dd>
 </dl>
 
-<img src="data:image/png;base64,@ViewBag.Chart" />
+<img src="data:image/png;base64,@Model.ColumnChart" />
 
 <h2>Información por reactivo</h2>
 @{ 
