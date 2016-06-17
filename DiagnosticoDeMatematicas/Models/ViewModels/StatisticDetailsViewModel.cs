@@ -7,6 +7,9 @@ using Foolproof;
 
 namespace DiagnosticoDeMatematicas.Models.ViewModels
 {
+    /// <summary>
+    /// View Model for the view Respponses/StatisticDetails
+    /// </summary>
     public class StatisticDetailsViewModel
     {
         [Display(Name = "Examen")]

@@ -6,80 +6,151 @@ using System.Web;
 
 namespace DiagnosticoDeMatematicas.Models
 {
+    /// <summary>
+    /// Model representing a question.
+    /// </summary>
     public class Question
     {
         [Display(Name = "Pregunta")]
         public int ID { get; set; }
+        /// <summary>
+        /// Exam to which this question belongs.
+        /// </summary>
         [Required]
         [Display(Name = "Examen")]
         public int ExamID { get; set; }
+        /// <summary>
+        /// Description of the question. This field can be interpreted as a LaTeX mathematical formula, and can contain
+        /// both variables (Identified by a '%', e.g. "%x") and expressions that should be evaluated (Identified by
+        /// surrounding '|', e.g. "|2+3|"). 
+        /// </summary>
         [Required]
         [Display(Name = "Pregunta")]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
+        /// <summary>
+        /// Description of Option A. This field can be interpreted as a LaTeX mathematical formula, and can contain
+        /// both variables (Identified by a '%', e.g. "%x") and expressions that should be evaluated (Identified by
+        /// surrounding '|', e.g. "|2+3|"). 
+        /// </summary>
         [Required]
         [Display(Name = "Inciso A")]
         [DataType(DataType.MultilineText)]
         public string OptionA { get; set; }
+        /// <summary>
+        /// Desribes if Option A is a correct option in the question.
+        /// </summary>
         [Required]
         [Display(Name = "A es correcta")]
         public bool OptionACorrect { get; set; }
+        /// <summary>
+        /// Feedback for choosing Option A.
+        /// </summary>
         [Required]
         [Display(Name = "Retroalimentacion A")]
         [DataType(DataType.MultilineText)]
         public string OptionAFeedback { get; set; }
+        /// <summary>
+        /// Description of Option B. This field can be interpreted as a LaTeX mathematical formula, and can contain
+        /// both variables (Identified by a '%', e.g. "%x") and expressions that should be evaluated (Identified by
+        /// surrounding '|', e.g. "|2+3|"). 
+        /// </summary>
         [Required]
         [Display(Name = "Inciso B")]
         [DataType(DataType.MultilineText)]
         public string OptionB { get; set; }
+        /// <summary>
+        /// Desribes if Option B is a correct option in the question.
+        /// </summary>
         [Required]
         [Display(Name = "B es correcta")]
         public bool OptionBCorrect { get; set; }
+        /// <summary>
+        /// Feedback for choosing Option B.
+        /// </summary>
         [Required]
         [Display(Name = "Retroalimentacion B")]
         [DataType(DataType.MultilineText)]
         public string OptionBFeedback { get; set; }
+        /// <summary>
+        /// Description of Option C. This field can be interpreted as a LaTeX mathematical formula, and can contain
+        /// both variables (Identified by a '%', e.g. "%x") and expressions that should be evaluated (Identified by
+        /// surrounding '|', e.g. "|2+3|"). 
+        /// </summary>
         [Required]
         [Display(Name = "Inciso C")]
         [DataType(DataType.MultilineText)]
         public string OptionC { get; set; }
+        /// <summary>
+        /// Desribes if Option C is a correct option in the question.
+        /// </summary>
         [Required]
         [Display(Name = "C es correcta")]
         public bool OptionCCorrect { get; set; }
+        /// <summary>
+        /// Feedback for choosing Option C.
+        /// </summary>
         [Required]
         [Display(Name = "Retroalimentacion C")]
         [DataType(DataType.MultilineText)]
         public string OptionCFeedback { get; set; }
+        /// <summary>
+        /// Description of Option D. This field can be interpreted as a LaTeX mathematical formula, and can contain
+        /// both variables (Identified by a '%', e.g. "%x") and expressions that should be evaluated (Identified by
+        /// surrounding '|', e.g. "|2+3|"). 
+        /// </summary>
         [Required]
         [Display(Name = "Inciso D")]
         [DataType(DataType.MultilineText)]
         public string OptionD { get; set; }
+        /// <summary>
+        /// Desribes if Option D is a correct option in the question.
+        /// </summary>
         [Required]
         [Display(Name = "D es correcta")]
         public bool OptionDCorrect { get; set; }
+        /// <summary>
+        /// Feedback for choosing Option D.
+        /// </summary>
         [Required]
         [Display(Name = "Retroalimentacion D")]
         [DataType(DataType.MultilineText)]
         public string OptionDFeedback { get; set; }
 
+        /// <summary>
+        /// List containing all correct choices for this question.
+        /// </summary>
         [Display(Name = "Respuestas correctas")]
-        public List<char> CorrectAnswers
+        public List<Choice> CorrectAnswers
         {
             get
             {
-                var correct = new List<char>();
-                if (OptionACorrect) correct.Add('A');
-                if (OptionBCorrect) correct.Add('B');
-                if (OptionCCorrect) correct.Add('C');
-                if (OptionDCorrect) correct.Add('D');
+                var correct = new List<Choice>();
+                if (OptionACorrect) correct.Add(Choice.A);
+                if (OptionBCorrect) correct.Add(Choice.B);
+                if (OptionCCorrect) correct.Add(Choice.C);
+                if (OptionDCorrect) correct.Add(Choice.D);
                 return correct;
             }
         }
 
+        /// <summary>
+        /// Exam to which the question belongs.
+        /// </summary>
         public virtual Exam Exam { get; set; }
+        /// <summary>
+        /// All answers that have been registered for this question.
+        /// </summary>
         public virtual ICollection<Answer> Answers { get; set; }
+        /// <summary>
+        /// Variables that the question contains.
+        /// </summary>
         public virtual ICollection<Variable> Variables { get; set; }
 
+        /// <summary>
+        /// Copies the question, but eliminating all notation from it ('|' and '%')
+        /// </summary>
+        /// <returns>A new question, with no notation on its description or options.</returns>
         public Question CopyWithNoNotation()
         {
             return new Question
@@ -105,6 +176,11 @@ namespace DiagnosticoDeMatematicas.Models
             };
         }
 
+        /// <summary>
+        /// Copies the question, but replacing each variable with one of its possible values, and evaluating every
+        /// marked operation from the description, and its four options.
+        /// </summary>
+        /// <returns>An evaluated copy of the question.</returns>
         public Question CopyEvaluatedWithRandomValues()
         {
             Question question = new Question
@@ -180,6 +256,11 @@ namespace DiagnosticoDeMatematicas.Models
 
         //Gotten from:
         //http://stackoverflow.com/questions/333737/evaluating-string-342-yield-int-18
+        /// <summary>
+        /// Evaluates a numeric expression
+        /// </summary>
+        /// <param name="expression">The expression to be evaluated.</param>
+        /// <returns>The resulting value.</returns>
         private double Evaluate(string expression)
         {
             var loDataTable = new System.Data.DataTable();
