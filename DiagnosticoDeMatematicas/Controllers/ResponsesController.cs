@@ -135,7 +135,12 @@ namespace DiagnosticoDeMatematicas.Controllers
             var answers = new List<QuestionAnswer>();
             foreach (var question in response.Exam.Questions)
             {
-                answers.Add(new QuestionAnswer { QuestionID = question.ID, SelectedOption = -1 });
+                answers.Add(new QuestionAnswer { Question = question, SelectedOption = -1, QuestionID = question.ID });
+            }
+
+            foreach (var answer in answers)
+            {
+                answer.Shuffle();
             }
 
             response.Choices = answers;
@@ -157,6 +162,11 @@ namespace DiagnosticoDeMatematicas.Controllers
                 Date = DateTime.Now
             };
 
+            foreach(var answer in responseWithAnswers.Choices)
+            {
+                answer.Question = db.Questions.Find(answer.QuestionID);
+            }
+
             if (ModelState.IsValid)
             {
                 db.Responses.Add(response);
@@ -165,20 +175,21 @@ namespace DiagnosticoDeMatematicas.Controllers
                 foreach (var answer in responseWithAnswers.Choices)
                 {
                     var choice = new Choice();
-                    if (answer.SelectedOption == 0) choice = Choice.A;
-                    else if (answer.SelectedOption == 1) choice = Choice.B;
-                    else if (answer.SelectedOption == 1) choice = Choice.C;
+                    var selectedOption = answer.GetAnswer();
+                    if (selectedOption == 0) choice = Choice.A;
+                    else if (selectedOption == 1) choice = Choice.B;
+                    else if (selectedOption == 2) choice = Choice.C;
                     else choice = Choice.D;
-                    db.Answers.Add(new Answer { QuestionID = answer.QuestionID, ResponseID = response.ID, Choice = choice });
+                    db.Answers.Add(new Answer { QuestionID = answer.Question.ID, ResponseID = response.ID, Choice = choice });
                 }
                 db.SaveChanges();
 
                 return RedirectToAction("ThankYou");
             }
 
-            ViewBag.ExamID = new SelectList(db.Exams, "ID", "Name", response.ExamID);
-            ViewBag.UserID = new SelectList(db.Users, "Email", "FullName", response.UserID);
-            return View(response);
+            //ViewBag.ExamID = new SelectList(db.Exams, "ID", "Name", response.ExamID);
+            //ViewBag.UserID = new SelectList(db.Users, "Email", "FullName", response.UserID);
+            return View(responseWithAnswers);
         }
 
         public ActionResult ThankYou()

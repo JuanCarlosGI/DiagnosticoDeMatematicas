@@ -32,7 +32,7 @@ namespace DiagnosticoDeMatematicas.Models
         {
             get
             {
-                return Question.CorrectAnswers.Contains((char)Choice);
+                return Question.CorrectAnswers.Contains(Choice);
             }
         }
 

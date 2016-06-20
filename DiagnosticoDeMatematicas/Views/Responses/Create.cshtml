@@ -19,15 +19,16 @@
         @Html.HiddenFor(model => Model.ExamID)
         @Html.HiddenFor(model => Model.UserID)
 
-        @foreach (var question in Model.Exam.Questions)
+        @foreach (var question in Model.Choices)
         {
-            var questionEvaluated = question.CopyEvaluatedWithRandomValues();
+            var questionEvaluated = question.Question.CopyEvaluatedWithRandomValues();
 
             <div>
                 <div class="panel panel-primary">
                     <div class="panel-heading"><h6>Pregunta @(counter + 1)</h6></div>
                     <div class="panel-body">@questionEvaluated.Description</div>
                     @Html.HiddenFor(m => Model.Choices[counter].QuestionID)
+                    @Html.HiddenFor(m => Model.Choices[counter].Guid)
                     <div class="panel-footer">
                         <div class="row">
                             <div class="col-sm-6 col-lg-3">

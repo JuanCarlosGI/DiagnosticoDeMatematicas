@@ -63,6 +63,63 @@ namespace DiagnosticoDeMatematicas.Models
     public class QuestionAnswer
     {
         public int QuestionID { get; set; }
+        public Question Question { get; set; }
         public int SelectedOption { get; set; }
+        public Guid Guid { set; get; }
+
+        private static Random Random = new Random();
+        private static Dictionary<Guid, int[]> SwapDictionary = new Dictionary<Guid, int[]>();
+
+        public void Shuffle()
+        {
+            int[] swaps = { 0, 1, 2, 3 };
+            int n = 4;
+            while (n > 1)
+            {
+                n--;
+                int k = Random.Next(n + 1);
+                int value = swaps[k];
+                swaps[k] = swaps[n];
+                swaps[n] = value;
+            }
+
+            QuestionAnswer aux = new QuestionAnswer
+            {
+                Question = new Question
+                {
+                    OptionA = Question.OptionA,
+                    OptionB = Question.OptionB,
+                    OptionC = Question.OptionC,
+                    OptionD = Question.OptionD
+                }
+            };
+
+            Question.OptionA = aux.GetQuestion(swaps[0]);
+            Question.OptionB = aux.GetQuestion(swaps[1]);
+            Question.OptionC = aux.GetQuestion(swaps[2]);
+            Question.OptionD = aux.GetQuestion(swaps[3]);
+
+            Guid = Guid.NewGuid();
+            SwapDictionary.Add(Guid, swaps);
+        }
+
+        public int GetAnswer()
+        {
+            var swaps = SwapDictionary[Guid];
+            SwapDictionary.Remove(Guid);
+            return swaps[SelectedOption];
+        }
+
+        private string GetQuestion(int Option)
+        {
+            switch(Option)
+            {
+                case 0: return Question.OptionA;
+                case 1: return Question.OptionB;
+                case 2: return Question.OptionC;
+                case 3: return Question.OptionD;
+                default: return null;
+            }
+        }
     }
 }
