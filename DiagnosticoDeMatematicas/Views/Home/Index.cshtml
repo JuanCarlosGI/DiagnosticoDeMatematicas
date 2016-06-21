@@ -1,4 +1,5 @@
 ﻿@model List<DiagnosticoDeMatematicas.Models.Exam>
+@using DiagnosticoDeMatematicas.Charts
 
 @{
     ViewBag.Title = "Home Page";
@@ -9,7 +10,7 @@
     <p class="lead">Bienvenido a la plataforma.</p>
 </div>
 <div class="row">
-    @foreach(var exam in Model)
+    @foreach (var exam in Model)
     {
         <div class="col-md-4">
             <div class="panel panel-primary">

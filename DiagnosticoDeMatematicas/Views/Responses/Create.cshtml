@@ -1,4 +1,5 @@
 ﻿@model DiagnosticoDeMatematicas.Models.ResponseWithAnswers
+@using DiagnosticoDeMatematicas.Charts
 
 @{
     ViewBag.Title = "Create";
@@ -26,7 +27,7 @@
             <div>
                 <div class="panel panel-primary">
                     <div class="panel-heading"><h6>Pregunta @(counter + 1)</h6></div>
-                    <div class="panel-body">@questionEvaluated.Description</div>
+                    <div class="panel-body">@Html.Raw(ChartCreator.QuestionWithChart(questionEvaluated.Description))</div>
                     @Html.HiddenFor(m => Model.Choices[counter].QuestionID)
                     @Html.HiddenFor(m => Model.Choices[counter].Guid)
                     <div class="panel-footer">
@@ -34,25 +35,25 @@
                             <div class="col-sm-6 col-lg-3">
                                 @Html.RadioButtonFor(m => Model.Choices[counter].SelectedOption, 0)
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                @questionEvaluated.OptionA
+                                @Html.Raw(ChartCreator.QuestionWithChart(questionEvaluated.OptionA))
                                 <br /><br />
                             </div>
                             <div class="col-sm-6 col-lg-3">
                                 @Html.RadioButtonFor(m => Model.Choices[counter].SelectedOption, 1)
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                @questionEvaluated.OptionB
+                                @Html.Raw(ChartCreator.QuestionWithChart(questionEvaluated.OptionB))
                                 <br /><br />
                             </div>
                             <div class="col-sm-6 col-lg-3">
                                 @Html.RadioButtonFor(m => Model.Choices[counter].SelectedOption, 2)
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                @questionEvaluated.OptionC
+                                @Html.Raw(ChartCreator.QuestionWithChart(questionEvaluated.OptionC))
                                 <br /><br />
                             </div>
                             <div class="col-sm-6 col-lg-3">
                                 @Html.RadioButtonFor(m => Model.Choices[counter].SelectedOption, 3)
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                                @questionEvaluated.OptionD
+                                @Html.Raw(ChartCreator.QuestionWithChart(questionEvaluated.OptionD))
                                 <br /><br />
                             </div>
                         </div>

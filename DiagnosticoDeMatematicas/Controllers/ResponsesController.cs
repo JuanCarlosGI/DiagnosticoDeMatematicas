@@ -186,9 +186,7 @@ namespace DiagnosticoDeMatematicas.Controllers
 
                 return RedirectToAction("ThankYou");
             }
-
-            //ViewBag.ExamID = new SelectList(db.Exams, "ID", "Name", response.ExamID);
-            //ViewBag.UserID = new SelectList(db.Users, "Email", "FullName", response.UserID);
+            
             return View(responseWithAnswers);
         }
 

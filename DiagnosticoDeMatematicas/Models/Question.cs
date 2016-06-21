@@ -219,35 +219,35 @@ namespace DiagnosticoDeMatematicas.Models
             var descriptionSegments = question.Description.Split('|');
             for (int operation = 1; operation < descriptionSegments.Length; operation += 2)
             {
-                descriptionSegments[operation] = ((int)Evaluate(descriptionSegments[operation])).ToString();
+                descriptionSegments[operation] = (Evaluate(descriptionSegments[operation])).ToString();
             }
             question.Description = String.Join("", descriptionSegments);
 
             var optionSegments = question.OptionA.Split('|');
             for (int operation = 1; operation < optionSegments.Length; operation += 2)
             {
-                optionSegments[operation] = ((int)Evaluate(optionSegments[operation])).ToString();
+                optionSegments[operation] = (Evaluate(optionSegments[operation])).ToString();
             }
             question.OptionA = String.Join("", optionSegments);
 
             optionSegments = question.OptionB.Split('|');
             for (int operation = 1; operation < optionSegments.Length; operation += 2)
             {
-                optionSegments[operation] = ((int)Evaluate(optionSegments[operation])).ToString();
+                optionSegments[operation] = (Evaluate(optionSegments[operation])).ToString();
             }
             question.OptionB = String.Join("", optionSegments);
 
             optionSegments = question.OptionC.Split('|');
             for (int operation = 1; operation < optionSegments.Length; operation += 2)
             {
-                optionSegments[operation] = ((int)Evaluate(optionSegments[operation])).ToString();
+                optionSegments[operation] = (Evaluate(optionSegments[operation])).ToString();
             }
             question.OptionC = String.Join("", optionSegments);
 
             optionSegments = question.OptionD.Split('|');
             for (int operation = 1; operation < optionSegments.Length; operation += 2)
             {
-                optionSegments[operation] = ((int)Evaluate(optionSegments[operation])).ToString();
+                optionSegments[operation] = (Evaluate(optionSegments[operation])).ToString();
             }
             question.OptionD = String.Join("", optionSegments);
 
