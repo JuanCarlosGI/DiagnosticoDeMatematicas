@@ -161,7 +161,12 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Charts\ChartCreator.cs" />
+    <Compile Include="Charts\ChartBuilder.cs" />
+    <Compile Include="Charts\ChartTypes\MultiPolynomialChart.cs" />
+    <Compile Include="Charts\ChartTypes\PolynomialChart.cs" />
+    <Compile Include="Charts\ChartTypes\PolynomialWithDerivateChart.cs" />
+    <Compile Include="Charts\ChartTypes\PolynomialWithDoubleDerivateChart.cs" />
+    <Compile Include="Charts\CartesianPlane.cs" />
     <Compile Include="Charts\FunctionSeries.cs" />
     <Compile Include="Controllers\ExamsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
