@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using DiagnosticoDeMatematicas.DAL;
 using DiagnosticoDeMatematicas.Models;
-using System.Drawing;
-using System.Web.UI.DataVisualization.Charting;
-using System.IO;
+using DiagnosticoDeMatematicas.Models.ViewModels;
+using DiagnosticoDeMatematicas.Helpers;
 
 namespace DiagnosticoDeMatematicas.Controllers
 {
@@ -130,7 +127,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            ResponseWithAnswers response = new ResponseWithAnswers { ExamID = ExamId.Value, UserID = (string)Session.Contents["Email"], Exam = db.Exams.Find(ExamId) };
+            ResponseWithAnswersViewModel response = new ResponseWithAnswersViewModel { ExamID = ExamId.Value, UserID = (string)Session.Contents["Email"], Exam = db.Exams.Find(ExamId) };
 
             var answers = new List<QuestionAnswer>();
             foreach (var question in response.Exam.Questions)
@@ -153,7 +150,7 @@ namespace DiagnosticoDeMatematicas.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserID,ExamID,Choices")]ResponseWithAnswers responseWithAnswers)
+        public ActionResult Create([Bind(Include = "ID,UserID,ExamID,Choices")]ResponseWithAnswersViewModel responseWithAnswers)
         {
             var response = new Response
             {

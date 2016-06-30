@@ -158,16 +158,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Charts\ChartBuilder.cs" />
-    <Compile Include="Charts\ChartTypes\MultiPolynomialChart.cs" />
-    <Compile Include="Charts\ChartTypes\PolynomialChart.cs" />
-    <Compile Include="Charts\ChartTypes\PolynomialWithDerivateChart.cs" />
-    <Compile Include="Charts\ChartTypes\PolynomialWithDoubleDerivateChart.cs" />
-    <Compile Include="Charts\CartesianPlane.cs" />
-    <Compile Include="Charts\FunctionSeries.cs" />
+    <Compile Include="App_Start\BundleConfig.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="App_Start\FilterConfig.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="App_Start\RouteConfig.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Helpers\Charts\ChartBuilder.cs" />
+    <Compile Include="Helpers\Charts\ChartTypes\MultiPolynomialChart.cs" />
+    <Compile Include="Helpers\Charts\ChartTypes\PolynomialChart.cs" />
+    <Compile Include="Helpers\Charts\ChartTypes\PolynomialWithDerivateChart.cs" />
+    <Compile Include="Helpers\Charts\ChartTypes\PolynomialWithDoubleDerivateChart.cs" />
+    <Compile Include="Helpers\Charts\CartesianPlane.cs" />
+    <Compile Include="Helpers\Charts\ChartTypes\VerticalLineChart.cs" />
+    <Compile Include="Helpers\Charts\FunctionSeries.cs" />
+    <Compile Include="Helpers\Charts\VerticalSeries.cs" />
     <Compile Include="Controllers\ExamsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
@@ -180,6 +188,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\QuestionAnswer.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Exam.cs" />
     <Compile Include="Models\Question.cs" />
@@ -188,6 +197,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Variable.cs" />
     <Compile Include="Models\ViewModels\GlobalStatisticsViewModel.cs" />
+    <Compile Include="Models\ViewModels\ResponseWithAnswersViewModel.cs" />
     <Compile Include="Models\ViewModels\StatisticDetailsViewModel.cs" />
     <Compile Include="Models\ViewModels\StatisticsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -216,6 +226,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -268,6 +280,7 @@
     <Content Include="Views\Responses\Statistics.cshtml" />
     <Content Include="Views\Responses\GlobalStatistics.cshtml" />
     <Content Include="Views\Responses\ThankYou.cshtml" />
+    <Content Include="Views\Questions\Instructions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

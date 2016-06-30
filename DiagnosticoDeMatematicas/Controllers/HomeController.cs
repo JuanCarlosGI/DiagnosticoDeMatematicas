@@ -27,13 +27,22 @@ namespace DiagnosticoDeMatematicas.Controllers
                     var user = db.Users.Find(Email);
                     if (user != null) 
                     {
+                        System.Security.Cryptography.HashAlgorithm hashAlgo = new System.Security.Cryptography.SHA256Managed();
+                        byte[] plainTextBytes = System.Text.Encoding.Unicode.GetBytes(Password);
+                        byte[] hash = hashAlgo.ComputeHash(plainTextBytes);
+                        Password = System.Text.Encoding.Unicode.GetString(hash);
+                        if (user.Password != Password)
+                        {
+                            return View();
+                        }
+
                         Session.Contents["Email"] = user.Email;
                         Session.Contents["FullName"] = user.FullName;
                         Session.Contents["Role"] = user.Role;
                         Session.Timeout = 30;
+
                         return RedirectToAction("Index");
                     }
-
                 }
                 
                 return View();

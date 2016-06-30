@@ -169,6 +169,11 @@ namespace DiagnosticoDeMatematicas.Controllers
             return RedirectToAction("Details", "Exams", new { id = question.ExamID });
         }
 
+        public ActionResult Instructions()
+        {
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -13,7 +13,7 @@ namespace DiagnosticoDeMatematicas.DAL
                 Role = Role.Administrador,
                 FirstName = "Juan Carlos",
                 LastName = "Guzman",
-                Password = "admin",
+                Password = "⍵⫆랽豢鵚辭�엘䃀㕥㇥ꎨ譴깬~",
                 DateOfBirth = DateTime.Now,
                 Email = "jcgi@admin.com",
                 Gender = Gender.Masculino,
@@ -39,11 +39,19 @@ namespace DiagnosticoDeMatematicas.DAL
             {
                 ID = 2,
                 Name = "Fórmulas",
-                Description = "Este es un examen de aritmetica que permite el desarrollo de habilidades basicas matematicas.",
+                Description = "Este es un examen de fórmulas que permite el desarrollo de habilidades basicas matematicas.",
                 Active = true
             });
 
-            foreach(var exam in exams)
+            exams.Add(new Exam
+            {
+                ID = 3,
+                Name = "Gráficas",
+                Description = "Este es un examen de gráficas que permite el desarrollo de habilidades basicas matematicas.",
+                Active = true
+            });
+
+            foreach (var exam in exams)
             {
                 context.Exams.Add(exam);
             }
@@ -622,6 +630,28 @@ namespace DiagnosticoDeMatematicas.DAL
             ranges.Add(new Range { QuestionId = 24, Symbol = "m", ID = 59, Minimum = 5, Maximum = 5 });
             ranges.Add(new Range { QuestionId = 24, Symbol = "m", ID = 60, Minimum = 7, Maximum = 7 });
             ranges.Add(new Range { QuestionId = 24, Symbol = "m", ID = 61, Minimum = 9, Maximum = 9 });
+
+            questions.Add(new Question
+            {
+                ID = 25,
+                ExamID = 3,
+                Description = "Entre las siguientes gráficas de rectas, elige aquella que pasa por el punto (0,%n)",
+                OptionA = "&& Polynomial -5 5 -5 5 %n &&",
+                OptionACorrect = true,
+                OptionAFeedback = "Correcto",
+                OptionB = "&& Polynomial -5 5 -5 5 %n 0 &&",
+                OptionBCorrect = false,
+                OptionBFeedback = "En x=0 se tiene y=0 y en x=n se tiene y=n.",
+                OptionC = "&& VerticalLine -5 5 -5 5 %n &&",
+                OptionCCorrect = false,
+                OptionCFeedback = "Elige que pasa por (n,0) confundiendo 'x' e 'y'.",
+                OptionD = "&& Polynomial -5 5 -5 5 -1 |2*%n| &&",
+                OptionDCorrect = false,
+                OptionDFeedback = "Elige recta que pasa por (0,2n) y (n,n)."
+            });
+            variables.Add(new Variable { QuestionID = 25, Symbol = "n" });
+            ranges.Add(new Range { QuestionId = 25, Symbol = "n", ID = 62, Minimum = -3, Maximum = -1 });
+            ranges.Add(new Range { QuestionId = 25, Symbol = "n", ID = 63, Minimum = 1, Maximum = 3 });
 
             foreach ( var question in questions)
             {

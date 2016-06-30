@@ -74,6 +74,10 @@ namespace DiagnosticoDeMatematicas.Controllers
         {
             if (ModelState.IsValid)
             {
+                System.Security.Cryptography.HashAlgorithm hashAlgo = new System.Security.Cryptography.SHA256Managed();
+                byte[] plainTextBytes = System.Text.Encoding.Unicode.GetBytes(user.Password);
+                byte[] hash = hashAlgo.ComputeHash(plainTextBytes);
+                user.Password = System.Text.Encoding.Unicode.GetString(hash);
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("SignIn", "Home");
