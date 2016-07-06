@@ -1,12 +1,13 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web.Mvc;
-using DiagnosticoDeMatematicas.DAL;
-using DiagnosticoDeMatematicas.Models;
-
-namespace DiagnosticoDeMatematicas.Controllers
+﻿namespace DiagnosticoDeMatematicas.Controllers
 {
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Web.Mvc;
+    using DAL;
+    using Models;
+    using Helpers;
+
     public class ExamsController : Controller
     {
         private SiteContext db = new SiteContext();
@@ -14,14 +15,14 @@ namespace DiagnosticoDeMatematicas.Controllers
         // GET: Exams
         public ActionResult Index()
         {
-            if(Session.Contents["Email"] == null)
+            if (!SessionValidator.IsAdminSignedIn)
             {
-                return RedirectToAction("SignIn", "Home");
-            }
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
 
-            if((Role)Session.Contents["Role"] != Role.Administrador)
-            {
-                return RedirectToAction("AccessDenied", "Home");
+                return RedirectToAction("SignIn", "Home");
             }
 
             return View(db.Exams.ToList());
@@ -35,14 +36,14 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (Session.Contents["Email"] == null)
+            if (!SessionValidator.IsAdminSignedIn)
             {
-                return RedirectToAction("SignIn", "Home");
-            }
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
 
-            if ((Role)Session.Contents["Role"] != Role.Administrador)
-            {
-                return RedirectToAction("AccessDenied", "Home");
+                return RedirectToAction("SignIn", "Home");
             }
 
             Exam exam = db.Exams.Find(id);
@@ -56,14 +57,14 @@ namespace DiagnosticoDeMatematicas.Controllers
         // GET: Exams/Create
         public ActionResult Create()
         {
-            if (Session.Contents["Email"] == null)
+            if (!SessionValidator.IsAdminSignedIn)
             {
-                return RedirectToAction("SignIn", "Home");
-            }
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
 
-            if ((Role)Session.Contents["Role"] != Role.Administrador)
-            {
-                return RedirectToAction("AccessDenied", "Home");
+                return RedirectToAction("SignIn", "Home");
             }
 
             return View();
@@ -94,14 +95,14 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (Session.Contents["Email"] == null)
+            if (!SessionValidator.IsAdminSignedIn)
             {
-                return RedirectToAction("SignIn", "Home");
-            }
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
 
-            if ((Role)Session.Contents["Role"] != Role.Administrador)
-            {
-                return RedirectToAction("AccessDenied", "Home");
+                return RedirectToAction("SignIn", "Home");
             }
 
             Exam exam = db.Exams.Find(id);
@@ -136,14 +137,14 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (Session.Contents["Email"] == null)
+            if (!SessionValidator.IsAdminSignedIn)
             {
-                return RedirectToAction("SignIn", "Home");
-            }
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
 
-            if ((Role)Session.Contents["Role"] != Role.Administrador)
-            {
-                return RedirectToAction("AccessDenied", "Home");
+                return RedirectToAction("SignIn", "Home");
             }
 
             Exam exam = db.Exams.Find(id);
@@ -159,14 +160,14 @@ namespace DiagnosticoDeMatematicas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if (Session.Contents["Email"] == null)
+            if (!SessionValidator.IsAdminSignedIn)
             {
-                return RedirectToAction("SignIn", "Home");
-            }
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
 
-            if ((Role)Session.Contents["Role"] != Role.Administrador)
-            {
-                return RedirectToAction("AccessDenied", "Home");
+                return RedirectToAction("SignIn", "Home");
             }
 
             Exam exam = db.Exams.Find(id);
@@ -181,6 +182,7 @@ namespace DiagnosticoDeMatematicas.Controllers
             {
                 db.Dispose();
             }
+
             base.Dispose(disposing);
         }
     }

@@ -1,39 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using DiagnosticoDeMatematicas.DAL;
-using DiagnosticoDeMatematicas.Models;
-
-namespace DiagnosticoDeMatematicas.Controllers
+﻿namespace DiagnosticoDeMatematicas.Controllers
 {
+    using System.Data.Entity;
+    using System.Net;
+    using System.Web.Mvc;
+    using DAL;
+    using Models;
+    using Helpers;
+
     public class RangesController : Controller
     {
         private SiteContext db = new SiteContext();
 
         // GET: Ranges/Create
-        public ActionResult Create(int? QuestionId, string Symbol)
+        public ActionResult Create(int? questionId, string symbol)
         {
-            if (QuestionId == null || Symbol == null)
+            if (questionId == null || symbol == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (Session.Contents["Email"] == null)
+            if (!SessionValidator.IsAdminSignedIn)
             {
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
+
                 return RedirectToAction("SignIn", "Home");
             }
 
-            if ((Role)Session.Contents["Role"] != Role.Administrador)
-            {
-                return RedirectToAction("AccessDenied", "Home");
-            }
-
-            Range range = new Range { QuestionId = QuestionId.Value, Symbol = Symbol };
+            Range range = new Range { QuestionId = questionId.Value, Symbol = symbol };
             return View(range);
         }
 
@@ -62,14 +58,14 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (Session.Contents["Email"] == null)
+            if (!SessionValidator.IsAdminSignedIn)
             {
-                return RedirectToAction("SignIn", "Home");
-            }
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
 
-            if ((Role)Session.Contents["Role"] != Role.Administrador)
-            {
-                return RedirectToAction("AccessDenied", "Home");
+                return RedirectToAction("SignIn", "Home");
             }
 
             Range range = db.Ranges.Find(id);
@@ -77,6 +73,7 @@ namespace DiagnosticoDeMatematicas.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(range);
         }
 
@@ -93,6 +90,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Details", "Variables", new { QuestionID = range.QuestionId, Symbol = range.Symbol });
             }
+
             return View(range);
         }
 
@@ -104,14 +102,14 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (Session.Contents["Email"] == null)
+            if (!SessionValidator.IsAdminSignedIn)
             {
-                return RedirectToAction("SignIn", "Home");
-            }
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
 
-            if ((Role)Session.Contents["Role"] != Role.Administrador)
-            {
-                return RedirectToAction("AccessDenied", "Home");
+                return RedirectToAction("SignIn", "Home");
             }
 
             Range range = db.Ranges.Find(id.Value);
@@ -119,6 +117,7 @@ namespace DiagnosticoDeMatematicas.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(range);
         }
 
@@ -127,16 +126,6 @@ namespace DiagnosticoDeMatematicas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if (Session.Contents["Email"] == null)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
-
-            if ((Role)Session.Contents["Role"] != Role.Administrador)
-            {
-                return RedirectToAction("AccessDenied", "Home");
-            }
-
             Range range = db.Ranges.Find(id);
             var symbol = range.Symbol;
             db.Ranges.Remove(range);
@@ -150,6 +139,7 @@ namespace DiagnosticoDeMatematicas.Controllers
             {
                 db.Dispose();
             }
+
             base.Dispose(disposing);
         }
     }

@@ -1,16 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace DiagnosticoDeMatematicas.Charts.ChartTypes
+﻿namespace DiagnosticoDeMatematicas.Charts.ChartTypes
 {
+    using System.Collections.Generic;
+    using Helpers.Functions.FunctionTypes;
+
+    /// <summary>
+    /// Chart containing a single polynomial.
+    /// </summary>
     public class PolynomialChart : CartesianPlane
     {
-        public Polynomial Polynomial { get; }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PolynomialChart"/> class.
+        /// </summary>
+        /// <param name="stringCoefficients">Array containing the coefficients for the polynomial.</param>
+        /// <param name="minX">Minimum value for the x-axis.</param>
+        /// <param name="maxX">Maximum value for the x-axis.</param>
+        /// <param name="minY">Minimum value for the y-axis.</param>
+        /// <param name="maxY">Maximum value for the y-axis.</param>
         public PolynomialChart(string[] stringCoefficients, int minX, int maxX, int minY, int maxY) 
-            : base (minX, maxX, minY, maxY)
+            : base(minX, maxX, minY, maxY)
         {
             if (ValidateCoefficients(stringCoefficients))
             {
@@ -20,37 +27,58 @@ namespace DiagnosticoDeMatematicas.Charts.ChartTypes
 
                 var polynomialSeries = new FunctionSeries(Polynomial, ChartAreas["Chart"]);
                 polynomialSeries.BorderWidth = 3;
-                polynomialSeries.Color = SERIES_COLOR_HIERARCHY[0];
+                polynomialSeries.Color = SeriesColorHierarchy[0];
 
                 Series.Add(polynomialSeries);
             }
         }
 
+        /// <summary>
+        /// Gets the polynomial being displayed.
+        /// </summary>
+        public Polynomial Polynomial { get; }
+
+        /// <summary>
+        /// Validates that the coefficients have a correct format.
+        /// </summary>
+        /// <param name="coefficients">Array of strings.</param>
+        /// <returns>A value indicating whether the coefficients are correctly formatted.</returns>
         protected virtual bool ValidateCoefficients(string[] coefficients)
         {
-            if (coefficients.Length < 1) return false;
-
-            bool IsValid = true;
-            foreach(var coefficient in coefficients)
+            if (coefficients.Length < 1)
             {
-                double aux;
-                IsValid = double.TryParse(coefficient, out aux);
-
-                if (!IsValid) break;
+                return false;
             }
 
-            return IsValid;
-        }
-
-        protected double[] ParseCoefficients(string[] coefficients)
-        {
-            var Coefficients = new List<double>();
+            bool isValid = true;
             foreach (var coefficient in coefficients)
             {
-                Coefficients.Add(double.Parse(coefficient));
+                double aux;
+                isValid = double.TryParse(coefficient, out aux);
+
+                if (!isValid)
+                {
+                    break;
+                }
             }
 
-            return Coefficients.ToArray();
+            return isValid;
+        }
+
+        /// <summary>
+        /// Parses the coefficients into doubles.
+        /// </summary>
+        /// <param name="stringCoefficients">Array of strings.</param>
+        /// <returns>Array of doubles.</returns>
+        protected double[] ParseCoefficients(string[] stringCoefficients)
+        {
+            var coefficients = new List<double>();
+            foreach (var coefficient in stringCoefficients)
+            {
+                coefficients.Add(double.Parse(coefficient));
+            }
+
+            return coefficients.ToArray();
         }
     }
 }

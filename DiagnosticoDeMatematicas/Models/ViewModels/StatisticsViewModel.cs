@@ -147,7 +147,7 @@
         {
             if (ResponsesFiltered.Count() == 0)
             {
-                return new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                return new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             }
 
             var responsesFilteredOnce = ResponsesFiltered;

@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web.Mvc;
-using DiagnosticoDeMatematicas.DAL;
-using DiagnosticoDeMatematicas.Models;
-using DiagnosticoDeMatematicas.Models.ViewModels;
-using DiagnosticoDeMatematicas.Helpers;
-
-namespace DiagnosticoDeMatematicas.Controllers
+﻿namespace DiagnosticoDeMatematicas.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Web.Mvc;
+    using DAL;
+    using Helpers;
+    using Models;
+    using Models.ViewModels;
+
     public class ResponsesController : Controller
     {
         private SiteContext db = new SiteContext();
@@ -18,14 +18,14 @@ namespace DiagnosticoDeMatematicas.Controllers
         // GET: Responses
         public ActionResult Index()
         {
-            if (Session.Contents["Email"] == null)
+            if (!SessionValidator.IsAdminSignedIn)
             {
-                return RedirectToAction("SignIn", "Home");
-            }
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
 
-            if ((Role)Session.Contents["Role"] != Role.Administrador)
-            {
-                return RedirectToAction("AccessDenied", "Home");
+                return RedirectToAction("SignIn", "Home");
             }
 
             var responses = db.Responses.Include(r => r.Exam).Include(r => r.User).ToList();
@@ -35,14 +35,34 @@ namespace DiagnosticoDeMatematicas.Controllers
 
         public ActionResult StatisticDetails()
         {
-            ViewBag.ExamID = new SelectList(db.Exams, "ID", "Name", "");
+            if (!SessionValidator.IsAdminSignedIn)
+            {
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
+
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            ViewBag.ExamID = new SelectList(db.Exams, "ID", "Name", string.Empty);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult StatisticDetails([Bind(Include = "ExamID,StartDate,EndDate")]Models.ViewModels.StatisticDetailsViewModel details)
+        public ActionResult StatisticDetails([Bind(Include = "ExamID,StartDate,EndDate")]StatisticDetailsViewModel details)
         {
+            if (!SessionValidator.IsAdminSignedIn)
+            {
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
+
+                return RedirectToAction("SignIn", "Home");
+            }
+
             if (details.StartDate != null && details.EndDate != null && details.StartDate.Value > details.EndDate.Value)
             {
                 ModelState.AddModelError("EndDate", "La fecha de terminación debe ser igual o mayor a la fecha de inicio.");
@@ -53,6 +73,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                 {
                     return RedirectToAction("GlobalStatistics", "Responses", details);
                 }
+
                 return RedirectToAction("Statistics", "Responses", details);
             }
 
@@ -61,9 +82,20 @@ namespace DiagnosticoDeMatematicas.Controllers
             return View(details);
         }
 
-        public ActionResult Statistics(Models.ViewModels.StatisticDetailsViewModel details)
+        public ActionResult Statistics(StatisticDetailsViewModel details)
         {
-            var statistics = new Models.ViewModels.StatisticsViewModel {
+            if (!SessionValidator.IsAdminSignedIn)
+            {
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
+
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            var statistics = new StatisticsViewModel
+            {
                 Responses = db.Responses.ToList(),
                 Exam = db.Exams.Find(details.ExamID.Value),
                 StartDate = details.StartDate,
@@ -73,9 +105,19 @@ namespace DiagnosticoDeMatematicas.Controllers
             return View(statistics);
         }
 
-        public ActionResult GlobalStatistics(Models.ViewModels.StatisticDetailsViewModel details)
+        public ActionResult GlobalStatistics(StatisticDetailsViewModel details)
         {
-            var model = new Models.ViewModels.GlobalStatisticsViewModel
+            if (!SessionValidator.IsAdminSignedIn)
+            {
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
+
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            var model = new GlobalStatisticsViewModel
             {
                 Responses = db.Responses.ToList(),
                 StartDate = details.StartDate,
@@ -93,20 +135,19 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Response response = db.Responses.Find(id);
-
-            if (Session.Contents["Email"] == null)
+            if (!SessionValidator.IsSignedIn)
             {
                 return RedirectToAction("SignIn", "Home");
             }
 
+            Response response = db.Responses.Find(id);
             if (response == null)
             {
                 return HttpNotFound();
             }
 
-            if ((Role)Session.Contents["Role"] != Role.Administrador &&
-                response.UserID != (string)Session.Contents["Email"])
+            if (!SessionValidator.IsAdminSignedIn &&
+                response.User.Email != SessionService.User.Email)
             {
                 return RedirectToAction("AccessDenied", "Home");
             }
@@ -115,19 +156,19 @@ namespace DiagnosticoDeMatematicas.Controllers
         }
 
         // GET: Responses/Create
-        public ActionResult Create(int? ExamId)
+        public ActionResult Create(int? examId)
         {
-            if (Session.Contents["Email"] == null)
+            if (!SessionValidator.IsSignedIn)
             {
                 return RedirectToAction("SignIn", "Home");
             }
 
-            if (ExamId == null || db.Exams.Find(ExamId.Value) == null)
+            if (examId == null || db.Exams.Find(examId.Value) == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            ResponseWithAnswersViewModel response = new ResponseWithAnswersViewModel { ExamID = ExamId.Value, UserID = (string)Session.Contents["Email"], Exam = db.Exams.Find(ExamId) };
+            ResponseWithAnswersViewModel response = new ResponseWithAnswersViewModel { ExamID = examId.Value, UserID = (string)Session.Contents["Email"], Exam = db.Exams.Find(examId) };
 
             var answers = new List<QuestionAnswer>();
             foreach (var question in response.Exam.Questions)
@@ -159,7 +200,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                 Date = DateTime.Now
             };
 
-            foreach(var answer in responseWithAnswers.Choices)
+            foreach (var answer in responseWithAnswers.Choices)
             {
                 answer.Question = db.Questions.Find(answer.QuestionID);
             }
@@ -173,12 +214,26 @@ namespace DiagnosticoDeMatematicas.Controllers
                 {
                     var choice = new Choice();
                     var selectedOption = answer.GetAnswer();
-                    if (selectedOption == 0) choice = Choice.A;
-                    else if (selectedOption == 1) choice = Choice.B;
-                    else if (selectedOption == 2) choice = Choice.C;
-                    else choice = Choice.D;
+                    if (selectedOption == 0)
+                    {
+                        choice = Choice.A;
+                    }
+                    else if (selectedOption == 1)
+                    {
+                        choice = Choice.B;
+                    }
+                    else if (selectedOption == 2)
+                    {
+                        choice = Choice.C;
+                    }
+                    else
+                    {
+                        choice = Choice.D;
+                    }
+
                     db.Answers.Add(new Answer { QuestionID = answer.Question.ID, ResponseID = response.ID, Choice = choice });
                 }
+
                 db.SaveChanges();
 
                 return RedirectToAction("ThankYou");
@@ -200,22 +255,23 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            if (!SessionValidator.IsSignedIn)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
             Response response = db.Responses.Find(id);
             if (response == null)
             {
                 return HttpNotFound();
             }
 
-            if (Session.Contents["Email"] == null)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
-
-            if ((Role)Session.Contents["Role"] != Role.Administrador &&
-                response.UserID != (string)Session.Contents["Email"])
+            if (!SessionValidator.IsAdminSignedIn &&
+                response.User.Email != SessionService.User.Email)
             {
                 return RedirectToAction("AccessDenied", "Home");
             }
+
             return View(response);
         }
 
@@ -236,6 +292,7 @@ namespace DiagnosticoDeMatematicas.Controllers
             {
                 db.Dispose();
             }
+
             base.Dispose(disposing);
         }
     }

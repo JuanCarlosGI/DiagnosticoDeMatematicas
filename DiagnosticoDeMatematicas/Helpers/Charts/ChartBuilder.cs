@@ -83,7 +83,7 @@
         /// </summary>
         /// <param name="chartData">String containing the definition of a chart.</param>
         /// <returns>The string representation of the image of a chart.</returns>
-        private static string CreateChart(string chartData)
+        public static string CreateChart(string chartData)
         {
             string[] parameters = chartData.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -133,7 +133,7 @@
         /// <param name="maxY">The maximum value of the y-axis.</param>
         /// <param name="options">An array containing all the necessary options for the chart to be created successfully.</param>
         /// <returns>The string representation of the image of a chart.</returns>
-        private static string CreateChart(CustomChartTypes type, int minX, int maxX, int minY, int maxY, string[] options)
+        public static string CreateChart(CustomChartTypes type, int minX, int maxX, int minY, int maxY, string[] options)
         {
             CartesianPlane chart = null;
             switch (type)

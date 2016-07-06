@@ -5,6 +5,9 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    /// <summary>
+    /// Model representing a variable inside a question.
+    /// </summary>
     public class Variable
     {
         /// <summary>
@@ -29,6 +32,16 @@
         public int QuestionID { get; set; }
 
         /// <summary>
+        /// Gets or sets the question to which the variable belongs to.
+        /// </summary>
+        public virtual Question Question { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ranges belonging to the variable.
+        /// </summary>
+        public virtual ICollection<Range> Ranges { get; set; }
+
+        /// <summary>
         /// Generates a random value for the variable to take.
         /// </summary>
         /// <returns>A random value.</returns>
@@ -51,15 +64,5 @@
 
             return 1;
         }
-
-        /// <summary>
-        /// Gets or sets the question to which the variable belongs to.
-        /// </summary>
-        public virtual Question Question { get; set; }
-
-        /// <summary>
-        /// gets or sets the ranges belonging to the variable.
-        /// </summary>
-        public virtual ICollection<Range> Ranges { get; set; }
     }
 }

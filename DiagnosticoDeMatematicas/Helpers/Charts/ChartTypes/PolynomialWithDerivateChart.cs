@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace DiagnosticoDeMatematicas.Charts.ChartTypes
+﻿namespace DiagnosticoDeMatematicas.Charts.ChartTypes
 {
+    using Helpers.Functions.FunctionTypes;
+
+    /// <summary>
+    /// Chart containing a polynomial and its derivate.
+    /// </summary>
     public class PolynomialWithDerivateChart : PolynomialChart
     {
-        public Polynomial Derivate { get; }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PolynomialWithDerivateChart"/> class.
+        /// </summary>
+        /// <param name="stringCoefficients">Coefficients for the main polynomial.</param>
+        /// <param name="minX">Minimum value for the x-axis.</param>
+        /// <param name="maxX">Maximum value for the x-axis.</param>
+        /// <param name="minY">Minimum value for the y-axis.</param>
+        /// <param name="maxY">Maximum value for the y-axis.</param>
         public PolynomialWithDerivateChart(string[] stringCoefficients, int minX, int maxX, int minY, int maxY) 
-            : base (stringCoefficients, minX, maxX, minY, maxY)
+            : base(stringCoefficients, minX, maxX, minY, maxY)
         {
             if (ValidateCoefficients(stringCoefficients))
             {
@@ -20,26 +26,15 @@ namespace DiagnosticoDeMatematicas.Charts.ChartTypes
 
                 var derivateSeries = new FunctionSeries(new Polynomial(coefficients).Derivate(), ChartAreas["Chart"]);
                 derivateSeries.BorderWidth = 2;
-                derivateSeries.Color = SERIES_COLOR_HIERARCHY[1];
+                derivateSeries.Color = SeriesColorHierarchy[1];
 
                 Series.Add(derivateSeries);
             }
         }
 
-        protected override bool ValidateCoefficients(string[] coefficients)
-        {
-            if (coefficients.Length < 2) return false;
-
-            bool IsValid = true;
-            foreach (var coefficient in coefficients)
-            {
-                double aux;
-                IsValid = double.TryParse(coefficient, out aux);
-
-                if (!IsValid) break;
-            }
-
-            return IsValid;
-        }
+        /// <summary>
+        /// Gets the derivate of the polynomial.
+        /// </summary>
+        public Polynomial Derivate { get; }
     }
 }

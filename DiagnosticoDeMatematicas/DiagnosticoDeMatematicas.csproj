@@ -167,6 +167,15 @@
     <Compile Include="App_Start\RouteConfig.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="DAL\SiteInitializer\GraphsExam.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="DAL\SiteInitializer\FormulasExam.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="DAL\SiteInitializer\NumbersExam.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Helpers\Charts\ChartBuilder.cs" />
     <Compile Include="Helpers\Charts\ChartTypes\MultiPolynomialChart.cs" />
     <Compile Include="Helpers\Charts\ChartTypes\PolynomialChart.cs" />
@@ -174,21 +183,50 @@
     <Compile Include="Helpers\Charts\ChartTypes\PolynomialWithDoubleDerivateChart.cs" />
     <Compile Include="Helpers\Charts\CartesianPlane.cs" />
     <Compile Include="Helpers\Charts\ChartTypes\VerticalLineChart.cs" />
-    <Compile Include="Helpers\Charts\FunctionSeries.cs" />
-    <Compile Include="Helpers\Charts\VerticalSeries.cs" />
-    <Compile Include="Controllers\ExamsController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\QuestionsController.cs" />
-    <Compile Include="Controllers\RangesController.cs" />
-    <Compile Include="Controllers\ResponsesController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Controllers\VariablesController.cs" />
-    <Compile Include="DAL\SiteContext.cs" />
-    <Compile Include="DAL\SiteInitializer.cs" />
+    <Compile Include="Helpers\Charts\Series\FunctionSeries.cs" />
+    <Compile Include="Helpers\Charts\Series\VerticalSeries.cs" />
+    <Compile Include="Controllers\ExamsController.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Controllers\HomeController.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Controllers\QuestionsController.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Controllers\RangesController.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Controllers\ResponsesController.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Controllers\UsersController.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Controllers\VariablesController.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="DAL\SiteContext.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="DAL\SiteInitializer\SiteInitializer.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Helpers\QuestionAnswer.cs" />
+    <Compile Include="Helpers\Functions\Function.cs" />
+    <Compile Include="Helpers\Functions\FunctionTypes\Polynomial.cs" />
+    <Compile Include="Helpers\IEncoder.cs" />
+    <Compile Include="Helpers\IEvaluator\IEvaluator.cs" />
+    <Compile Include="Helpers\IEvaluator\Evaluators\NotationlessEvaluator.cs" />
+    <Compile Include="Helpers\IEvaluator\Evaluators\RandomValueEvaluator.cs" />
+    <Compile Include="Helpers\SessionManager.cs" />
+    <Compile Include="Helpers\SessionService.cs" />
+    <Compile Include="Helpers\SessionValidator.cs" />
+    <Compile Include="Helpers\StringEncoder.cs" />
+    <Compile Include="Models\ViewModels\QuestionAnswer.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Exam.cs" />
     <Compile Include="Models\Question.cs" />
@@ -222,6 +260,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -232,6 +271,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\MathJax.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -284,6 +324,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\MathJax\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

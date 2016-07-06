@@ -179,131 +179,34 @@
         public virtual ICollection<Variable> Variables { get; set; }
 
         /// <summary>
-        /// Copies the question, but eliminating all notation from it ('|' and '%')
+        /// Creates a shallow copy of the Question.
         /// </summary>
-        /// <returns>A new question, with no notation on its description or options.</returns>
-        public Question CopyWithNoNotation()
+        /// <returns>A copy of the question.</returns>
+        public Question Copy()
         {
             return new Question
             {
                 ID = ID,
                 ExamID = ExamID,
-                Description = Description.Replace("%", string.Empty).Replace("|", string.Empty),
-                OptionA = OptionA.Replace("%", string.Empty).Replace("|", string.Empty),
+
+                Description = string.Copy(Description),
+                OptionA = string.Copy(OptionA),
+                OptionB = string.Copy(OptionB),
+                OptionC = string.Copy(OptionC),
+                OptionD = string.Copy(OptionD),
+                OptionAFeedback = string.Copy(OptionAFeedback),
+                OptionBFeedback = string.Copy(OptionBFeedback),
+                OptionCFeedback = string.Copy(OptionCFeedback),
+                OptionDFeedback = string.Copy(OptionDFeedback),
                 OptionACorrect = OptionACorrect,
-                OptionAFeedback = OptionAFeedback,
-                OptionB = OptionB.Replace("%", string.Empty).Replace("|", string.Empty),
                 OptionBCorrect = OptionBCorrect,
-                OptionBFeedback = OptionBFeedback,
-                OptionC = OptionC.Replace("%", string.Empty).Replace("|", string.Empty),
                 OptionCCorrect = OptionCCorrect,
-                OptionCFeedback = OptionCFeedback,
-                OptionD = OptionD.Replace("%", string.Empty).Replace("|", string.Empty),
                 OptionDCorrect = OptionDCorrect,
-                OptionDFeedback = OptionDFeedback,
+
                 Exam = Exam,
                 Answers = Answers,
                 Variables = Variables
             };
-        }
-
-        /// <summary>
-        /// Copies the question, but replacing each variable with one of its possible values, and evaluating every
-        /// marked operation from the description, and its four options.
-        /// </summary>
-        /// <returns>An evaluated copy of the question.</returns>
-        public Question CopyEvaluatedWithRandomValues()
-        {
-            Question question = new Question
-            {
-                ID = ID,
-                ExamID = ExamID,
-                Description = Description,
-                OptionA = OptionA,
-                OptionACorrect = OptionACorrect,
-                OptionAFeedback = OptionAFeedback,
-                OptionB = OptionB,
-                OptionBCorrect = OptionBCorrect,
-                OptionBFeedback = OptionBFeedback,
-                OptionC = OptionC,
-                OptionCCorrect = OptionCCorrect,
-                OptionCFeedback = OptionCFeedback,
-                OptionD = OptionD,
-                OptionDCorrect = OptionDCorrect,
-                OptionDFeedback = OptionDFeedback,
-                Exam = Exam,
-                Answers = Answers,
-                Variables = Variables
-            };
-
-            foreach (var variable in question.Variables)
-            {
-                var value = variable.RandomValue();
-
-                question.Description = question.Description.Replace("%" + variable.Symbol, value.ToString());
-                question.OptionA = question.OptionA.Replace("%" + variable.Symbol, value.ToString());
-                question.OptionB = question.OptionB.Replace("%" + variable.Symbol, value.ToString());
-                question.OptionC = question.OptionC.Replace("%" + variable.Symbol, value.ToString());
-                question.OptionD = question.OptionD.Replace("%" + variable.Symbol, value.ToString());
-            }
-
-            var descriptionSegments = question.Description.Split('|');
-            for (int operation = 1; operation < descriptionSegments.Length; operation += 2)
-            {
-                descriptionSegments[operation] = Evaluate(descriptionSegments[operation]).ToString();
-            }
-
-            question.Description = string.Join(string.Empty, descriptionSegments);
-
-            var optionSegments = question.OptionA.Split('|');
-            for (int operation = 1; operation < optionSegments.Length; operation += 2)
-            {
-                optionSegments[operation] = Evaluate(optionSegments[operation]).ToString();
-            }
-
-            question.OptionA = string.Join(string.Empty, optionSegments);
-
-            optionSegments = question.OptionB.Split('|');
-            for (int operation = 1; operation < optionSegments.Length; operation += 2)
-            {
-                optionSegments[operation] = Evaluate(optionSegments[operation]).ToString();
-            }
-
-            question.OptionB = string.Join(string.Empty, optionSegments);
-
-            optionSegments = question.OptionC.Split('|');
-            for (int operation = 1; operation < optionSegments.Length; operation += 2)
-            {
-                optionSegments[operation] = Evaluate(optionSegments[operation]).ToString();
-            }
-
-            question.OptionC = string.Join(string.Empty, optionSegments);
-
-            optionSegments = question.OptionD.Split('|');
-            for (int operation = 1; operation < optionSegments.Length; operation += 2)
-            {
-                optionSegments[operation] = Evaluate(optionSegments[operation]).ToString();
-            }
-
-            question.OptionD = string.Join(string.Empty, optionSegments);
-
-            return question;
-        }
-
-        /// <summary>
-        /// Evaluates a numeric expression
-        /// Gotten from:
-        /// http://stackoverflow.com/questions/333737/evaluating-string-342-yield-int-18
-        /// </summary>
-        /// <param name="expression">The expression to be evaluated.</param>
-        /// <returns>The resulting value.</returns>
-        private double Evaluate(string expression)
-        {
-            var dataTable = new System.Data.DataTable();
-            var dataColumn = new System.Data.DataColumn("Eval", typeof(double), expression);
-            dataTable.Columns.Add(dataColumn);
-            dataTable.Rows.Add(0);
-            return (double)dataTable.Rows[0]["Eval"];
         }
     }
 }

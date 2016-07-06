@@ -30,12 +30,12 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Editar", "Edit", new { QuestionID = Model.QuestionID, Symbol = Model.Symbol }) |
+    @Html.ActionLink("Editar", "Edit", new { questionID = Model.QuestionID, symbol = Model.Symbol }) |
     @Html.ActionLink("Regresar a la pregunta", "Details", "Questions", new { id = Model.QuestionID }, null)
 </p>
 
 <h3>Ranges</h3>
-@Html.ActionLink("Agregar rango", "Create", "Ranges", new { QuestionID = Model.QuestionID, Symbol = Model.Symbol }, null)
+@Html.ActionLink("Agregar rango", "Create", "Ranges", new { questionID = Model.QuestionID, symbol = Model.Symbol }, null)
 <table class="table table-hover table-striped">
     <tr>
         <th>

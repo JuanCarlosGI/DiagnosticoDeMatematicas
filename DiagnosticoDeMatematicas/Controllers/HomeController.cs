@@ -1,14 +1,10 @@
-﻿using DiagnosticoDeMatematicas.DAL;
-using DiagnosticoDeMatematicas.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.UI.DataVisualization.Charting;
-
-namespace DiagnosticoDeMatematicas.Controllers
+﻿namespace DiagnosticoDeMatematicas.Controllers
 {
+    using System.Linq;
+    using System.Web.Mvc;
+    using DAL;
+    using Helpers;
+
     public class HomeController : Controller
     {
         private SiteContext db = new SiteContext();
@@ -18,33 +14,10 @@ namespace DiagnosticoDeMatematicas.Controllers
             return View(db.Exams.Where(m => m.Active == true).ToList());
         }
 
-        public ActionResult SignIn(string Email, string Password)
+        public ActionResult SignIn(string email, string password)
         {
-            if (Session.Contents["Email"] == null)
+            if (!SessionValidator.IsSignedIn && !SessionManager.TrySignIn(email, password))
             {
-                if (Email != null && Password != null)
-                {
-                    var user = db.Users.Find(Email);
-                    if (user != null) 
-                    {
-                        System.Security.Cryptography.HashAlgorithm hashAlgo = new System.Security.Cryptography.SHA256Managed();
-                        byte[] plainTextBytes = System.Text.Encoding.Unicode.GetBytes(Password);
-                        byte[] hash = hashAlgo.ComputeHash(plainTextBytes);
-                        Password = System.Text.Encoding.Unicode.GetString(hash);
-                        if (user.Password != Password)
-                        {
-                            return View();
-                        }
-
-                        Session.Contents["Email"] = user.Email;
-                        Session.Contents["FullName"] = user.FullName;
-                        Session.Contents["Role"] = user.Role;
-                        Session.Timeout = 30;
-
-                        return RedirectToAction("Index");
-                    }
-                }
-                
                 return View();
             }
 
@@ -53,7 +26,7 @@ namespace DiagnosticoDeMatematicas.Controllers
 
         public ActionResult SignOut()
         {
-            Session.RemoveAll();
+            SessionManager.SignOut();
             return RedirectToAction("Index");
         }
 

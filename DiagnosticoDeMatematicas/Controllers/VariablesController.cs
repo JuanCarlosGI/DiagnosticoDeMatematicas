@@ -1,64 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using DiagnosticoDeMatematicas.DAL;
-using DiagnosticoDeMatematicas.Models;
-
-namespace DiagnosticoDeMatematicas.Controllers
+﻿namespace DiagnosticoDeMatematicas.Controllers
 {
+    using System.Net;
+    using System.Web.Mvc;
+    using DAL;
+    using Models;
+    using Helpers;
+
     public class VariablesController : Controller
     {
         private SiteContext db = new SiteContext();
 
         // GET: Variables/Details/5
-        public ActionResult Details(int? QuestionID, string Symbol)
+        public ActionResult Details(int? questionID, string symbol)
         {
-            if (QuestionID == null || Symbol == null)
+            if (questionID == null || symbol == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Variable variable = db.Variables.Find(Symbol, QuestionID);
+
+            if (!SessionValidator.IsAdminSignedIn)
+            {
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
+
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            Variable variable = db.Variables.Find(symbol, questionID);
             if (variable == null)
             {
                 return HttpNotFound();
             }
 
-            if (Session.Contents["Email"] == null)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
-
-            if ((Role)Session.Contents["Role"] != Role.Administrador)
-            {
-                return RedirectToAction("AccessDenied", "Home");
-            }
             return View(variable);
         }
 
         // GET: Variables/Create
-        public ActionResult Create(int? QuestionID)
+        public ActionResult Create(int? questionID)
         {
-            if (QuestionID == null)
+            if (questionID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (Session.Contents["Email"] == null)
+            if (!SessionValidator.IsAdminSignedIn)
             {
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
+
                 return RedirectToAction("SignIn", "Home");
             }
 
-            if ((Role)Session.Contents["Role"] != Role.Administrador)
-            {
-                return RedirectToAction("AccessDenied", "Home");
-            }
-
-            Variable variable = new Variable { QuestionID = QuestionID.Value };
+            Variable variable = new Variable { QuestionID = questionID.Value };
             return View(variable);
         }
 
@@ -69,11 +66,16 @@ namespace DiagnosticoDeMatematicas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,QuestionID,Symbol")] Variable variable)
         {
-            Variable variable2 = db.Variables.Find(variable.Symbol, variable.QuestionID);
-            if (variable2 != null)
+            if (!SessionValidator.IsAdminSignedIn)
             {
-                ModelState.AddModelError("Symbol", "Esa variable ya existe.");
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
+
+                return RedirectToAction("SignIn", "Home");
             }
+
             if (ModelState.IsValid)
             {
                 db.Variables.Add(variable);
@@ -86,26 +88,27 @@ namespace DiagnosticoDeMatematicas.Controllers
         }
         
         // GET: Variables/Delete/5
-        public ActionResult Delete(int? QuestionID, string Symbol)
+        public ActionResult Delete(int? questionID, string symbol)
         {
-            if (QuestionID == null || Symbol == null)
+            if (questionID == null || symbol == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Variable variable = db.Variables.Find(Symbol, QuestionID);
-            if (variable == null)
-            {
-                return HttpNotFound();
-            }
 
-            if (Session.Contents["Email"] == null)
+            if (!SessionValidator.IsAdminSignedIn)
             {
+                if (SessionValidator.IsSignedIn)
+                {
+                    return RedirectToAction("AccessDenied", "Home");
+                }
+
                 return RedirectToAction("SignIn", "Home");
             }
 
-            if ((Role)Session.Contents["Role"] != Role.Administrador)
+            Variable variable = db.Variables.Find(symbol, questionID);
+            if (variable == null)
             {
-                return RedirectToAction("AccessDenied", "Home");
+                return HttpNotFound();
             }
 
             return View(variable);
@@ -114,9 +117,9 @@ namespace DiagnosticoDeMatematicas.Controllers
         // POST: Variables/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int QuestionID,  string Symbol)
+        public ActionResult DeleteConfirmed(int questionID,  string symbol)
         {
-            Variable variable = db.Variables.Find(Symbol, QuestionID);
+            Variable variable = db.Variables.Find(symbol, questionID);
             db.Variables.Remove(variable);
             db.SaveChanges();
             return RedirectToAction("Details", "Questions", new { id = variable.QuestionID });
@@ -128,6 +131,7 @@ namespace DiagnosticoDeMatematicas.Controllers
             {
                 db.Dispose();
             }
+
             base.Dispose(disposing);
         }
     }
