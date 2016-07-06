@@ -1,7 +1,7 @@
 ﻿namespace DiagnosticoDeMatematicas.Helpers
 {
     using DAL;
-
+    using IEncoder;
     /// <summary>
     /// Class in charge of signing in and out of the site.
     /// </summary>
@@ -37,7 +37,7 @@
                 return false;
             }
 
-            IEncoder encoder = new EncoderSHA256();
+            var encoder = new EncoderSHA256();
             var encodedPassword = encoder.Encode(password);
 
             if (encodedPassword != user.Password)
