@@ -34,8 +34,6 @@
         }
 
         // POST: Ranges/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,QuestionId,Symbol,Minimum,Maximum")] Range range)
@@ -78,8 +76,6 @@
         }
 
         // POST: Ranges/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,QuestionId,Symbol,Minimum,Maximum")] Range range)

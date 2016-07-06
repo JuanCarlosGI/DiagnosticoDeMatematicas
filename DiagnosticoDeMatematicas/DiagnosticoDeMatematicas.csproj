@@ -167,6 +167,7 @@
     <Compile Include="App_Start\RouteConfig.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="DAL\SiteInitializer\GraphsExam.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -260,7 +261,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -314,10 +314,9 @@
     <Content Include="Views\Ranges\Edit.cshtml" />
     <Content Include="Views\Questions\View.cshtml" />
     <Content Include="Views\Home\AccessDenied.cshtml" />
-    <Content Include="Views\Responses\Table.cshtml" />
-    <Content Include="Views\Responses\StatisticDetails.cshtml" />
-    <Content Include="Views\Responses\Statistics.cshtml" />
-    <Content Include="Views\Responses\GlobalStatistics.cshtml" />
+    <Content Include="Views\Statistics\StatisticDetails.cshtml" />
+    <Content Include="Views\Statistics\Statistics.cshtml" />
+    <Content Include="Views\Statistics\GlobalStatistics.cshtml" />
     <Content Include="Views\Responses\ThankYou.cshtml" />
     <Content Include="Views\Questions\Instructions.cshtml" />
   </ItemGroup>

@@ -1,0 +1,190 @@
+﻿@model DiagnosticoDeMatematicas.Models.ViewModels.StatisticsViewModel
+@using DiagnosticoDeMatematicas.Helpers.IEvaluator
+
+@{
+    ViewBag.Title = @Model.Exam.Name;
+    var QuestionResponses = Model.QuestionResponses;
+}
+
+<h2>@Model.Exam.Name</h2>
+<dl class="dl-horizontal">
+    @if (Model.StartDate.HasValue)
+    {
+        <dt>
+            @Html.DisplayNameFor(m => m.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(m => m.StartDate)
+        </dd>
+    }
+    @if (Model.EndDate.HasValue)
+    {
+        <dt>
+            @Html.DisplayNameFor(m => m.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(m => m.EndDate)
+        </dd>
+    }
+</dl>
+
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(m => m.Average)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(m => m.Average)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(m => m.AmountOfResponses)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(m => m.AmountOfResponses)
+    </dd>
+</dl>
+
+<img src="data:image/png;base64,@Model.ColumnChart()" />
+
+<h2>Información por reactivo</h2>
+@{ 
+    var counter = 0;
+    var evaluator = new NotationlessEvaluator();
+}
+@foreach (var question in Model.Exam.Questions)
+{
+    counter++;
+    var questionNotation = evaluator.Evaluate(question);
+    var options = QuestionResponses[question.ID];
+    var totalResponses = (options.Item1 + options.Item2 + options.Item3 + options.Item4) * 1.0;
+
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <h4>@counter) @questionNotation.Description</h4>
+        </div>
+
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <h3 class="text-success">@(string.Format("{0:n2}", options.Item1 / totalResponses * 100))%</h3>
+                    <dl>
+                        <dt>
+                            @Html.DisplayNameFor(q => question.OptionA)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(q => questionNotation.OptionA)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(q => question.OptionACorrect)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(q => question.OptionACorrect)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(q => question.OptionAFeedback)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(q => question.OptionAFeedback)
+                        </dd>
+                    </dl>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <h3 class="text-warning">@(string.Format("{0:n2}", options.Item2 / totalResponses * 100))%</h3>
+                    <dl>
+                        <dt>
+                            @Html.DisplayNameFor(q => question.OptionB)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(q => questionNotation.OptionB)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(q => question.OptionBCorrect)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(q => question.OptionBCorrect)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(q => question.OptionBFeedback)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(q => question.OptionBFeedback)
+                        </dd>
+                    </dl>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <h3>@(string.Format("{0:n2}", options.Item3 / totalResponses * 100))%</h3>
+                    <dl>
+                        <dt>
+                            @Html.DisplayNameFor(q => question.OptionC)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(q => questionNotation.OptionC)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(q => question.OptionCCorrect)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(q => question.OptionCCorrect)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(q => question.OptionCFeedback)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(q => question.OptionCFeedback)
+                        </dd>
+                    </dl>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <h3 class="text-danger">@(string.Format("{0:n2}", options.Item4 / totalResponses * 100))%</h3>
+                    <dl>
+                        <dt>
+                            @Html.DisplayNameFor(q => question.OptionD)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(q => questionNotation.OptionD)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(q => question.OptionDCorrect)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(q => question.OptionDCorrect)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(q => question.OptionDFeedback)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(q => question.OptionDFeedback)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+}

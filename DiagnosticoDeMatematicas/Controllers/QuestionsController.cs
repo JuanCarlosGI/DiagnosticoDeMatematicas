@@ -65,8 +65,6 @@
         }
 
         // POST: Questions/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,ExamID,Description,OptionA,OptionACorrect,OptionAFeedback,OptionB,OptionBCorrect,OptionBFeedback,OptionC,OptionCCorrect,OptionCFeedback,OptionD,OptionDCorrect,OptionDFeedback")] Question question)
@@ -110,8 +108,6 @@
         }
 
         // POST: Questions/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,ExamID,Description,OptionA,OptionACorrect,OptionAFeedback,OptionB,OptionBCorrect,OptionBFeedback,OptionC,OptionCCorrect,OptionCFeedback,OptionD,OptionDCorrect,OptionDFeedback")] Question question)
