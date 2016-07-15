@@ -33,14 +33,14 @@
     <div class="col col-lg-3 col-lg-offset-1">
         <h4>Cantidad de exámenes</h4>
         <dl class="dl-horizontal">
-            @foreach (var exam in Model.Exams)
+            @foreach (var analyzer in Model.ExamAnalyzers)
             {
                 <dt>
-                    @Html.DisplayFor(m => exam.Name)
+                    @Html.DisplayFor(m => analyzer.Exam.Name)
                 </dt>
 
                 <dd>
-                    @Model.AmountOfResponses(exam.ID)
+                    @Html.DisplayFor(m => analyzer.AmountOfResponses)
                 </dd>
             }
         </dl>

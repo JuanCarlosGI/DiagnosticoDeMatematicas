@@ -2,49 +2,49 @@
 @using DiagnosticoDeMatematicas.Helpers.IEvaluator
 
 @{
-    ViewBag.Title = @Model.Exam.Name;
-    var QuestionResponses = Model.QuestionResponses;
+    ViewBag.Title = @Model.ExamAnalyzer.Exam.Name;
+    var QuestionResponses = Model.ExamAnalyzer.QuestionResponses;
 }
 
-<h2>@Model.Exam.Name</h2>
+<h2>@Model.ExamAnalyzer.Exam.Name</h2>
 <dl class="dl-horizontal">
-    @if (Model.StartDate.HasValue)
+    @if (Model.ExamAnalyzer.StartDate.HasValue)
     {
         <dt>
-            @Html.DisplayNameFor(m => m.StartDate)
+            @Html.DisplayNameFor(m => m.ExamAnalyzer.StartDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(m => m.StartDate)
+            @Html.DisplayFor(m => m.ExamAnalyzer.StartDate)
         </dd>
     }
-    @if (Model.EndDate.HasValue)
+    @if (Model.ExamAnalyzer.EndDate.HasValue)
     {
         <dt>
-            @Html.DisplayNameFor(m => m.EndDate)
+            @Html.DisplayNameFor(m => m.ExamAnalyzer.EndDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(m => m.EndDate)
+            @Html.DisplayFor(m => m.ExamAnalyzer.EndDate)
         </dd>
     }
 </dl>
 
 <dl class="dl-horizontal">
     <dt>
-        @Html.DisplayNameFor(m => m.Average)
+        @Html.DisplayNameFor(m => m.ExamAnalyzer.AverageGrade)
     </dt>
 
     <dd>
-        @Html.DisplayFor(m => m.Average)
+        @Html.DisplayFor(m => m.ExamAnalyzer.AverageGrade)
     </dd>
 
     <dt>
-        @Html.DisplayNameFor(m => m.AmountOfResponses)
+        @Html.DisplayNameFor(m => m.ExamAnalyzer.AmountOfResponses)
     </dt>
 
     <dd>
-        @Html.DisplayFor(m => m.AmountOfResponses)
+        @Html.DisplayFor(m => m.ExamAnalyzer.AmountOfResponses)
     </dd>
 </dl>
 
@@ -55,7 +55,7 @@
     var counter = 0;
     var evaluator = new NotationlessEvaluator();
 }
-@foreach (var question in Model.Exam.Questions)
+@foreach (var question in Model.ExamAnalyzer.Exam.Questions)
 {
     counter++;
     var questionNotation = evaluator.Evaluate(question);

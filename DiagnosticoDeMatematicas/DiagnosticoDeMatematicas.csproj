@@ -34,6 +34,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\DiagnosticoDeMatematicas.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -167,7 +169,9 @@
     <Compile Include="App_Start\RouteConfig.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Controllers\StatisticsController.cs" />
+    <Compile Include="Controllers\StatisticsController.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="DAL\SiteInitializer\GraphsExam.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -217,6 +221,7 @@
       <DependentUpon>Global.asax</DependentUpon>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Helpers\ExamAnalyzer.cs" />
     <Compile Include="Helpers\Functions\Function.cs" />
     <Compile Include="Helpers\Functions\FunctionTypes\Polynomial.cs" />
     <Compile Include="Helpers\IEncoder\IEncoder.cs" />
@@ -235,7 +240,9 @@
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Variable.cs" />
-    <Compile Include="Models\ViewModels\GlobalStatisticsViewModel.cs" />
+    <Compile Include="Models\ViewModels\GlobalStatisticsViewModel.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Models\ViewModels\ResponseWithAnswersViewModel.cs" />
     <Compile Include="Models\ViewModels\StatisticDetailsViewModel.cs" />
     <Compile Include="Models\ViewModels\StatisticsViewModel.cs" />

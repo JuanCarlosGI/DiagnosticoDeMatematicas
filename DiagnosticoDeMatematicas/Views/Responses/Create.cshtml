@@ -1,6 +1,7 @@
 ﻿@model DiagnosticoDeMatematicas.Models.ViewModels.ResponseWithAnswersViewModel
 @using DiagnosticoDeMatematicas.Charts
 
+
 @{
     ViewBag.Title = "Contestar examen";
     var counter = 0;
@@ -66,15 +67,11 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Enviar respuestas" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

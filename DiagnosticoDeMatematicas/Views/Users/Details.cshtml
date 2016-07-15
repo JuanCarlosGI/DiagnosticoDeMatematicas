@@ -92,7 +92,7 @@
 
     </dl>
 </div>
-@if ((DiagnosticoDeMatematicas.Models.Role)Session.Contents["Role"] == DiagnosticoDeMatematicas.Models.Role.Administrador)
+@if (DiagnosticoDeMatematicas.Helpers.SessionValidator.IsAdminSignedIn)
 {
     <p>
         @Html.ActionLink("Editar", "Edit", new { id = Model.Email.ToString() + "/" }) |

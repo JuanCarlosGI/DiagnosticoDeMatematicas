@@ -23,7 +23,7 @@
 
             return RedirectToAction("Index");
         }
-
+        
         public ActionResult SignOut()
         {
             SessionManager.SignOut();

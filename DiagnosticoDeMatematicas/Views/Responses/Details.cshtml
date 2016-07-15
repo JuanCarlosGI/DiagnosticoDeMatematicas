@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Detalles de respuesta";
     var AnswerDummy = new DiagnosticoDeMatematicas.Models.Answer();
+    var evaluator = new DiagnosticoDeMatematicas.Helpers.IEvaluator.NotationlessEvaluator();
 }
 
 <h2>Detalles de respuesta</h2>
@@ -65,7 +66,7 @@
     {
         <tr>
             @{ 
-                var questionNotation = item.Question.CopyWithNoNotation();
+                var questionNotation = evaluator.Evaluate(item.Question);
             }
             <td>
                 @{

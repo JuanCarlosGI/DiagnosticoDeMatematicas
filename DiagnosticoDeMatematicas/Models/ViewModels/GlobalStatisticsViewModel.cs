@@ -7,6 +7,7 @@
     using System.IO;
     using System.Linq;
     using System.Web.UI.DataVisualization.Charting;
+    using Helpers;
 
     /// <summary>
     /// View Model for view Responses/GlobalStatistics
@@ -14,9 +15,27 @@
     public class GlobalStatisticsViewModel
     {
         /// <summary>
-        /// Gets or sets the list of responses that will be analyzed. It is not necessary to filter them by date.
+        /// Initializes a new instance of the <see cref="GlobalStatisticsViewModel"/> class.
         /// </summary>
-        public ICollection<Response> Responses { get; set; }
+        /// <param name="exams">List of exams to analyze.</param>
+        /// <param name="startDate">Start date of the analysis.</param>
+        /// <param name="endDate">End date of the analysis.</param>
+        public GlobalStatisticsViewModel(List<Exam> exams, DateTime? startDate, DateTime? endDate)
+        {
+            ExamAnalyzers = new List<ExamAnalyzer>();
+            foreach (Exam exam in exams)
+            {
+                ExamAnalyzers.Add(new ExamAnalyzer(exam, startDate, endDate));
+            }
+
+            StartDate = startDate;
+            EndDate = endDate;
+        }
+
+        /// <summary>
+        /// Gets the list of all exam analyzers from which the information is read.
+        /// </summary>
+        public List<ExamAnalyzer> ExamAnalyzers { get; }
 
         /// <summary>
         /// Gets or sets the minimum for the Date value of responses in order for them to be considered. If it is null, there is no minimum.
@@ -35,17 +54,6 @@
         public DateTime? EndDate { get; set; }
 
         /// <summary>
-        /// Gets the list of distinct exams that correspond to the list of responses.
-        /// </summary>
-        public IEnumerable<Exam> Exams
-        {
-            get
-            {
-                return Responses.GroupBy(r => r.ExamID).Select(g => g.First().Exam).ToList();
-            }
-        }
-
-        /// <summary>
         /// Gets the string containing the image of a radar chart. This radar chart compares the average grade of all exams.
         /// </summary>
         public string RadarChart
@@ -58,19 +66,9 @@
                 chart.ChartAreas.Add("Chart").BackColor = Color.White;
                 chart.Series.Add("Chart");
 
-                foreach (var exam in Exams)
+                foreach (var examAnalyzer in ExamAnalyzers)
                 {
-                    var responsesForExam = ResponsesForExam(exam.ID);
-
-                    var sum = 0.0;
-                    foreach (var response in responsesForExam)
-                    {
-                        sum += response.Grade;
-                    }
-
-                    var average = sum / responsesForExam.Count();
-
-                    chart.Series["Chart"].Points.AddXY(exam.Name, average / 100.0 * 20.0);
+                    chart.Series["Chart"].Points.AddXY(examAnalyzer.Exam.Name, examAnalyzer.AverageGrade / 100.0 * 20.0);
                 }
 
                 chart.Series["Chart"].ChartType = SeriesChartType.Radar;
@@ -95,37 +93,28 @@
         {
             get
             {
-                var statisticsList = new List<StatisticsViewModel>();
-                foreach (var exam in Exams)
-                {
-                    var responsesForExam = ResponsesForExam(exam.ID);
-
-                    statisticsList.Add(new StatisticsViewModel { Responses = responsesForExam, Exam = exam, StartDate = StartDate, EndDate = EndDate });
-                }
-
                 var chart = new Chart();
                 chart.Width = 1000;
                 chart.Height = 400;
                 chart.ChartAreas.Add("Chart").BackColor = Color.White;
 
                 double max = 0;
-                foreach (var statistics in statisticsList)
+                foreach (var statistics in ExamAnalyzers)
                 {
                     chart.Series.Add(statistics.Exam.Name);
 
                     var counter = 0;
-                    var gradeRanges = statistics.GradeRanges();
-                    foreach (var result in gradeRanges)
+                    foreach (var percentage in statistics.GradeRanges)
                     {
-                        chart.Series[statistics.Exam.Name].Points.AddXY(counter.ToString(), result);
+                        chart.Series[statistics.Exam.Name].Points.AddXY(counter.ToString(), percentage);
                         counter++;
                     }
 
                     chart.Series[statistics.Exam.Name].ChartType = SeriesChartType.Column;
 
-                    if (gradeRanges.Max() > max)
+                    if (statistics.GradeRanges.Max() > max)
                     {
-                        max = gradeRanges.Max();
+                        max = statistics.GradeRanges.Max();
                     }
                 }
 
@@ -151,30 +140,6 @@
                 byte[] arrbyte2 = imageStream2.ToArray();
                 return Convert.ToBase64String(arrbyte2);
             }
-        }
-
-        /// <summary>
-        /// The list of responses corresponding to an exam.
-        /// </summary>
-        /// <param name="examID">ID of the exam in question.</param>
-        /// <returns>A list with the responses.</returns>
-        public IEnumerable<Response> ResponsesForExam(int examID)
-        {
-            return from r in Responses
-                   where r.ExamID == examID
-                   where !StartDate.HasValue || r.Date >= StartDate.Value
-                   where !EndDate.HasValue || r.Date <= EndDate.Value
-                   select r;
-        }
-
-        /// <summary>
-        /// The amount of responses that correspond to a certain exam.
-        /// </summary>
-        /// <param name="examID">ID of the exam in question.</param>
-        /// <returns>The amount of responses.</returns>
-        public int AmountOfResponses(int examID)
-        {
-            return ResponsesForExam(examID).Count();
         }
     }
 }

@@ -2,6 +2,7 @@
 {
     using DAL;
     using IEncoder;
+
     /// <summary>
     /// Class in charge of signing in and out of the site.
     /// </summary>

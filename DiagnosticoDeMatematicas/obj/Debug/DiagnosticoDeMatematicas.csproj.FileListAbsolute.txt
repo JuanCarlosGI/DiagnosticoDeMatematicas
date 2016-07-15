@@ -56,3 +56,4 @@ c:\users\patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatemati
 c:\users\patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\bin\EntityFramework.xml
 c:\users\patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\bin\EntityFramework.SqlServer.xml
 C:\Users\Patysalinas\Documents\Visual Studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\bin\FoolproofValidation.dll
+C:\Users\Patysalinas\Documents\Visual Studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\bin\DiagnosticoDeMatematicas.XML

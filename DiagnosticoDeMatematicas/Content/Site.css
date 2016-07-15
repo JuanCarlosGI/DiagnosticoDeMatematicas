@@ -22,3 +22,12 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.row {
+  overflow: hidden; 
+}
+
+[class*="col-"]{
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
+}

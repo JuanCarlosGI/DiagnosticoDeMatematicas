@@ -1,0 +1,1311 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DiagnosticoDeMatematicas</name>
+    </assembly>
+    <members>
+        <member name="T:DiagnosticoDeMatematicas.DAL.SiteContext">
+            <summary>
+            Class with access to the site database.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.DAL.SiteContext.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.DAL.SiteContext"/> class.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.DAL.SiteContext.Users">
+            <summary>
+            Gets or sets all the users in the database.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.DAL.SiteContext.Responses">
+            <summary>
+            Gets or sets all the responses in the database.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.DAL.SiteContext.Answers">
+            <summary>
+            Gets or sets all the answers in the database.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.DAL.SiteContext.Exams">
+            <summary>
+            Gets or sets all the exams in the database.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.DAL.SiteContext.Questions">
+            <summary>
+            Gets or sets all the questions in the database.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.DAL.SiteContext.Variables">
+            <summary>
+            Gets or sets all the variables in the database.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.DAL.SiteContext.Ranges">
+            <summary>
+            Gets or sets all the ranges in the database.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Charts.ChartBuilder">
+            <summary>
+            Abstract class in charge of creating different types charts in the form of HTML images.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.ChartBuilder.ValidTranslations">
+            <summary>
+            Pairs of valid translations from strings to CustomChartTypes
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Charts.ChartBuilder.CustomChartTypes">
+            <summary>
+            All possible custom chart types.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.ChartBuilder.CustomChartTypes.Polynomial">
+            <summary>
+            Graph with a single polynomial.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.ChartBuilder.CustomChartTypes.PolynomialWithDerivate">
+            <summary>
+            Graph with a single polynomial and its derivate.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.ChartBuilder.CustomChartTypes.PolynomialWithDoubleDerivate">
+            <summary>
+            Graph with a single polynomial, its derivate, and its double derivate.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.ChartBuilder.CustomChartTypes.MultiPolynomial">
+            <summary>
+            Graph with a multiple polynomials.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.ChartBuilder.CustomChartTypes.VerticalLine">
+            <summary>
+            Graph with a single vertical line.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.ChartBuilder.QuestionWithChart(System.String)">
+            <summary>
+            Makes a new copy of a string, but changing all the strings that could be translated to a chart.
+            </summary>
+            <param name="question">String to be converted.</param>
+            <returns>String with all instances matching a possible chart modified.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.ChartBuilder.HtmlImageChart(System.String)">
+            <summary>
+            Takes a string containing the definition of a chart and returns an HTML image tag with the image of the chart.
+            </summary>
+            <param name="chartData">The string containing the definition of a chart.</param>
+            <returns>string with the HTML image tag and the image.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.ChartBuilder.CreateChart(System.String)">
+            <summary>
+            Creates a chart and transforms it to a string.
+            </summary>
+            <param name="chartData">String containing the definition of a chart.</param>
+            <returns>The string representation of the image of a chart.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.ChartBuilder.CreateChart(DiagnosticoDeMatematicas.Charts.ChartBuilder.CustomChartTypes,System.Int32,System.Int32,System.Int32,System.Int32,System.String[])">
+            <summary>
+            Creates a chart and transforms it to a string.
+            </summary>
+            <param name="type">The type of chart that will be created.</param>
+            <param name="minX">The minimum value of the x-axis.</param>
+            <param name="maxX">The maximum value of the x-axis.</param>
+            <param name="minY">The minimum value of the y-axis.</param>
+            <param name="maxY">The maximum value of the y-axis.</param>
+            <param name="options">An array containing all the necessary options for the chart to be created successfully.</param>
+            <returns>The string representation of the image of a chart.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Charts.ChartTypes.MultiPolynomialChart">
+            <summary>
+            Type of chart containing multiple polynomials.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.ChartTypes.MultiPolynomialChart.#ctor(System.String[],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Charts.ChartTypes.MultiPolynomialChart"/> class.
+            </summary>
+            <param name="stringOptions">List of options. The options should have a format of "Degree CoefficientA CoefficientB..." for each polynomial.</param>
+            <param name="minX">Minimum value for the x-axis.</param>
+            <param name="maxX">Maximum value for the x-axis.</param>
+            <param name="minY">Minimum value for the y-axis.</param>
+            <param name="maxY">Maximum value for the y-axis.</param>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Charts.ChartTypes.MultiPolynomialChart.Polynomials">
+            <summary>
+            Gets the list of polynomials contained.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.ChartTypes.MultiPolynomialChart.ValidateOptions(System.String[])">
+            <summary>
+            Validates that the options have a correct format.
+            </summary>
+            <param name="options">Array containing the options.</param>
+            <returns>Value indicating whether the options are valid.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.ChartTypes.MultiPolynomialChart.ParseOptions(System.String[])">
+            <summary>
+            Parses options into a correct format.
+            </summary>
+            <param name="options">Array of string options.</param>
+            <returns>Double array of doubles.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Charts.ChartTypes.PolynomialChart">
+            <summary>
+            Chart containing a single polynomial.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.ChartTypes.PolynomialChart.#ctor(System.String[],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Charts.ChartTypes.PolynomialChart"/> class.
+            </summary>
+            <param name="stringCoefficients">Array containing the coefficients for the polynomial.</param>
+            <param name="minX">Minimum value for the x-axis.</param>
+            <param name="maxX">Maximum value for the x-axis.</param>
+            <param name="minY">Minimum value for the y-axis.</param>
+            <param name="maxY">Maximum value for the y-axis.</param>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Charts.ChartTypes.PolynomialChart.Polynomial">
+            <summary>
+            Gets the polynomial being displayed.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.ChartTypes.PolynomialChart.ValidateCoefficients(System.String[])">
+            <summary>
+            Validates that the coefficients have a correct format.
+            </summary>
+            <param name="coefficients">Array of strings.</param>
+            <returns>A value indicating whether the coefficients are correctly formatted.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.ChartTypes.PolynomialChart.ParseCoefficients(System.String[])">
+            <summary>
+            Parses the coefficients into doubles.
+            </summary>
+            <param name="stringCoefficients">Array of strings.</param>
+            <returns>Array of doubles.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Charts.ChartTypes.PolynomialWithDerivateChart">
+            <summary>
+            Chart containing a polynomial and its derivate.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.ChartTypes.PolynomialWithDerivateChart.#ctor(System.String[],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Charts.ChartTypes.PolynomialWithDerivateChart"/> class.
+            </summary>
+            <param name="stringCoefficients">Coefficients for the main polynomial.</param>
+            <param name="minX">Minimum value for the x-axis.</param>
+            <param name="maxX">Maximum value for the x-axis.</param>
+            <param name="minY">Minimum value for the y-axis.</param>
+            <param name="maxY">Maximum value for the y-axis.</param>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Charts.ChartTypes.PolynomialWithDerivateChart.Derivate">
+            <summary>
+            Gets the derivate of the polynomial.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Charts.ChartTypes.PolynomialWithDoubleDerivateChart">
+            <summary>
+            Chart with a polynomial, its derivate, and its second derivate.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.ChartTypes.PolynomialWithDoubleDerivateChart.#ctor(System.String[],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Charts.ChartTypes.PolynomialWithDoubleDerivateChart"/> class.
+            </summary>
+            <param name="stringCoefficients">Coefficients for the main polynomial.</param>
+            <param name="minX">Minimum value for the x-axis.</param>
+            <param name="maxX">Maximum value for the x-axis.</param>
+            <param name="minY">Minimum value for the y-axis.</param>
+            <param name="maxY">Maximum value for the y-axis.</param>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Charts.ChartTypes.PolynomialWithDoubleDerivateChart.DoubleDerivate">
+            <summary>
+            Gets the double derivate.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Charts.ChartTypes.VerticalLineChart">
+            <summary>
+            Chart displaying a vertical line.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.ChartTypes.VerticalLineChart.#ctor(System.String[],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Charts.ChartTypes.VerticalLineChart"/> class.
+            </summary>
+            <param name="stringValue">The value for x in which the vertical line will be shown.</param>
+            <param name="minX">Minimum value for the x-axis.</param>
+            <param name="maxX">Maximum value for the x-axis.</param>
+            <param name="minY">Minimum value for the y-axis.</param>
+            <param name="maxY">Maximum value for the y-axis.</param>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.ChartTypes.VerticalLineChart.ValidateOptions(System.String[])">
+            <summary>
+            Validates that the options contain a single string representing a double.
+            </summary>
+            <param name="options">Array of options.</param>
+            <returns>Value indicating whether the format if correct.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.ChartTypes.VerticalLineChart.ParseOptions(System.String[])">
+            <summary>
+            Parses the options into a single double.
+            </summary>
+            <param name="options">Array of strings containing the options.</param>
+            <returns>The double value represented by that options.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Charts.CartesianPlane">
+            <summary>
+            Custom chart representing a blank cartesian plane
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.CartesianPlane.SeriesColorHierarchy">
+            <summary>
+            Array of colors used to put hierarchy to different lines that will be put onto the cartesian plane.
+            Blue is the primary color, red the secondary, and green the tertiary.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.CartesianPlane.ChartHeight">
+            <summary>
+            Default chart height
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.CartesianPlane.ChartWidth">
+            <summary>
+            Default chart width.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.CartesianPlane.GridInterval">
+            <summary>
+            Default interval for grid.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.CartesianPlane.AxisInterval">
+            <summary>
+            Default interval between axis labels.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.CartesianPlane.AxisCenter">
+            <summary>
+            Default location for x-axis and y-axis.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.CartesianPlane.DefaultBackColor">
+            <summary>
+            Back color of the chart.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.CartesianPlane.AxisColor">
+            <summary>
+            Color for the x-axis and y-axis.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.CartesianPlane.GridColor">
+            <summary>
+            Color for the grid
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.CartesianPlane.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Charts.CartesianPlane"/> class.
+            </summary>
+            <param name="minX">Minimum value for the x-axis.</param>
+            <param name="maxX">Maximum value for the x-axis</param>
+            <param name="minY">Minimum value for the y-axis.</param>
+            <param name="maxY">Maximum value for the y-axis</param>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.CartesianPlane.ToString">
+            <summary>
+            Creates a string representing the image of the chart.
+            </summary>
+            <returns>The string representing the chart.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Charts.FunctionSeries">
+            <summary>
+            Series specifically made to represent a function.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.FunctionSeries.AmountOfIntervals">
+            <summary>
+            Amount of intervals, or data points, that the series will contain.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.FunctionSeries.#ctor(DiagnosticoDeMatematicas.Helpers.Functions.Function,System.Web.UI.DataVisualization.Charting.ChartArea)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Charts.FunctionSeries"/> class.
+            </summary>
+            <param name="function">Function to be represented.</param>
+            <param name="chartArea">Chart area to which this series belongs.</param>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Charts.FunctionSeries.Function">
+            <summary>
+            Gets the function that is being represented.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Charts.FunctionSeries.ChartAreaObject">
+            <summary>
+            Gets the chart area to which the series belongs.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Charts.VerticalSeries">
+            <summary>
+            A series specifically made to represent a vertical line.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Charts.VerticalSeries.#ctor(System.Double,System.Web.UI.DataVisualization.Charting.ChartArea)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Charts.VerticalSeries"/> class.
+            </summary>
+            <param name="value">Value for 'x' for the vertical line.</param>
+            <param name="chartArea">Chart area to which the series belongs.</param>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Charts.VerticalSeries.Value">
+            <summary>
+            Gets the value for 'x' in which the vertical line is displayed.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Charts.VerticalSeries.ChartAreaObject">
+            <summary>
+            Gets the chart area to which the series belongs.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer">
+            <summary>
+            Class in charge of analyzing an exam.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.#ctor(DiagnosticoDeMatematicas.Models.Exam,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer"/> class.
+            </summary>
+            <param name="exam">Exam to be analyzed.</param>
+            <param name="startDate">Start date of the analysis. If null, no lower limit is considered.</param>
+            <param name="endDate">End date of the analysis. If null, no upper limit is considered.</param>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.Exam">
+            <summary>
+            Gets the exam being analyzed.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.StartDate">
+            <summary>
+            Gets the start date of the analysis.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.EndDate">
+            <summary>
+            Gets the end date of the analysis.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.Responses">
+            <summary>
+            Gets the responses being analyzed.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.AmountOfResponses">
+            <summary>
+            Gets the amount of responses that were analyzed.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.AverageGrade">
+            <summary>
+            Gets the average grade for the responses being analyzed.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.GradeRanges">
+            <summary>
+            Gets an array containing the percentage of responses that fall within a certain grade range, starting in 0 
+            and ending in 100, in intervals of 5.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.QuestionResponses">
+            <summary>
+            Gets the dictionary containing the amount of times each option was chosen for a given question. The key is
+            the ID of the question, and the value is a tuple containing the amount of times optionA, optionB, optionC,
+            and OptionD were chosen, respectively.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.PercentageBetweenGrades(System.Double,System.Double)">
+            <summary>
+            Gets the percentage of the responses analyzed that have a grade within the limits specified.
+            </summary>
+            <param name="lowerLimit">Inclusive lower limit of the range of grades.</param>
+            <param name="upperLimit">Non-inclusive upper limit of the range of grades.</param>
+            <returns>The percentage of responses meeting the criteria.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.CreateQuestionResponses">
+            <summary>
+            Creates the QuestionResponses dictionary.
+            </summary>
+            <returns>The created dictionary</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.CreateGradeRanges">
+            <summary>
+            Creates the GradeRanges array.
+            </summary>
+            <returns>The created array.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Helpers.Functions.Function">
+            <summary>
+            Abstract class representing a function.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.Functions.Function.Evaluate(System.Double)">
+            <summary>
+            Evaluates the function.
+            </summary>
+            <param name="x">Value of 'x' to be evaluated.</param>
+            <returns>The evaluated value.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.Functions.Function.Derivate">
+            <summary>
+            Gets the derivate of the function.
+            </summary>
+            <returns>The derivate of the function.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Helpers.Functions.FunctionTypes.Polynomial">
+            <summary>
+            Class representing a polynomial function.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Helpers.Functions.FunctionTypes.Polynomial.coefficients">
+            <summary>
+            List of coefficients representing the polynomial function.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.Functions.FunctionTypes.Polynomial.#ctor(System.Double[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Helpers.Functions.FunctionTypes.Polynomial"/> class.
+            </summary>
+            <param name="coefficients">Array of coefficients representing the polynomial.</param>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Helpers.Functions.FunctionTypes.Polynomial.Degree">
+            <summary>
+            Gets the degree of the polynomial function.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Helpers.Functions.FunctionTypes.Polynomial.Coefficients">
+            <summary>
+            Gets the array of coefficients representing the polynomial.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.Functions.FunctionTypes.Polynomial.Evaluate(System.Double)">
+            <summary>
+            Evaluates the polynomial function.
+            </summary>
+            <param name="x">Value for 'x'</param>
+            <returns>The evaluated value.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.Functions.FunctionTypes.Polynomial.Derivate">
+            <summary>
+            Gets the derivate of the function.
+            </summary>
+            <returns>The derivate of the function.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Helpers.IEncoder.IEncoder">
+            <summary>
+            Interface for a class that will be able to encode a string.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEncoder.IEncoder.Encode(System.String)">
+            <summary>
+            Encodes a string.
+            </summary>
+            <param name="text">String to be encoded.</param>
+            <returns>Encoded string.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Helpers.IEncoder.EncoderSHA256">
+            <summary>
+            Class in charge of encoding string using SHA256.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEncoder.EncoderSHA256.Encode(System.String)">
+            <summary>
+            Encodes a string using SHA256.
+            </summary>
+            <param name="text">String to be encoded.</param>
+            <returns>Encoded string.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Helpers.IEvaluator.IEvaluator">
+            <summary>
+            Interface for an object that can evaluate a question's variables.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.IEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.Question)">
+            <summary>
+            Evaluates a question.
+            </summary>
+            <param name="question">Question to be evaluated.</param>
+            <returns>Evaluated question.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Helpers.IEvaluator.NotationlessEvaluator">
+            <summary>
+            Class responsible for removing all notation from a question.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.NotationlessEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.Question)">
+            <summary>
+            Evaluates a question, removing all notation and leaving the variables' names.
+            </summary>
+            <param name="question">Question to be evaluated.</param>
+            <returns>Evaluated question.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator">
+            <summary>
+            Class responsible for evaluating a question with valid random values.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.Question)">
+            <summary>
+            Evaluates a question with a valid random value for each variable.
+            </summary>
+            <param name="question">Question to be evaluated.</param>
+            <returns>The evaluated question.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator.EvaluatePart(System.String)">
+            <summary>
+            Evaluates a single string.
+            </summary>
+            <param name="part">String to be evaluated.</param>
+            <returns>Evaluated string.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator.Evaluate(System.String)">
+            <summary>
+            Evaluates a numeric expression
+            Gotten from:
+            http://stackoverflow.com/questions/333737/evaluating-string-342-yield-int-18
+            </summary>
+            <param name="expression">The expression to be evaluated.</param>
+            <returns>The resulting value.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator.EliminateDoubleSigns(System.String)">
+            <summary>
+            Replaces double signs (+-) or (--) with their equivalent single sign.
+            </summary>
+            <param name="expression">String to be modified.</param>
+            <returns>Modified string.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator.EliminateMultiplyingOnes(System.String)">
+            <summary>
+            Eliminates '1' when it precedes a letter as a multiplication.
+            </summary>
+            <param name="expression">String to be modified.</param>
+            <returns>Modified string.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Helpers.SessionManager">
+            <summary>
+            Class in charge of signing in and out of the site.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Helpers.SessionManager.Timeout">
+            <summary>
+            Default timeout.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Helpers.SessionManager.db">
+            <summary>
+            Context for the database.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.SessionManager.TrySignIn(System.String,System.String)">
+            <summary>
+            Tries to sign in to the site.
+            </summary>
+            <param name="email">Email of the user to be signed in.</param>
+            <param name="password">Password for the user.</param>
+            <returns>Value indicating whether the user was successfully signed in.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.SessionManager.SignOut">
+            <summary>
+            Signs out of the site. Clears all the session object.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Helpers.SessionService">
+            <summary>
+            Class representing a session object.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Helpers.SessionService.UserIdentifier">
+            <summary>
+            Identifier for the User field in the session object.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Helpers.SessionService.User">
+            <summary>
+            Gets or sets the current user in the session.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Helpers.SessionService.Timeout">
+            <summary>
+            Sets the timeout for the current session.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.SessionService.Clear">
+            <summary>
+            Clears all values from the current session.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Helpers.SessionValidator">
+            <summary>
+            Class in charge of determining certain states of the current session.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Helpers.SessionValidator.IsSignedIn">
+            <summary>
+            Gets a value indicating whether a user is currently signed in.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Helpers.SessionValidator.IsAdminSignedIn">
+            <summary>
+            Gets a value indicating whether an administrator is signed in.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer">
+            <summary>
+            Class representing a question and the answer that was chosen.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.random">
+            <summary>
+            Object used to generate random values consistently.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.swapDictionary">
+            <summary>
+            Dictionary used to store the IDs of objects and the order in which the options are displayed.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.QuestionID">
+            <summary>
+            Gets or sets the ID of the question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.Question">
+            <summary>
+            Gets or sets the question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.SelectedOption">
+            <summary>
+            Gets or sets the selected option.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.Guid">
+            <summary>
+            Gets or sets the ID of this object.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.Shuffle">
+            <summary>
+            Shuffles the options of the question randomly.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.GetAnswer">
+            <summary>
+            Gets the option number that was chosen in the random state.
+            </summary>
+            <returns>The number of the option.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.GetOption(System.Int32)">
+            <summary>
+            Gets the option given the option number.
+            </summary>
+            <param name="option">The number of the option.</param>
+            <returns>The option string.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel">
+            <summary>
+            View Model for view Responses/GlobalStatistics
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.#ctor(System.Collections.Generic.List{DiagnosticoDeMatematicas.Models.Exam},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel"/> class.
+            </summary>
+            <param name="exams">List of exams to analyze.</param>
+            <param name="startDate">Start date of the analysis.</param>
+            <param name="endDate">End date of the analysis.</param>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.ExamAnalyzers">
+            <summary>
+            Gets the list of all exam analyzers from which the information is read.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.StartDate">
+            <summary>
+            Gets or sets the minimum for the Date value of responses in order for them to be considered. If it is null, there is no minimum.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.EndDate">
+            <summary>
+            Gets or sets the maximum for the Date value of responses in order for them to be considered. If it is null, there is no maximum.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.RadarChart">
+            <summary>
+            Gets the string containing the image of a radar chart. This radar chart compares the average grade of all exams.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.MulticolumnChart">
+            <summary>
+            Gets the string containing the image of a multicolumn chart. This chart compares the amount of responses for each exam in which they have a certain grade.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.ResponseWithAnswersViewModel">
+            <summary>
+            View Model for view Responses/Create.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.ResponseWithAnswersViewModel.ID">
+            <summary>
+            Gets or sets the ID of the response.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.ResponseWithAnswersViewModel.UserID">
+            <summary>
+            Gets or sets the ID of the user.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.ResponseWithAnswersViewModel.ExamID">
+            <summary>
+            Gets or sets the ID of the exam being answered.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.ResponseWithAnswersViewModel.Choices">
+            <summary>
+            Gets or sets a list of all questions and its answers.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.ResponseWithAnswersViewModel.Exam">
+            <summary>
+            Gets or sets the exam that is being answered.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel">
+            <summary>
+            View Model for the view Responses/StatisticDetails
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel.ExamID">
+            <summary>
+            Gets or sets the ID of the exam that is being analyzed.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel.StartDate">
+            <summary>
+            Gets or sets the minimum for the Date value of responses in order for them to be considered. If it is null, there is no minimum.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel.EndDate">
+            <summary>
+            Gets or sets the maximum for the Date value of responses in order for them to be considered. If it is null, there is no maximum.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.StatisticsViewModel">
+            <summary>
+            View model for the view Responses/Statistics
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.StatisticsViewModel.ExamAnalyzer">
+            <summary>
+            Gets or sets the exam analyzer from which the information will be taken.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Models.ViewModels.StatisticsViewModel.ColumnChart">
+            <summary>
+            Chart that displays the information on GradeRanges.
+            </summary>
+            <returns>String containing the image of a column chart.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.Choice">
+            <summary>
+            Possible answers for a question.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Choice.A">
+            <summary>
+            Option A
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Choice.B">
+            <summary>
+            Option B
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Choice.C">
+            <summary>
+            Option C
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Choice.D">
+            <summary>
+            Option D
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.Answer">
+            <summary>
+            Class representing a question and the answer that was chosen.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Answer.ResponseID">
+            <summary>
+            Gets or sets the ID of the response this answer belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Answer.QuestionID">
+            <summary>
+            Gets or sets the ID of the question that is being answered.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Answer.Choice">
+            <summary>
+            Gets or sets the selected option.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Answer.Response">
+            <summary>
+            Gets or sets the response to which this answer belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Answer.Question">
+            <summary>
+            Gets or sets the question that is being answered.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Answer.IsCorrect">
+            <summary>
+            Gets a value indicating whether the option selected is a correct one.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.Exam">
+            <summary>
+            Model representing an exam.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Exam.ID">
+            <summary>
+            Gets or sets the ID of the exam.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Exam.Name">
+            <summary>
+            Gets or sets the name of the exam.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Exam.Description">
+            <summary>
+            Gets or sets the description of the exam.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Exam.Active">
+            <summary>
+            Gets or sets a value indicating whether the exam is active or not.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Exam.AverageGrade">
+            <summary>
+            Gets the average grade of all responses belonging to this exam. If no responses are found, the average is 0.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Exam.Questions">
+            <summary>
+            Gets or sets the questions that the exam has.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Exam.Responses">
+            <summary>
+            Gets or sets the responses that the exam has.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.Question">
+            <summary>
+            Model representing a question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.ID">
+            <summary>
+            Gets or sets the ID of the question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.ExamID">
+            <summary>
+            Gets or sets the ID of the exam to which this question belongs.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.Description">
+            <summary>
+            Gets or sets the description of the question. This field can be interpreted as a Latex mathematical formula,
+            and can contain both variables (Identified by a '%', e.g. "%x") and expressions that should be evaluated
+            (Identified by surrounding '|', e.g. "|2+3|").
+            Also, it can contain chart definitions. For more information on defining charts, read the documentation on
+            Helpers.Charts.ChartBuilder.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionA">
+            <summary>
+            Gets or sets the description of Option A. This field can be interpreted the same way as the description of
+            the question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionACorrect">
+            <summary>
+            Gets or sets a value indicating whether Option A is a correct option in the question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionAFeedback">
+            <summary>
+            Gets or sets the feedback for choosing Option A.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionB">
+            <summary>
+            Gets or sets the description of Option B. This field can be interpreted the same way as the description of
+            the question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionBCorrect">
+            <summary>
+            Gets or sets a value indicating whether Option B is a correct option in the question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionBFeedback">
+            <summary>
+            Gets or sets the feedback for choosing Option B.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionC">
+            <summary>
+            Gets or sets the description of Option C. This field can be interpreted the same way as the description of
+            the question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionCCorrect">
+            <summary>
+            Gets or sets a value indicating whether Option C is a correct option in the question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionCFeedback">
+            <summary>
+            Gets or sets the feedback for choosing Option C.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionD">
+            <summary>
+            Gets or sets the description of Option D. This field can be interpreted the same way as the description of
+            the question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionDCorrect">
+            <summary>
+            Gets or sets a value indicating whether Option D is a correct option in the question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionDFeedback">
+            <summary>
+            Gets or sets the feedback for choosing Option D.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.CorrectAnswers">
+            <summary>
+            Gets a list containing all correct choices for this question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.Exam">
+            <summary>
+            Gets or sets the exam to which the question belongs.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.Answers">
+            <summary>
+            Gets or sets the answers that have been registered for this question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.Variables">
+            <summary>
+            Gets or sets the variables that the question contains.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Models.Question.Copy">
+            <summary>
+            Creates a shallow copy of the Question.
+            </summary>
+            <returns>A copy of the question.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.Range">
+            <summary>
+            Model representing a range of integers.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Range.ID">
+            <summary>
+            Gets or sets the ID of the range
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Range.QuestionId">
+            <summary>
+            Gets or sets the ID of the question this range belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Range.Symbol">
+            <summary>
+            Gets or sets the symbol that has this range.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Range.Minimum">
+            <summary>
+            Gets or sets the minimum value of the range.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Range.Maximum">
+            <summary>
+            Gets or sets the maximum value of the range.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Range.Variable">
+            <summary>
+            Gets or sets the variable that this range belongs to.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.Response">
+            <summary>
+            Model representing a response to an exam.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Response.ID">
+            <summary>
+            Gets or sets the ID of the response.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Response.UserID">
+            <summary>
+            Gets or sets the ID of the user that this response belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Response.ExamID">
+            <summary>
+            Gets or sets the ID of the exam being answered.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Response.Date">
+            <summary>
+            Gets or sets the date on which the response was created.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Response.Grade">
+            <summary>
+            Gets the grade of the response.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Response.Exam">
+            <summary>
+            Gets or sets the exam that is being answered.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Response.User">
+            <summary>
+            Gets or sets the user to which this response belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Response.Answers">
+            <summary>
+            Gets or sets the answers belonging to this response.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.Gender">
+            <summary>
+            Possible genders for a user.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Gender.Masculino">
+            <summary>
+            Male gender.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Gender.Femenino">
+            <summary>
+            Female gender.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.Occupation">
+            <summary>
+            Possible occupations for a user.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Occupation.Estudiante">
+            <summary>
+            Student
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Occupation.Profesor">
+            <summary>
+            Professor
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Occupation.Profesionista">
+            <summary>
+            Professional
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Occupation.Otro">
+            <summary>
+            Other
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.Scale">
+            <summary>
+            Scale for measuring, from Extremely to Not at all.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Scale.Extremadamente">
+            <summary>
+            Extremely
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Scale.Mucho">
+            <summary>
+            A lot
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Scale.Moderadamente">
+            <summary>
+            Moderately
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Scale.Poco">
+            <summary>
+            Not much
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Scale.Nada">
+            <summary>
+            Not at all.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.Role">
+            <summary>
+            Possible user roles
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Role.Administrador">
+            <summary>
+            Administrator
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Role.Usuario">
+            <summary>
+            Normal user
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.User">
+            <summary>
+            Model representing a user.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.User.Email">
+            <summary>
+            Gets or sets the email of the user.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.User.Role">
+            <summary>
+            Gets or sets the role of the user.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.User.FirstName">
+            <summary>
+            Gets or sets the first name of the user.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.User.LastName">
+            <summary>
+            Gets or sets the last name of the user.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.User.Password">
+            <summary>
+            Gets or sets the password of the user.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.User.DateOfBirth">
+            <summary>
+            Gets or sets the date of birth of the user.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.User.Gender">
+            <summary>
+            Gets or sets the gender of the user.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.User.Interest">
+            <summary>
+            Gets or sets the interest level of the user.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.User.Facility">
+            <summary>
+            Gets or sets the facility level of the user.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.User.Liking">
+            <summary>
+            Gets or sets the liking level oh the user.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.User.Age">
+            <summary>
+            Gets the age of the user.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.User.FullName">
+            <summary>
+            Gets the full name of the user.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.User.Responses">
+            <summary>
+            Gets or sets the responses belonging to the user.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.Variable">
+            <summary>
+            Model representing a variable inside a question.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Models.Variable.rnd">
+            <summary>
+            Object used to generate random values consistently.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Variable.Symbol">
+            <summary>
+            Gets or sets the symbol representing the variable.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Variable.QuestionID">
+            <summary>
+            Gets or sets the ID of the question to which the variable belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Variable.Question">
+            <summary>
+            Gets or sets the question to which the variable belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Variable.Ranges">
+            <summary>
+            Gets or sets the ranges belonging to the variable.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Models.Variable.RandomValue">
+            <summary>
+            Generates a random value for the variable to take.
+            </summary>
+            <returns>A random value.</returns>
+        </member>
+    </members>
+</doc>

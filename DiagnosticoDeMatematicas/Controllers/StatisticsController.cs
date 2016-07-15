@@ -46,11 +46,7 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            if (details.StartDate != null && details.EndDate != null && details.StartDate.Value > details.EndDate.Value)
-            {
-                ModelState.AddModelError("EndDate", "La fecha de terminación debe ser igual o mayor a la fecha de inicio.");
-            }
-            else
+            if (ModelState.IsValid)
             {
                 if (!details.ExamID.HasValue)
                 {
@@ -60,8 +56,6 @@
                 return RedirectToAction("Statistics", "Statistics", details);
             }
 
-            details.ExamID = 0;
-            ViewBag.ExamID = new SelectList(db.Exams, "ID", "Name");
             return View(details);
         }
 
@@ -79,10 +73,7 @@
 
             var statistics = new StatisticsViewModel
             {
-                Responses = db.Responses.ToList(),
-                Exam = db.Exams.Find(details.ExamID.Value),
-                StartDate = details.StartDate,
-                EndDate = details.EndDate
+                ExamAnalyzer = new ExamAnalyzer(db.Exams.Find(details.ExamID), details.StartDate, details.EndDate)
             };
 
             return View(statistics);
@@ -100,12 +91,7 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            var model = new GlobalStatisticsViewModel
-            {
-                Responses = db.Responses.ToList(),
-                StartDate = details.StartDate,
-                EndDate = details.EndDate
-            };
+            var model = new GlobalStatisticsViewModel(db.Exams.ToList(), details.StartDate, details.EndDate);
 
             return View(model);
         }
