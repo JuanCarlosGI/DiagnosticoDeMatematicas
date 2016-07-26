@@ -178,19 +178,104 @@
             {
                 ID = ++QuestionCounter,
                 ExamID = ExamCounter,
-                Description = "",
-                OptionA = "",
+                Description = "Entre las siguientes gráficas debes elegir aquella que satisface la siguiente: con cada cambio en 'x' de una unidad, se tiene un cambio en 'y' de \\(\\dfrac{1}{%n}\\) unidades.",
+                OptionA = "&& Polynomial -5 5 -5 5 |1/%n| 1 &&",
                 OptionACorrect = true,
                 OptionAFeedback = "Correcto",
-                OptionB = "",
+                OptionB = "&& Polynomial -5 5 -5 5 %n 1 &&",
                 OptionBCorrect = false,
-                OptionBFeedback = "Retro",
-                OptionC = "",
+                OptionBFeedback = "}Intercambio de roles de 'x' e 'y'.",
+                OptionC = "&& Polynomial -5 5 -5 5 -|1/%n| 1  &&",
                 OptionCCorrect = false,
-                OptionCFeedback = "Retro",
-                OptionD = "",
+                OptionCFeedback = "Signo que afecta el comportamiento creciente/decreciente.",
+                OptionD = "&& Polynomial -5 5 -5 5 -%n 1 &&",
                 OptionDCorrect = false,
-                OptionDFeedback = "Retro"
+                OptionDFeedback = "Intercambio de roles de 'x' e 'y' y además de signo que afecta el comportamiento creciente/decreciente."
+            });
+            Variables.Add(new Variable { QuestionID = QuestionCounter, Symbol = "n" });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = -5, Maximum = -2 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = 2, Maximum = 5 });
+
+            Questions.Add(new Question
+            {
+                ID = ++QuestionCounter,
+                ExamID = ExamCounter,
+                Description = "Entre las siguientes gráficas escoge la que cumple que cuando x=0, se tiene y=%m y cuando y=0, se tiene que x=%n",
+                OptionA = "&& Polynomial -5 5 -5 5 -|%m/%n| %m &&",
+                OptionACorrect = true,
+                OptionAFeedback = "Correcto",
+                OptionB = "&& Polynomial -5 5 -5 5 |%m/%n| %m &&",
+                OptionBCorrect = false,
+                OptionBFeedback = "Error en signo en corte del eje 'x'",
+                OptionC = "&& Polynomial -5 5 -5 5 -|%m/%n| -%m &&",
+                OptionCCorrect = false,
+                OptionCFeedback = "Error en signo de corte del eje 'y'.",
+                OptionD = "&& Polynomial -5 5 -5 5 |%m/%n| -%m &&",
+                OptionDCorrect = false,
+                OptionDFeedback = "Error en signo en corte con ejes 'x' e 'y'."
+            });
+            Variables.Add(new Variable { QuestionID = QuestionCounter, Symbol = "n" });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = 2, Maximum = 2 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = 4, Maximum = 4 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = 6, Maximum = 6 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = -2, Maximum = -2 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = -4, Maximum = -4 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = -6, Maximum = -6 });
+            Variables.Add(new Variable { QuestionID = QuestionCounter, Symbol = "m" });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "m", ID = ++RangeCounter, Minimum = 1, Maximum = 1 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "m", ID = ++RangeCounter, Minimum = 3, Maximum = 3 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "m", ID = ++RangeCounter, Minimum = 5, Maximum = 5 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "m", ID = ++RangeCounter, Minimum = -1, Maximum = -1 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "m", ID = ++RangeCounter, Minimum = -3, Maximum = -3 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "m", ID = ++RangeCounter, Minimum = -5, Maximum = -5 });
+
+            Questions.Add(new Question
+            {
+                ID = ++QuestionCounter,
+                ExamID = ExamCounter,
+                Description = "Entre las sigueintes gráficas, escoge aquélla que cumple que con cada cambio en 'x' de una unidad, se tiene un cambio en 'y' de \\(\\dfrac{%n}{%m}\\) unidades.",
+                OptionA = "&& Polynomial -5 5 -5 5 |%n/%m| 0 &&",
+                OptionACorrect = true,
+                OptionAFeedback = "Correcto",
+                OptionB = "&& Polynomial -5 5 -5 5 |%m/%n| 0 &&",
+                OptionBCorrect = false,
+                OptionBFeedback = "Intercambio de roles de 'x' e 'y'.",
+                OptionC = "&& Polynomial -5 5 -5 5 -|%n/%m| 0 &&",
+                OptionCCorrect = false,
+                OptionCFeedback = "Signo del cambio de 'y' no considerado.",
+                OptionD = "&& Polynomial -5 5 -5 5 -|%m/%n| 0 &&",
+                OptionDCorrect = false,
+                OptionDFeedback = "Intercambio de roles de 'x' e 'y' y falta considerar el signo del cambio de 'y'."
+            });
+            Variables.Add(new Variable { QuestionID = QuestionCounter, Symbol = "n" });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = 2, Maximum = 2 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = 4, Maximum = 4 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = -2, Maximum = -2 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = -4, Maximum = -4 });
+            Variables.Add(new Variable { QuestionID = QuestionCounter, Symbol = "m" });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "m", ID = ++RangeCounter, Minimum = 3, Maximum = 3 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "m", ID = ++RangeCounter, Minimum = 5, Maximum = 5 });
+
+
+        OCHO OCHO
+
+            Questions.Add(new Question
+            {
+                ID = ++QuestionCounter,
+                ExamID = ExamCounter,
+                Description = "Entre las siguientes gráficas de rectas, elige aquélla que pasa por el punto (-|%n+1|, n).",
+                OptionA = "&& Polynomial -10 10 -10 10 |%n/(%n+1)| |2*%n| &&",
+                OptionACorrect = true,
+                OptionAFeedback = "Correcto",
+                OptionB = "&& Polynomial -10 10 -10 10 |%n/(%n+1)| %n &&",
+                OptionBCorrect = false,
+                OptionBFeedback = "Confusión de punto con sus coordenadas por separado en los ejes.",
+                OptionC = "&& Polynomial -10 10 -10 10 |(%n+1)/%n| -|%n+1| &&",
+                OptionCCorrect = false,
+                OptionCFeedback = "Confusión de punto con sus coordenadas por separado y cambio de 'x' por 'y' y viceversa.",
+                OptionD = "&& Polynomial -10 10 -10 10 |(%n+1)/%n| -|2*(%n+1)| &&",
+                OptionDCorrect = false,
+                OptionDFeedback = "Confusción de 'x' por 'y' y 'y' por 'x' en las coordenadas del punto."
             });
             Variables.Add(new Variable { QuestionID = QuestionCounter, Symbol = "n" });
             Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = 1, Maximum = 5 });

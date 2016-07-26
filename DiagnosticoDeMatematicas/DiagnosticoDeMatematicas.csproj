@@ -221,6 +221,7 @@
       <DependentUpon>Global.asax</DependentUpon>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Helpers\Dumper.cs" />
     <Compile Include="Helpers\ExamAnalyzer.cs" />
     <Compile Include="Helpers\Functions\Function.cs" />
     <Compile Include="Helpers\Functions\FunctionTypes\Polynomial.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="Helpers\IEvaluator\IEvaluator.cs" />
     <Compile Include="Helpers\IEvaluator\Evaluators\NotationlessEvaluator.cs" />
     <Compile Include="Helpers\IEvaluator\Evaluators\RandomValueEvaluator.cs" />
+    <Compile Include="Helpers\ObjectDumper.cs" />
     <Compile Include="Helpers\Session\SessionManager.cs" />
     <Compile Include="Helpers\Session\SessionService.cs" />
     <Compile Include="Helpers\Session\SessionValidator.cs" />
@@ -247,6 +249,7 @@
     <Compile Include="Models\ViewModels\StatisticDetailsViewModel.cs" />
     <Compile Include="Models\ViewModels\StatisticsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\Interface1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Client Scripts\mvcfoolproof.unobtrusive.js" />

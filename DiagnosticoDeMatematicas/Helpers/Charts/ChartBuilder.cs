@@ -75,7 +75,7 @@
         /// <returns>string with the HTML image tag and the image.</returns>
         public static string HtmlImageChart(string chartData)
         {
-            return "<img src=\"data:image/png;base64," + CreateChart(chartData) + "\" />";
+            return "<img class=\"chart-img\" src=\"data:image/png;base64," + CreateChart(chartData) + "\" />";
         }
 
         /// <summary>
