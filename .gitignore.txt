@@ -1,0 +1,10 @@
+packages/
+.vs/
+DiagnosticoDeMatematicas/App_Data/
+DiagnosticoDeMatematicas/bin/
+DiagnosticoDeMatematicas/Migrations/
+DiagnosticoDeMatematicas/obj/
+DiagnosticoDeMatematicas/ApplicationInsights
+DiagnosticoDeMatematicas/Settings.StyleCop
+DiagnosticoDeMatematicas/StyleCop.Cache
+StyleCop.Cache
