@@ -1,6 +1,7 @@
 ﻿namespace DiagnosticoDeMatematicas.Helpers
 {
     using System.Web;
+    using DAL;
     using Models;
 
     /// <summary>
@@ -21,13 +22,15 @@
             get
             {
                 HttpContext context = HttpContext.Current;
-                return context.Session[UserIdentifier] as User;
+
+                SiteContext db = new SiteContext();
+                return db.Users.Find(context.Session[UserIdentifier]);
             }
 
             set
             {
                 HttpContext context = HttpContext.Current;
-                context.Session[UserIdentifier] = value;
+                context.Session[UserIdentifier] = value.Email;
             }
         }
 

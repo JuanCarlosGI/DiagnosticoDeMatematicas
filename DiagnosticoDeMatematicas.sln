@@ -5,6 +5,11 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiagnosticoDeMatematicas", "DiagnosticoDeMatematicas\DiagnosticoDeMatematicas.csproj", "{2AE9A74C-53EB-4839-99DD-EFED00B05BA9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9CBA667E-A4E6-4473-A6AD-BD43D616B89F}"
+	ProjectSection(SolutionItems) = preProject
+		Grant.sql = Grant.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

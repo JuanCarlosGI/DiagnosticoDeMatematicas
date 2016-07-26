@@ -173,7 +173,7 @@
             {
                 ID = ++QuestionCounter,
                 ExamID = ExamCounter,
-                Description = "Entre las siguientes gráficas de rectas, elige aquélla que pasa por el punto (-|%n+1|, n).",
+                Description = "Entre las siguientes gráficas de rectas, elige aquélla que pasa por el punto (-|%n+1|, %n).",
                 OptionA = "&& Polynomial -10 10 -10 10 |%n/(%n+1)| |2*%n| &&",
                 OptionACorrect = true,
                 OptionAFeedback = "Correcto",
@@ -326,13 +326,38 @@
             Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = 5, Maximum = 5 });
             Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = 7, Maximum = 7 });
 
-            // FALTA 15
+            Questions.Add(new Question
+            {
+                ID = ++QuestionCounter,
+                ExamID = ExamCounter,
+                Description = "Entre las gráficas de rectas dadas, escoge la recta que cumple que cuando 'x' crece %m unidades, se tiene que 'y' decrece %n unidades.",
+                OptionA = "&& Polynomial -5 5 -5 5 -|%n/%m| %n &&",
+                OptionACorrect = true,
+                OptionAFeedback = "Correcto",
+                OptionB = "&& Polynomial -5 5 -5 5 -|%m/%n| %m &&",
+                OptionBCorrect = false,
+                OptionBFeedback = "Intercambio de roles en 'x' e 'y'",
+                OptionC = "&& Polynomial -5 5 -5 5 -|(1-%n)/%m| -1 &&",
+                OptionCCorrect = false,
+                OptionCFeedback = "Ubicar el punto (m, -n) como si la recta pasara por el origen.",
+                OptionD = "&& Polynomial -5 5 -5 5 -|(1-%n)/%m| 1 &&",
+                OptionDCorrect = false,
+                OptionDFeedback = "Ubicar el punto (m, -n) como si la recta pasara por el origen."
+            });
+            Variables.Add(new Variable { QuestionID = QuestionCounter, Symbol = "n" });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = 2, Maximum = 2 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = 4, Maximum = 4 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = 6, Maximum = 6 });
+            Variables.Add(new Variable { QuestionID = QuestionCounter, Symbol = "m" });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "m", ID = ++RangeCounter, Minimum = 3, Maximum = 3 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "m", ID = ++RangeCounter, Minimum = 5, Maximum = 5 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "m", ID = ++RangeCounter, Minimum = 7, Maximum = 7 });
 
             Questions.Add(new Question
             {
                 ID = ++QuestionCounter,
                 ExamID = ExamCounter,
-                Description = "Entre las sigueintes gr[aficas de rectas, escoge aqu[ella que comple que su coordenada 'x' siempre vale lo mismo.",
+                Description = "Entre las sigueintes gr[aficas de rectas, escoge aquella que comple que su coordenada 'x' siempre vale lo mismo.",
                 OptionA = "&& VerticalLine -5 5 -5 5 %n &&",
                 OptionACorrect = true,
                 OptionAFeedback = "Correcto",
@@ -342,7 +367,7 @@
                 OptionC = "&& Polynomial -5 5 -5 5 1 0 &&",
                 OptionCCorrect = false,
                 OptionCFeedback = "Interpretar que 'x' siempre valga lo mismo que 'y'.",
-                OptionD = "&& Polynomial -5 5 -5 5 |%n| 0 &&",
+                OptionD = "&& Polynomial -5 5 -5 5 %n 0 &&",
                 OptionDCorrect = false,
                 OptionDFeedback = "Interpretar que en la recta hay algo constante, su inclinación."
             });
@@ -355,7 +380,7 @@
                 ID = ++QuestionCounter,
                 ExamID = ExamCounter,
                 Description = "Escoge entre las siguientes gráficas de rectas aquella que representa que el valor de 'y' no cambia a pesar de que el de 'x' cambia.",
-                OptionA = "&& Polynomial -5 5 -5 5 %n| 0 &&",
+                OptionA = "&& Polynomial -5 5 -5 5 %n 0 &&",
                 OptionACorrect = true,
                 OptionAFeedback = "Correcto",
                 OptionB = "&& VerticalLine -5 5 -5 5 %n &&",

@@ -221,7 +221,6 @@
       <DependentUpon>Global.asax</DependentUpon>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Helpers\Dumper.cs" />
     <Compile Include="Helpers\ExamAnalyzer.cs" />
     <Compile Include="Helpers\Functions\Function.cs" />
     <Compile Include="Helpers\Functions\FunctionTypes\Polynomial.cs" />
@@ -229,11 +228,19 @@
     <Compile Include="Helpers\IEvaluator\IEvaluator.cs" />
     <Compile Include="Helpers\IEvaluator\Evaluators\NotationlessEvaluator.cs" />
     <Compile Include="Helpers\IEvaluator\Evaluators\RandomValueEvaluator.cs" />
-    <Compile Include="Helpers\ObjectDumper.cs" />
     <Compile Include="Helpers\Session\SessionManager.cs" />
     <Compile Include="Helpers\Session\SessionService.cs" />
     <Compile Include="Helpers\Session\SessionValidator.cs" />
     <Compile Include="Helpers\IEncoder\StringEncoder.cs" />
+    <Compile Include="Migrations\201607261447158_InitialCreate.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Migrations\201607261447158_InitialCreate.Designer.cs">
+      <DependentUpon>201607261447158_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Models\ViewModels\QuestionAnswer.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Exam.cs" />
@@ -249,7 +256,6 @@
     <Compile Include="Models\ViewModels\StatisticDetailsViewModel.cs" />
     <Compile Include="Models\ViewModels\StatisticsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test\Interface1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Client Scripts\mvcfoolproof.unobtrusive.js" />
@@ -271,6 +277,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -329,6 +336,9 @@
     <Content Include="Views\Statistics\GlobalStatistics.cshtml" />
     <Content Include="Views\Responses\ThankYou.cshtml" />
     <Content Include="Views\Questions\Instructions.cshtml" />
+    <None Include="Web.Test.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -340,6 +350,11 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201607261447158_InitialCreate.resx">
+      <DependentUpon>201607261447158_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

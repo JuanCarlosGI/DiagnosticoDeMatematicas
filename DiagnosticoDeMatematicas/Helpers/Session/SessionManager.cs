@@ -14,11 +14,6 @@
         private const int Timeout = 30;
 
         /// <summary>
-        /// Context for the database.
-        /// </summary>
-        private static SiteContext db = new SiteContext();
-
-        /// <summary>
         /// Tries to sign in to the site.
         /// </summary>
         /// <param name="email">Email of the user to be signed in.</param>
@@ -31,6 +26,7 @@
                 return false;
             }
 
+            SiteContext db = new SiteContext();
             var user = db.Users.Find(email);
 
             if (user == null)

@@ -1,0 +1,57 @@
+﻿Para crear preguntas, tenga en cuenta las diferentes cosas que puede hacer.<br />
+<br />
+Variables<br />
+Una variable se puede identificar en una pregunta, o cualquiera de sus opciones, utilizando el signo de porcentaje (%) antes de ella.<br />
+Nota: es importante notar que la variable después tendrá que ser agregada a la pregunta para que el sistema la detecte. Asimismo, luego se tendrán que agregar rangos a la variable. Por ejemplo, si se quiere que una variable tome cualqueir valor de 1 a 10, tendrá que hacerse un rango con un mínimo de 1 y un máximo de 10.
+<br />Ejemplo: %n<br />
+<br />
+Gráficas:<br />
+Hay distintos tipos de gráficas que se pueden crear:<br />
+<br />
+Polinomio:<br />
+Grafica un polinomio en color azul.<br />
+Sintáxis: && Polynomial MinX MaxX MinY MaxY a b c d .... n &&<br />
+MinX y MaxX definen el rango de valores del eje X de la gráfica.<br />
+MinY y MaxY definen el rango de valores del eje Y de la gráfica.<br />
+Ejemplo:<br />
+Si quiero una gráfica que muestre los ejes X y Y desde el -5 al 5, y que grafique el polinomio x^4 + 3x^3 - 5x + 2, el comando sería el siguiente:<br />
+&& Polynome -5 5 -5 5 1 3 0 -5 2 &&<br />
+@Html.Raw(DiagnosticoDeMatematicas.Charts.ChartBuilder.QuestionWithChart("&& Polynomial -5 5 -5 5 1 3 0 -5 2 &&"))<br />
+<br />
+Polinomio con derivada:<br />
+Grafica un polinomio en color azul, y su derivada en color rojo.<br />
+Sintáxis: && PolynomialWithDerivate MinX MaxX MinY MaxY a b c d .... n &&<br />
+MinX y MaxX definen el rango de valores del eje X de la gráfica.<br />
+MinY y MaxY definen el rango de valores del eje Y de la gráfica.<br />
+Ejemplo:<br />
+Si quiero una gráfica que muestre los ejes X y Y desde el -5 al 5, y que grafique el polinomio x^4 + 3x^3 - 5x + 2 y su derivada, el comando sería el siguiente:<br />
+&& PolynomialWithDerivate -5 5 -5 5 1 3 0 -5 2 &&<br />
+@Html.Raw(DiagnosticoDeMatematicas.Charts.ChartBuilder.QuestionWithChart("&& PolynomialWithDerivate -5 5 -5 5 1 3 0 -5 2 &&"))<br />
+<br />
+Polinomio con derivada y segunda derivada:<br />
+Grafica un polinomio en color azul, su derivada en color rojo, y su segunda derivada en color verde.<br />
+Sintáxis: && PolynomialWithDoubleDerivate MinX MaxX MinY MaxY a b c d .... n &&<br />
+MinX y MaxX definen el rango de valores del eje X de la gráfica.<br />
+MinY y MaxY definen el rango de valores del eje Y de la gráfica.<br />
+Ejemplo:<br />
+Si quiero una gráfica que muestre los ejes X y Y desde el -5 al 5, y que grafique el polinomio x^4 + 3x^3 - 5x + 2 y sus derivadas, el comando sería el siguiente:<br />
+&& PolynomialWithDoubleDerivate -5 5 -5 5 1 3 0 -5 2 &&<br />
+@Html.Raw(DiagnosticoDeMatematicas.Charts.ChartBuilder.QuestionWithChart("&& PolynomialWithDoubleDerivate -5 5 -5 5 1 3 0 -5 2 &&"))<br />
+<br />
+Múltiples polinomios:<br />
+Grafica varios polinomios simultáneamente.<br />
+Sintaxis: && MultiPolynomial MinX MaxX MinY MaxY Grado1 a b c ... n Grado2 a b c ... n ... ... GradoN a b c ... n &&<br />
+MinX y MaxX definen el rango de valores del eje X de la gráfica.<br />
+MinY y MaxY definen el rango de valores del eje Y de la gráfica.<br />
+Ejemplo:<br />
+Si quiero una gráfica con los polinomios x^2 + 6x + 1 y 7x^4 + x + 1 en los ejes X y Y desde el -5 al 5, el comando sería el siguiente:<br />
+&& MultiPolynomial -5 5 -5 5 2 1 6 1 4 7 0 0 1 4 &&<br />
+@Html.Raw(DiagnosticoDeMatematicas.Charts.ChartBuilder.QuestionWithChart("&& MultiPolynomial -5 5 -5 5 2 1 6 1 4 7 0 0 1 1 &&"))<br />
+<br />
+Línea vertical:<br />
+Grafica una linea vertical, del tipo x=n.<br />
+Sintaxis: && VerticalLine MinX MaxX MinY MaxY N &&<br />
+Ejemplo:<br />
+Si quiero una gráfica con una línea vertical en el eje x=2 en los ejes X y Y desde el -5 al 5, el comando sería el siguiente:<br />
+&& VerticalLine -5 5 -5 5 2 &&<br />
+@Html.Raw(DiagnosticoDeMatematicas.Charts.ChartBuilder.QuestionWithChart("&& VerticalLine -5 5 -5 5 2 &&"))

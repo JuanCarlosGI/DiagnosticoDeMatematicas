@@ -1,0 +1,47 @@
+﻿@model DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel
+
+@{
+    ViewBag.Title = "StatisticDetails";
+}
+
+<h2>Estadisticas</h2>
+<p>Seleccione los datos que quiere ver.</p>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.ExamID, Html.DisplayNameFor(field => Model.ExamID).ToString(), htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ExamID", null, "Todos los examenes", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ExamID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <hr />
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ir a estadisticas" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+

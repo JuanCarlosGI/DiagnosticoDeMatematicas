@@ -1,0 +1,78 @@
+﻿@model DiagnosticoDeMatematicas.Models.ViewModels.ResponseWithAnswersViewModel
+@using DiagnosticoDeMatematicas.Charts
+
+
+@{
+    ViewBag.Title = "Contestar examen";
+    var counter = 0;
+    var evaluator = new DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator();
+}
+
+<h2>Contestar examen</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => Model.ExamID)
+        @Html.HiddenFor(model => Model.UserID)
+
+        @foreach (var question in Model.Choices)
+        {
+            var questionEvaluated = evaluator.Evaluate(question.Question);
+
+            <div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><h6>Pregunta @(counter + 1)</h6></div>
+                    <div class="panel-body">@Html.Raw(ChartBuilder.QuestionWithChart(questionEvaluated.Description))</div>
+                    @Html.HiddenFor(m => Model.Choices[counter].QuestionID)
+                    @Html.HiddenFor(m => Model.Choices[counter].Guid)
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                @Html.RadioButtonFor(m => Model.Choices[counter].SelectedOption, 0)
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                @Html.Raw(ChartBuilder.QuestionWithChart(questionEvaluated.OptionA))
+                                <br /><br />
+                            </div>
+                            <div class="col-lg-6">
+                                @Html.RadioButtonFor(m => Model.Choices[counter].SelectedOption, 1)
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                @Html.Raw(ChartBuilder.QuestionWithChart(questionEvaluated.OptionB))
+                                <br /><br />
+                            </div>
+                            <div class="col-lg-6">
+                                @Html.RadioButtonFor(m => Model.Choices[counter].SelectedOption, 2)
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                @Html.Raw(ChartBuilder.QuestionWithChart(questionEvaluated.OptionC))
+                                <br /><br />
+                            </div>
+                            <div class="col-lg-6">
+                                @Html.RadioButtonFor(m => Model.Choices[counter].SelectedOption, 3)
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                @Html.Raw(ChartBuilder.QuestionWithChart(questionEvaluated.OptionD))
+                                <br /><br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+
+            counter++;
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Enviar respuestas" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
