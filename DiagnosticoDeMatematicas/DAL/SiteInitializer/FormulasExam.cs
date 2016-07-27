@@ -10,7 +10,13 @@
             {
                 ID = ++ExamCounter,
                 Name = "Fórmulas",
-                Description = "Este es un examen de fórmulas que permite el desarrollo de habilidades basicas matematicas.",
+                Description =
+                "Las fórmulas son maneras concretas de representar algo que pasa con los números.\n" +
+                "Piensa por ejemplo en el Teorema de Pitágoras, o en una ecuación cuadrática y la fórmula general para resolverla.\n" +
+                "Se trata de expresiones algebraicas donde podemos encontrar letras, números y operaciones que los conectan.\n" +
+                "Con las fórmulas somos capaces de expresar comportamientos y realizar procedimientos de una manera general\n" +
+                "Piensa por ejemplo en lo que  y = mx + b  representa, y que en esa fórmula puedes despejar x.\n" +
+                "Este diagnóstico te permitirá apreciar tu dominio del manejo de las fórmulas.",
                 Active = true
             });
 

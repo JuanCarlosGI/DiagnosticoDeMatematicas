@@ -1,5 +1,6 @@
 ﻿@model List<DiagnosticoDeMatematicas.Models.Exam>
 @using DiagnosticoDeMatematicas.Charts
+@using DiagnosticoDeMatematicas.Helpers;
 
 @{
     ViewBag.Title = "Home Page";
@@ -7,7 +8,14 @@
 
 <div class="jumbotron">
     <h1>Bienvenido</h1>
-    <p class="lead">Bienvenido a la plataforma.</p>
+    <p class="lead">La Matemática trata con números, fórmulas y gráficas.<br />
+Su buen manejo es importante al estudiar una carrera profesional.<br />
+Hemos diseñado 20 preguntas relacionadas con cada una de estas maneras de representar en Matemáticas.<br />
+Al realizar los diagnósticos por primera vez obtendrás un indicador de tu nivel de dominio de cada tipo de representación.<br />
+Esto quedará grabado en tu perfil de usuario y servirá de retroalimentación para mejorar.<br />
+Puedes realizar los diagnósticos las veces que lo requieras.<br />
+El reto es lograr un dominio perfecto.<br />
+¿Cuántas veces necesitarás hacerlo?</p>
 </div>
 
 <div class="row">
@@ -16,7 +24,7 @@
         <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading"><h2>@Html.DisplayFor(m => exam.Name)</h2></div>
-                <div class="panel-body"> @Html.DisplayFor(m => exam.Description) </div>
+                <div class="panel-body"> @Html.DisplayWithBreaksFor(m => exam.Description) </div>
                 <div class="panel-footer">@Html.ActionLink("Contestar examen", "Create", "Responses", new { examId = exam.ID }, new { @class = "btn btn-default" })</div>
             </div>
         </div>

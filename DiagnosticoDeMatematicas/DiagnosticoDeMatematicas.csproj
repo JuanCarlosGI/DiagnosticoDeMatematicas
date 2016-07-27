@@ -222,6 +222,7 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Helpers\ExamAnalyzer.cs" />
+    <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\Functions\Function.cs" />
     <Compile Include="Helpers\Functions\FunctionTypes\Polynomial.cs" />
     <Compile Include="Helpers\IEncoder\IEncoder.cs" />

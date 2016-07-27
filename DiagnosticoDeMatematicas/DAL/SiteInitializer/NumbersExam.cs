@@ -10,7 +10,13 @@
             {
                 ID = ++ExamCounter,
                 Name = "Números",
-                Description = "Este es un examen de aritmetica que permite el desarrollo de habilidades basicas matematicas.",
+                Description = 
+                "Los números son símbolos.\n" +
+                "Representan una cantidad de cosas o bien la medida de algo.\n" +
+                "Piensa por ejemplo en los habitantes en México o en su área territorial.\n" +
+                "Con los números podemos realizar operaciones aritméticas que nos concretan acciones que podemos hacer con lo que representan.\n" +
+                "Piensa en separar la cantidad de jóvenes de la de niños, o bien repartir un territorio equitativamente.\n" +
+                "Este diagnóstico te permitirá apreciar tu dominio del manejo de los números.\n",
                 Active = true
             });
 

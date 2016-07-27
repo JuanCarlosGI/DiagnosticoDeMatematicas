@@ -10,7 +10,14 @@
             {
                 ID = ++ExamCounter,
                 Name = "Gráficas",
-                Description = "Este es un examen de gráficas que permite el desarrollo de habilidades basicas matematicas.",
+                Description = 
+                "Las gráficas son representaciones visuales que pueden estar asociadas con una fórmula, o bien que están conformadas por infinidad de números.\n" + 
+                "Piensa por ejemplo en dibujar en una hoja de papel un círculo, o una  figura contenidas en un plano.\n" +
+                "Se trata de curvas(lo que incluye a as rectas) que bien puede ser que nuestra mente asocia sin necesidad de una fórmula.\n" +
+                "Las gráficas nos permiten expresar comportamientos de algo que está presente pero que está cambiando en el mundo.\n" +
+                "Piensa por ejemplo en la temperatura, o en el kilometraje que está recorriéndose por un coche.\n" +
+                "Este diagnóstico te permitirá apreciar tu dominio del manejo de las gráficas en un plano.",
+                Comments = "Al contestar los reactivos, toma en cuenta que el eje horizontal es el eje 'x' y el eje vertical es el eje 'y'.",
                 Active = true
             });
 
@@ -230,7 +237,7 @@
                 OptionDFeedback = "Confusión en el rol de 'x' e 'y' además de considerar el aumento de n-1 y no n."
             });
             Variables.Add(new Variable { QuestionID = QuestionCounter, Symbol = "n" });
-            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = 2, Maximum = 5 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = 3, Maximum = 6 });
 
             Questions.Add(new Question
             {
@@ -380,7 +387,7 @@
                 ID = ++QuestionCounter,
                 ExamID = ExamCounter,
                 Description = "Escoge entre las siguientes gráficas de rectas aquella que representa que el valor de 'y' no cambia a pesar de que el de 'x' cambia.",
-                OptionA = "&& Polynomial -9 9 -9 9 %n 0 &&",
+                OptionA = "&& Polynomial -9 9 -9 9 %n &&",
                 OptionACorrect = true,
                 OptionAFeedback = "Correcto",
                 OptionB = "&& VerticalLine -9 9 -9 9 %n &&",
@@ -401,23 +408,25 @@
             {
                 ID = ++QuestionCounter,
                 ExamID = ExamCounter,
-                Description = "Entre las siguientes gráficas debes elegir aquella que satisface la siguiente: con cada cambio en 'x' de una unidad, se tiene un cambio en 'y' de \\(\\dfrac{1}{%n}\\) unidades.",
-                OptionA = "&& Polynomial -9 9 -9 9 |1/%n| 1 &&",
+                Description = "Entre las siguientes gráficas debes elegir aquella que satisface la siguiente: con cada cambio en 'x' de una unidad, se tiene un cambio en 'y' de \\(\\dfrac{%m}{\\,\\,%n\\,\\,}\\) unidades.",
+                OptionA = "&& Polynomial -9 9 -9 9 |%m/%n| 1 &&",
                 OptionACorrect = true,
                 OptionAFeedback = "Correcto",
-                OptionB = "&& Polynomial -9 9 -9 9 %n 1 &&",
+                OptionB = "&& Polynomial -9 9 -9 9 |%m*%n| 1 &&",
                 OptionBCorrect = false,
                 OptionBFeedback = "}Intercambio de roles de 'x' e 'y'.",
-                OptionC = "&& Polynomial -9 9 -9 9 -|1/%n| 1  &&",
+                OptionC = "&& Polynomial -9 9 -9 9 -|%m/%n| 1  &&",
                 OptionCCorrect = false,
                 OptionCFeedback = "Signo que afecta el comportamiento creciente/decreciente.",
-                OptionD = "&& Polynomial -9 9 -9 9 -%n 1 &&",
+                OptionD = "&& Polynomial -9 9 -9 9 -|%m*%n| 1 &&",
                 OptionDCorrect = false,
                 OptionDFeedback = "Intercambio de roles de 'x' e 'y' y además de signo que afecta el comportamiento creciente/decreciente."
             });
             Variables.Add(new Variable { QuestionID = QuestionCounter, Symbol = "n" });
-            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = -5, Maximum = -2 });
             Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "n", ID = ++RangeCounter, Minimum = 2, Maximum = 5 });
+            Variables.Add(new Variable { QuestionID = QuestionCounter, Symbol = "m" });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "m", ID = ++RangeCounter, Minimum = 1, Maximum = 1 });
+            Ranges.Add(new Range { QuestionId = QuestionCounter, Symbol = "m", ID = ++RangeCounter, Minimum = -1, Maximum = -1 });
 
             Questions.Add(new Question
             {
@@ -456,7 +465,7 @@
             {
                 ID = ++QuestionCounter,
                 ExamID = ExamCounter,
-                Description = "Entre las sigueintes gráficas, escoge aquélla que cumple que con cada cambio en 'x' de una unidad, se tiene un cambio en 'y' de \\(\\dfrac{%n}{%m}\\) unidades.",
+                Description = "Entre las sigueintes gráficas, escoge aquélla que cumple que con cada cambio en 'x' de una unidad, se tiene un cambio en 'y' de \\(\\dfrac{%n}{\\,\\,%m\\,\\,}\\) unidades.",
                 OptionA = "&& Polynomial -9 9 -9 9 |%n/%m| 0 &&",
                 OptionACorrect = true,
                 OptionAFeedback = "Correcto",
