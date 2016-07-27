@@ -73,7 +73,7 @@
         // POST: Exams/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Description,Active")] Exam exam)
+        public ActionResult Create([Bind(Include = "ID,Name,Description,Comments,Active")] Exam exam)
         {
             if (ModelState.IsValid)
             {
@@ -114,7 +114,7 @@
         // POST: Exams/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Description,Active")] Exam exam)
+        public ActionResult Edit([Bind(Include = "ID,Name,Description,Comments,Active")] Exam exam)
         {
             if (ModelState.IsValid)
             {

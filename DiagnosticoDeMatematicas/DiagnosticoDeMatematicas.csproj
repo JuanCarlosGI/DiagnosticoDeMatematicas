@@ -238,6 +238,10 @@
     <Compile Include="Migrations\201607261447158_InitialCreate.Designer.cs">
       <DependentUpon>201607261447158_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607271652430_AddCommentToExam.cs" />
+    <Compile Include="Migrations\201607271652430_AddCommentToExam.Designer.cs">
+      <DependentUpon>201607271652430_AddCommentToExam.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -354,6 +358,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201607261447158_InitialCreate.resx">
       <DependentUpon>201607261447158_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607271652430_AddCommentToExam.resx">
+      <DependentUpon>201607271652430_AddCommentToExam.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

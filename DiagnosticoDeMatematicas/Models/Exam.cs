@@ -30,6 +30,13 @@
         public string Description { get; set; }
 
         /// <summary>
+        /// Gets or sets additional comments for when a user is answering the exam.
+        /// </summary>
+        [Display(Name = "Comentarios")]
+        [DataType(DataType.MultilineText)]
+        public string Comments { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the exam is active or not.
         /// </summary>
         [Display(Name = "Activo")]

@@ -82,8 +82,6 @@
             ChartAreas[0].AxisX.MajorGrid.Interval = GridInterval;
             ChartAreas[0].AxisX.Minimum = minX;
             ChartAreas[0].AxisX.Maximum = maxX;
-            ChartAreas[0].AxisX.Title = "y";
-            ChartAreas[0].AxisX.TitleAlignment = StringAlignment.Center;
 
             ChartAreas[0].AxisY.LineColor = AxisColor;
             ChartAreas[0].AxisY.Interval = AxisInterval;
@@ -92,8 +90,6 @@
             ChartAreas[0].AxisY.MajorGrid.Interval = GridInterval;
             ChartAreas[0].AxisY.Minimum = minY;
             ChartAreas[0].AxisY.Maximum = maxY;
-            ChartAreas[0].AxisY.Title = "x";
-            ChartAreas[0].AxisY.TitleAlignment = StringAlignment.Center;
         }
 
         /// <summary>

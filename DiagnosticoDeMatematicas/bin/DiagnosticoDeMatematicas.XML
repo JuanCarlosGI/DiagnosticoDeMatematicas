@@ -897,6 +897,11 @@
             Gets or sets the description of the exam.
             </summary>
         </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.Exam.Comments">
+            <summary>
+            Gets or sets additional comments for when a user is answering the exam.
+            </summary>
+        </member>
         <member name="P:DiagnosticoDeMatematicas.Models.Exam.Active">
             <summary>
             Gets or sets a value indicating whether the exam is active or not.
