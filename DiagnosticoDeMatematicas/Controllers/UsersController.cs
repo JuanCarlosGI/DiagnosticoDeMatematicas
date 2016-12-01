@@ -8,7 +8,7 @@
     using DAL;
     using Models;
     using Helpers;
-
+    using Models.ViewModels;
     public class UsersController : Controller
     {
         private SiteContext db = new SiteContext();
@@ -54,7 +54,7 @@
                 return RedirectToAction("AccessDenied", "Home");
             }
 
-            return View(user);
+            return View(new UserWithExamsViewModel(user, db.Exams));
         }
 
         // GET: Users/Create

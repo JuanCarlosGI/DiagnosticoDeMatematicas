@@ -24,7 +24,7 @@
             Gets or sets all the responses in the database.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.DAL.SiteContext.Answers">
+        <member name="P:DiagnosticoDeMatematicas.DAL.SiteContext.SingleSelectionAnswers">
             <summary>
             Gets or sets all the answers in the database.
             </summary>
@@ -34,7 +34,7 @@
             Gets or sets all the exams in the database.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.DAL.SiteContext.Questions">
+        <member name="P:DiagnosticoDeMatematicas.DAL.SiteContext.SingleSelectionQuestions">
             <summary>
             Gets or sets all the questions in the database.
             </summary>
@@ -536,7 +536,7 @@
             Interface for an object that can evaluate a question's variables.
             </summary>
         </member>
-        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.IEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.Question)">
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.IEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.QuestionAbstract)">
             <summary>
             Evaluates a question.
             </summary>
@@ -548,7 +548,7 @@
             Class responsible for removing all notation from a question.
             </summary>
         </member>
-        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.NotationlessEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.Question)">
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.NotationlessEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.QuestionAbstract)">
             <summary>
             Evaluates a question, removing all notation and leaving the variables' names.
             </summary>
@@ -560,7 +560,7 @@
             Class responsible for evaluating a question with valid random values.
             </summary>
         </member>
-        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.Question)">
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.QuestionAbstract)">
             <summary>
             Evaluates a question with a valid random value for each variable.
             </summary>
@@ -593,6 +593,22 @@
         <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator.EliminateMultiplyingOnes(System.String)">
             <summary>
             Eliminates '1' when it precedes a letter as a multiplication.
+            </summary>
+            <param name="expression">String to be modified.</param>
+            <returns>Modified string.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator.CancelNegativeDivNegative(System.String)">
+            <summary>
+            Simplifies a division where both the numerator and denominator are negative, and eliminates the negative 
+            signs.
+            </summary>
+            <param name="expression">String to be modified.</param>
+            <returns>Modified string.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator.TakeSingleMinusOutOfDivision(System.String)">
+            <summary>
+            Modifies a string so that if a division is present in which either the numerator or the denumerator are 
+            negative (but not both), the negative sign is put outside the division instead.
             </summary>
             <param name="expression">String to be modified.</param>
             <returns>Modified string.</returns>
@@ -660,219 +676,81 @@
             Gets a value indicating whether an administrator is signed in.
             </summary>
         </member>
-        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer">
-            <summary>
-            Class representing a question and the answer that was chosen.
-            </summary>
-        </member>
-        <member name="F:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.random">
-            <summary>
-            Object used to generate random values consistently.
-            </summary>
-        </member>
-        <member name="F:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.swapDictionary">
-            <summary>
-            Dictionary used to store the IDs of objects and the order in which the options are displayed.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.QuestionID">
+        <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.Id">
             <summary>
             Gets or sets the ID of the question.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.Question">
+        <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.ExamID">
             <summary>
-            Gets or sets the question.
+            Gets or sets the ID of the exam to which this question belongs.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.SelectedOption">
+        <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.Description">
             <summary>
-            Gets or sets the selected option.
+            Gets or sets the description of the question. This field can be interpreted as a Latex mathematical formula,
+            and can contain both variables (Identified by a '%', e.g. "%x") and expressions that should be evaluated
+            (Identified by surrounding '|', e.g. "|2+3|").
+            Also, it can contain chart definitions. For more information on defining charts, read the documentation on
+            Helpers.Charts.ChartBuilder.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.Guid">
+        <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.Exam">
             <summary>
-            Gets or sets the ID of this object.
+            Gets or sets the exam to which the question belongs.
             </summary>
         </member>
-        <member name="M:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.Shuffle">
+        <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.Answers">
             <summary>
-            Shuffles the options of the question randomly.
+            Gets or sets the answers that have been registered for this question.
             </summary>
         </member>
-        <member name="M:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.GetAnswer">
+        <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.Variables">
             <summary>
-            Gets the option number that was chosen in the random state.
-            </summary>
-            <returns>The number of the option.</returns>
-        </member>
-        <member name="M:DiagnosticoDeMatematicas.Models.ViewModels.QuestionAnswer.GetOption(System.Int32)">
-            <summary>
-            Gets the option given the option number.
-            </summary>
-            <param name="option">The number of the option.</param>
-            <returns>The option string.</returns>
-        </member>
-        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel">
-            <summary>
-            View Model for view Responses/GlobalStatistics
+            Gets or sets the variables that the question contains.
             </summary>
         </member>
-        <member name="M:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.#ctor(System.Collections.Generic.List{DiagnosticoDeMatematicas.Models.Exam},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+        <member name="T:DiagnosticoDeMatematicas.Models.QuestionOption">
             <summary>
-            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel"/> class.
-            </summary>
-            <param name="exams">List of exams to analyze.</param>
-            <param name="startDate">Start date of the analysis.</param>
-            <param name="endDate">End date of the analysis.</param>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.ExamAnalyzers">
-            <summary>
-            Gets the list of all exam analyzers from which the information is read.
+            Class representing an option of a question.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.StartDate">
+        <member name="P:DiagnosticoDeMatematicas.Models.QuestionOption.Id">
             <summary>
-            Gets or sets the minimum for the Date value of responses in order for them to be considered. If it is null, there is no minimum.
+            Gets or sets the Id of the option.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.EndDate">
+        <member name="P:DiagnosticoDeMatematicas.Models.QuestionOption.QuestionId">
             <summary>
-            Gets or sets the maximum for the Date value of responses in order for them to be considered. If it is null, there is no maximum.
+            Gets or sets the Id of the question it belongs to.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.RadarChart">
+        <member name="P:DiagnosticoDeMatematicas.Models.QuestionOption.Description">
             <summary>
-            Gets the string containing the image of a radar chart. This radar chart compares the average grade of all exams.
+            Gets or sets the description of the option
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.MulticolumnChart">
+        <member name="P:DiagnosticoDeMatematicas.Models.QuestionOption.IsCorrect">
             <summary>
-            Gets the string containing the image of a multicolumn chart. This chart compares the amount of responses for each exam in which they have a certain grade.
+            Gets or sets a value indicating whether the option is true or not.
             </summary>
         </member>
-        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.ResponseWithAnswersViewModel">
+        <member name="P:DiagnosticoDeMatematicas.Models.QuestionOption.Feedback">
             <summary>
-            View Model for view Responses/Create.
+            Gets or sets the feedback that the option will give.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.ResponseWithAnswersViewModel.ID">
+        <member name="P:DiagnosticoDeMatematicas.Models.QuestionOption.Question">
             <summary>
-            Gets or sets the ID of the response.
+            Gets or sets the question it belongs to.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.ResponseWithAnswersViewModel.UserID">
-            <summary>
-            Gets or sets the ID of the user.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.ResponseWithAnswersViewModel.ExamID">
-            <summary>
-            Gets or sets the ID of the exam being answered.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.ResponseWithAnswersViewModel.Choices">
-            <summary>
-            Gets or sets a list of all questions and its answers.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.ResponseWithAnswersViewModel.Exam">
-            <summary>
-            Gets or sets the exam that is being answered.
-            </summary>
-        </member>
-        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel">
-            <summary>
-            View Model for the view Responses/StatisticDetails
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel.ExamID">
-            <summary>
-            Gets or sets the ID of the exam that is being analyzed.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel.StartDate">
-            <summary>
-            Gets or sets the minimum for the Date value of responses in order for them to be considered. If it is null, there is no minimum.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel.EndDate">
-            <summary>
-            Gets or sets the maximum for the Date value of responses in order for them to be considered. If it is null, there is no maximum.
-            </summary>
-        </member>
-        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.StatisticsViewModel">
-            <summary>
-            View model for the view Responses/Statistics
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.StatisticsViewModel.ExamAnalyzer">
-            <summary>
-            Gets or sets the exam analyzer from which the information will be taken.
-            </summary>
-        </member>
-        <member name="M:DiagnosticoDeMatematicas.Models.ViewModels.StatisticsViewModel.ColumnChart">
-            <summary>
-            Chart that displays the information on GradeRanges.
-            </summary>
-            <returns>String containing the image of a column chart.</returns>
-        </member>
-        <member name="T:DiagnosticoDeMatematicas.Models.Choice">
-            <summary>
-            Possible answers for a question.
-            </summary>
-        </member>
-        <member name="F:DiagnosticoDeMatematicas.Models.Choice.A">
-            <summary>
-            Option A
-            </summary>
-        </member>
-        <member name="F:DiagnosticoDeMatematicas.Models.Choice.B">
-            <summary>
-            Option B
-            </summary>
-        </member>
-        <member name="F:DiagnosticoDeMatematicas.Models.Choice.C">
-            <summary>
-            Option C
-            </summary>
-        </member>
-        <member name="F:DiagnosticoDeMatematicas.Models.Choice.D">
-            <summary>
-            Option D
-            </summary>
-        </member>
-        <member name="T:DiagnosticoDeMatematicas.Models.Answer">
+        <member name="T:DiagnosticoDeMatematicas.Models.SingleSelectionAnswer">
             <summary>
             Class representing a question and the answer that was chosen.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Answer.ResponseID">
-            <summary>
-            Gets or sets the ID of the response this answer belongs to.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Answer.QuestionID">
-            <summary>
-            Gets or sets the ID of the question that is being answered.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Answer.Choice">
-            <summary>
-            Gets or sets the selected option.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Answer.Response">
-            <summary>
-            Gets or sets the response to which this answer belongs to.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Answer.Question">
-            <summary>
-            Gets or sets the question that is being answered.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Answer.IsCorrect">
+        <member name="P:DiagnosticoDeMatematicas.Models.SingleSelectionAnswer.IsCorrect">
             <summary>
             Gets a value indicating whether the option selected is a correct one.
             </summary>
@@ -922,119 +800,10 @@
             Gets or sets the responses that the exam has.
             </summary>
         </member>
-        <member name="T:DiagnosticoDeMatematicas.Models.Question">
+        <member name="T:DiagnosticoDeMatematicas.Models.SingleSelectionQuestion">
             <summary>
             Model representing a question.
             </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.ID">
-            <summary>
-            Gets or sets the ID of the question.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.ExamID">
-            <summary>
-            Gets or sets the ID of the exam to which this question belongs.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.Description">
-            <summary>
-            Gets or sets the description of the question. This field can be interpreted as a Latex mathematical formula,
-            and can contain both variables (Identified by a '%', e.g. "%x") and expressions that should be evaluated
-            (Identified by surrounding '|', e.g. "|2+3|").
-            Also, it can contain chart definitions. For more information on defining charts, read the documentation on
-            Helpers.Charts.ChartBuilder.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionA">
-            <summary>
-            Gets or sets the description of Option A. This field can be interpreted the same way as the description of
-            the question.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionACorrect">
-            <summary>
-            Gets or sets a value indicating whether Option A is a correct option in the question.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionAFeedback">
-            <summary>
-            Gets or sets the feedback for choosing Option A.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionB">
-            <summary>
-            Gets or sets the description of Option B. This field can be interpreted the same way as the description of
-            the question.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionBCorrect">
-            <summary>
-            Gets or sets a value indicating whether Option B is a correct option in the question.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionBFeedback">
-            <summary>
-            Gets or sets the feedback for choosing Option B.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionC">
-            <summary>
-            Gets or sets the description of Option C. This field can be interpreted the same way as the description of
-            the question.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionCCorrect">
-            <summary>
-            Gets or sets a value indicating whether Option C is a correct option in the question.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionCFeedback">
-            <summary>
-            Gets or sets the feedback for choosing Option C.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionD">
-            <summary>
-            Gets or sets the description of Option D. This field can be interpreted the same way as the description of
-            the question.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionDCorrect">
-            <summary>
-            Gets or sets a value indicating whether Option D is a correct option in the question.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.OptionDFeedback">
-            <summary>
-            Gets or sets the feedback for choosing Option D.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.CorrectAnswers">
-            <summary>
-            Gets a list containing all correct choices for this question.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.Exam">
-            <summary>
-            Gets or sets the exam to which the question belongs.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.Answers">
-            <summary>
-            Gets or sets the answers that have been registered for this question.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Question.Variables">
-            <summary>
-            Gets or sets the variables that the question contains.
-            </summary>
-        </member>
-        <member name="M:DiagnosticoDeMatematicas.Models.Question.Copy">
-            <summary>
-            Creates a shallow copy of the Question.
-            </summary>
-            <returns>A copy of the question.</returns>
         </member>
         <member name="T:DiagnosticoDeMatematicas.Models.Range">
             <summary>
@@ -1076,17 +845,17 @@
             Model representing a response to an exam.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Response.ID">
+        <member name="P:DiagnosticoDeMatematicas.Models.Response.Id">
             <summary>
             Gets or sets the ID of the response.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Response.UserID">
+        <member name="P:DiagnosticoDeMatematicas.Models.Response.UserId">
             <summary>
             Gets or sets the ID of the user that this response belongs to.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Response.ExamID">
+        <member name="P:DiagnosticoDeMatematicas.Models.Response.ExamId">
             <summary>
             Gets or sets the ID of the exam being answered.
             </summary>
@@ -1286,7 +1055,7 @@
             Gets or sets the symbol representing the variable.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Variable.QuestionID">
+        <member name="P:DiagnosticoDeMatematicas.Models.Variable.QuestionId">
             <summary>
             Gets or sets the ID of the question to which the variable belongs to.
             </summary>
@@ -1306,6 +1075,80 @@
             Generates a random value for the variable to take.
             </summary>
             <returns>A random value.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel">
+            <summary>
+            View Model for view Responses/GlobalStatistics
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.#ctor(System.Collections.Generic.List{DiagnosticoDeMatematicas.Models.Exam},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel"/> class.
+            </summary>
+            <param name="exams">List of exams to analyze.</param>
+            <param name="startDate">Start date of the analysis.</param>
+            <param name="endDate">End date of the analysis.</param>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.ExamAnalyzers">
+            <summary>
+            Gets the list of all exam analyzers from which the information is read.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.StartDate">
+            <summary>
+            Gets or sets the minimum for the Date value of responses in order for them to be considered. If it is null, there is no minimum.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.EndDate">
+            <summary>
+            Gets or sets the maximum for the Date value of responses in order for them to be considered. If it is null, there is no maximum.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.RadarChart">
+            <summary>
+            Gets the string containing the image of a radar chart. This radar chart compares the average grade of all exams.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel.MulticolumnChart">
+            <summary>
+            Gets the string containing the image of a multicolumn chart. This chart compares the amount of responses for each exam in which they have a certain grade.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel">
+            <summary>
+            View Model for the view Responses/StatisticDetails
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel.ExamID">
+            <summary>
+            Gets or sets the ID of the exam that is being analyzed.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel.StartDate">
+            <summary>
+            Gets or sets the minimum for the Date value of responses in order for them to be considered. If it is null, there is no minimum.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel.EndDate">
+            <summary>
+            Gets or sets the maximum for the Date value of responses in order for them to be considered. If it is null, there is no maximum.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.StatisticsViewModel">
+            <summary>
+            View model for the view Responses/Statistics
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.StatisticsViewModel.ExamAnalyzer">
+            <summary>
+            Gets or sets the exam analyzer from which the information will be taken.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Models.ViewModels.StatisticsViewModel.ColumnChart">
+            <summary>
+            Chart that displays the information on GradeRanges.
+            </summary>
+            <returns>String containing the image of a column chart.</returns>
         </member>
     </members>
 </doc>

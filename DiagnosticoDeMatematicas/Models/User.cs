@@ -151,7 +151,7 @@
         /// Gets or sets the gender of the user.
         /// </summary>
         [Required]
-        [Display(Name = "Sexo")]
+        [Display(Name = "Genero")]
         [EnumDataType(typeof(Gender))]
         public Gender Gender { get; set; }
 
@@ -159,7 +159,7 @@
         /// Gets or sets the interest level of the user.
         /// </summary>
         [Required]
-        [Display(Name = "Interes")]
+        [Display(Name = "Interés por las matemáticas")]
         [EnumDataType(typeof(Scale))]
         public Scale Interest { get; set; }
 
@@ -167,7 +167,7 @@
         /// Gets or sets the facility level of the user.
         /// </summary>
         [Required]
-        [Display(Name = "Facilidad")]
+        [Display(Name = "Facilidad para las matemáticas")]
         [EnumDataType(typeof(Scale))]
         public Scale Facility { get; set; }
 
@@ -175,7 +175,7 @@
         /// Gets or sets the liking level oh the user.
         /// </summary>
         [Required]
-        [Display(Name = "Gusto")]
+        [Display(Name = "Gusto por las matemáticas")]
         [EnumDataType(typeof(Scale))]
         public Scale Liking { get; set; }
 

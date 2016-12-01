@@ -12,17 +12,32 @@
         /// </summary>
         /// <param name="question">Question to be evaluated.</param>
         /// <returns>Evaluated question.</returns>
-        public Question Evaluate(Question question)
+        public QuestionAbstract Evaluate(QuestionAbstract question)
         {
-            Question aux = question.Copy();
+            if (question is SelectionQuestion)
+            {
+                SelectionQuestion aux = new SelectionQuestion
+                {
+                    Description = question.Description,
+                    ExamID = question.ExamID,
+                    Options = (question as SelectionQuestion).Options,
+                    Answers = question.Answers,
+                    Exam = question.Exam,
+                    Id = question.Id,
+                    Variables = question.Variables
+                };
 
-            aux.Description = aux.Description.Replace("%", string.Empty).Replace("|", string.Empty);
-            aux.OptionA = aux.OptionA.Replace("%", string.Empty).Replace("|", string.Empty);
-            aux.OptionB = aux.OptionB.Replace("%", string.Empty).Replace("|", string.Empty);
-            aux.OptionC = aux.OptionC.Replace("%", string.Empty).Replace("|", string.Empty);
-            aux.OptionD = aux.OptionD.Replace("%", string.Empty).Replace("|", string.Empty);
+                aux.Description = aux.Description.Replace("%", string.Empty).Replace("|", string.Empty);
 
-            return aux;
+                foreach (var option in aux.Options)
+                {
+                    option.Description = option.Description.Replace("%", string.Empty).Replace("|", string.Empty);
+                }
+
+                return aux;
+            }
+
+            return null;
         }
     }
 }

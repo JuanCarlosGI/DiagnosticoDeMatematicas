@@ -10,7 +10,8 @@
     using Helpers;
     using Models;
     using Models.ViewModels;
-
+    using Helpers.Extensions;
+    using Helpers.IEvaluator;
     public class ResponsesController : Controller
     {
         private SiteContext db = new SiteContext();
@@ -60,7 +61,7 @@
 
             return View(response);
         }
-
+        
         // GET: Responses/Create
         public ActionResult Create(int? examId)
         {
@@ -74,20 +75,28 @@
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            ResponseWithAnswersViewModel response = new ResponseWithAnswersViewModel { ExamID = examId.Value, UserID = SessionService.User.Email, Exam = db.Exams.Find(examId) };
+            Response response = new Response { ExamId = examId.Value, UserId = SessionService.User.Email, Exam = db.Exams.Find(examId) };
 
-            var answers = new List<QuestionAnswer>();
+            var answers = new List<AnswerAbstract>();
             foreach (var question in response.Exam.Questions)
             {
-                answers.Add(new QuestionAnswer { Question = question, SelectedOption = -1, QuestionID = question.ID });
+                if (question is SingleSelectionQuestion)
+                    answers.Add(new SingleSelectionAnswer { Question = question as SingleSelectionQuestion, QuestionId = question.Id });
+                else if (question is MultipleSelectionQuestion)
+                    answers.Add(new MultipleSelectionAnswer(question as MultipleSelectionQuestion, null));
             }
 
+            var evaluator = new RandomValueEvaluator();
             foreach (var answer in answers)
             {
-                answer.Shuffle();
+                if (answer is SelectionAnswer)
+                {
+                    (answer.Question as SelectionQuestion).Options = (answer.Question as SelectionQuestion).Options.ToList().Shuffle().ToList();
+                    answer.Question = evaluator.Evaluate(answer.Question);
+                }
             }
 
-            response.Choices = answers;
+            response.Answers = answers;
 
             return View(response);
         }
@@ -95,55 +104,27 @@
         // POST: Responses/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserID,ExamID,Choices")]ResponseWithAnswersViewModel responseWithAnswers)
+        public ActionResult Create([Bind(Include = "Id,UserId,ExamId,Answers")]Response response)
         {
-            var response = new Response
-            {
-                ExamID = responseWithAnswers.ExamID,
-                UserID = responseWithAnswers.UserID,
-                Date = DateTime.Now
-            };
+            response.Date = DateTime.Now;
+            response.Exam = db.Exams.Find(response.ExamId);
+            response.User = db.Users.Find(response.UserId);
 
-            foreach (var answer in responseWithAnswers.Choices)
+            foreach(var answer in response.Answers)
             {
-                answer.Question = db.Questions.Find(answer.QuestionID);
+                answer.Question = db.QuestionAbstracts.Find(answer.QuestionId);
             }
 
             if (ModelState.IsValid)
             {
                 db.Responses.Add(response);
-                db.SaveChanges();
-
-                foreach (var answer in responseWithAnswers.Choices)
-                {
-                    var choice = new Choice();
-                    var selectedOption = answer.GetAnswer();
-                    if (selectedOption == 0)
-                    {
-                        choice = Choice.A;
-                    }
-                    else if (selectedOption == 1)
-                    {
-                        choice = Choice.B;
-                    }
-                    else if (selectedOption == 2)
-                    {
-                        choice = Choice.C;
-                    }
-                    else
-                    {
-                        choice = Choice.D;
-                    }
-
-                    db.Answers.Add(new Answer { QuestionID = answer.Question.ID, ResponseID = response.ID, Choice = choice });
-                }
-
+                db.Entry(response).State = EntityState.Added;
                 db.SaveChanges();
 
                 return RedirectToAction("ThankYou");
             }
             
-            return View(responseWithAnswers);
+            return View(response);
         }
 
         public ActionResult ThankYou()

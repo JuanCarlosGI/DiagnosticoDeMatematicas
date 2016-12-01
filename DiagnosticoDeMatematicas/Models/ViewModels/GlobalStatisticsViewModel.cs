@@ -120,9 +120,9 @@
 
                 chart.ChartAreas[0].AxisX.Title = "Reactivos correctos (n de cada 20)";
                 chart.ChartAreas[0].AxisX.Interval = 1;
-                chart.ChartAreas[0].AxisY.Title = "Porcentaje de alumnos";
+                chart.ChartAreas[0].AxisY.Title = "Porcentaje de diagnósticos";
                 chart.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.LightGray;
-                chart.ChartAreas[0].AxisY.Maximum = (Math.Ceiling(max / 10) + 1) * 10;
+                chart.ChartAreas[0].AxisY.Maximum = 100;
                 chart.ChartAreas[0].AxisY.Interval = 10;
                 chart.ChartAreas[0].AxisY.MinorGrid.LineColor = Color.LightGray;
                 chart.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.LightGray;
@@ -134,6 +134,8 @@
                 }
 
                 chart.Legends.Add(new Legend("Default") { Docking = Docking.Bottom });
+
+                chart.Titles.Add("Porcentaje de diagnósticos con 'n' reactivos contestados correctamente.");
 
                 MemoryStream imageStream2 = new MemoryStream();
                 chart.SaveImage(imageStream2, ChartImageFormat.Png);

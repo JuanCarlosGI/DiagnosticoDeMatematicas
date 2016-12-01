@@ -9,169 +9,130 @@
     using Models;
     using Helpers.IEvaluator;
     using Helpers;
-
+    using System.Collections.Generic;
     public class QuestionsController : Controller
     {
         private SiteContext db = new SiteContext();
 
-        // GET: Questions/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Index()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            return View(db.MultipleSelectionQuestions.ToList());
+        }
 
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
-            }
-
-            Question question = db.Questions.Find(id);
-            if (question == null)
-            {
-                return HttpNotFound();
-            }
+        // GET: MultipleSelectionQuestions/Details/5
+        public PartialViewResult Details(int id)
+        {
+            SelectionQuestion selectionQuestion = db.QuestionAbstracts.Find(id);
 
             var evaluator = new NotationlessEvaluator();
-            return View(evaluator.Evaluate(question));
+            selectionQuestion = evaluator.Evaluate(selectionQuestion) as SelectionQuestion;
+            return PartialView("_Details", selectionQuestion);
         }
 
-        // GET: Questions/Create
-        public ActionResult Create(int? examId)
+        // GET: MultipleSelectionQuestions/Create
+        public ActionResult Create()
         {
-            if (examId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            var model = new MultipleSelectionQuestion { Description = "Pregunta nueva" };
 
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
+            var list = new List<QuestionOption>();
 
-                return RedirectToAction("SignIn", "Home");
-            }
+            list.Add(new QuestionOption { Description = "Opción 1", Feedback = "Feedback de opción 1", IsCorrect = true, });
+            list.Add(new QuestionOption { Description = "Opción 2", Feedback = "Feedback de opción 2", IsCorrect = false, });
+            list.Add(new QuestionOption { Description = "Opción 3", Feedback = "Feedback de opción 3", IsCorrect = false, });
+            list.Add(new QuestionOption { Description = "Opción 4", Feedback = "Feedback de opción 4", IsCorrect = false, });
+            list.Add(new QuestionOption { Description = "Opción 5", Feedback = "Feedback de opción 5", IsCorrect = false, });
 
-            var question = new Question { ExamID = examId.Value };
-            return View(question);
+            model.Options = list;
+
+            return Create(model);
         }
 
-        // POST: Questions/Create
+        // POST: MultipleSelectionQuestions/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,ExamID,Description,OptionA,OptionACorrect,OptionAFeedback,OptionB,OptionBCorrect,OptionBFeedback,OptionC,OptionCCorrect,OptionCFeedback,OptionD,OptionDCorrect,OptionDFeedback")] Question question)
+        public ActionResult Create([Bind(Include = "Id,Description")] MultipleSelectionQuestion multipleSelectionQuestion)
         {
             if (ModelState.IsValid)
             {
-                db.Questions.Add(question);
+                db.MultipleSelectionQuestions.Add(multipleSelectionQuestion);
                 db.SaveChanges();
-                return RedirectToAction("Details", "Exams", new { id = question.ExamID });
+
+                return RedirectToAction("Index");
             }
 
-            ViewBag.ExamID = new SelectList(db.Exams, "ID", "Name", question.ExamID);
-            return View(question);
+            return View(multipleSelectionQuestion);
         }
 
-        // GET: Questions/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: MultipleSelectionQuestions/Edit/5
+        public PartialViewResult Edit(int id)
         {
-            if (id == null)
+            SelectionQuestion selectionQuestion = db.QuestionAbstracts.Find(id);
+            SelectionQuestionWithOptionsViewModel model = new SelectionQuestionWithOptionsViewModel
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+                Id = id,
+                Description = selectionQuestion.Description,
+                Options = selectionQuestion.Options.ToList()
+            };
 
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
-            }
-
-            Question question = db.Questions.Find(id);
-            if (question == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ExamID = new SelectList(db.Exams, "ID", "Name", question.ExamID);
-            return View(question);
+            return PartialView("_Edit", model);
         }
 
-        // POST: Questions/Edit/5
+        // POST: MultipleSelectionQuestions/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,ExamID,Description,OptionA,OptionACorrect,OptionAFeedback,OptionB,OptionBCorrect,OptionBFeedback,OptionC,OptionCCorrect,OptionCFeedback,OptionD,OptionDCorrect,OptionDFeedback")] Question question)
+        public PartialViewResult Edit([Bind(Include = "Id,Description,Options")] SelectionQuestionWithOptionsViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(question).State = EntityState.Modified;
+                MultipleSelectionQuestion multipleSelectionQuestion = new MultipleSelectionQuestion
+                {
+                    Id = model.Id,
+                    Description = model.Description,
+                    Options = model.Options
+                };
+
+                db.Entry(multipleSelectionQuestion).State = EntityState.Modified;
+                foreach (var option in multipleSelectionQuestion.Options)
+                {
+                    db.Entry(option).State = EntityState.Modified;
+                }
+
                 db.SaveChanges();
-                return RedirectToAction("Details", "Exams", new { id = question.ExamID });
+
+                return PartialView("_Details", multipleSelectionQuestion);
             }
 
-            ViewBag.ExamID = new SelectList(db.Exams, "ID", "Name", question.ExamID);
-            return View(question);
+            return PartialView("_Edit", model);
         }
 
-        // GET: Questions/Delete/5
+        // GET: MultipleSelectionQuestions/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
-            }
-
-            Question question = db.Questions.Find(id);
-            if (question == null)
+            MultipleSelectionQuestion multipleSelectionQuestion = db.MultipleSelectionQuestions.Find(id);
+            if (multipleSelectionQuestion == null)
             {
                 return HttpNotFound();
             }
-
-            return View(question);
+            return View(multipleSelectionQuestion);
         }
 
-        // POST: Questions/Delete/5
+        // POST: MultipleSelectionQuestions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var answers = db.Answers.Where(a => a.QuestionID == id).ToList();
-            foreach (Answer answer in answers)
-            {
-                db.Answers.Remove(answer);
-            }
-
+            MultipleSelectionQuestion multipleSelectionQuestion = db.MultipleSelectionQuestions.Find(id);
+            db.MultipleSelectionQuestions.Remove(multipleSelectionQuestion);
             db.SaveChanges();
-
-            Question question = db.Questions.Find(id);
-            db.Questions.Remove(question);
-            db.SaveChanges();
-            return RedirectToAction("Details", "Exams", new { id = question.ExamID });
-        }
-
-        public ActionResult Instructions()
-        {
-            return View();
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
@@ -180,7 +141,6 @@
             {
                 db.Dispose();
             }
-
             base.Dispose(disposing);
         }
     }

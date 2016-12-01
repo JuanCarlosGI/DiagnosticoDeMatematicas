@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Detalles de variable";
     var RangeDummy = new DiagnosticoDeMatematicas.Models.Range();
+
+    var evaluator = new DiagnosticoDeMatematicas.Helpers.IEvaluator.NotationlessEvaluator();
 }
 
 <h2>Detalles de la variable</h2>
@@ -12,11 +14,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Question.CopyWithNoNotation().Description)
+            @Html.DisplayNameFor(model => model.Question.Description)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Question.CopyWithNoNotation().Description)
+            @Html.DisplayFor(model => evaluator.Evaluate(model.Question).Description)
         </dd>
 
         <dt>

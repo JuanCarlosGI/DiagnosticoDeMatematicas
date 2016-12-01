@@ -1,0 +1,18 @@
+﻿@model IEnumerable<DiagnosticoDeMatematicas.Models.MultipleSelectionQuestion>
+
+@{
+    ViewBag.Title = "Lista de preguntas";
+}
+
+<h2>Lista de preguntas</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<p>Se está usando esta página como una prueba del funcionamiento de MultipleSelectionQuestion, que permite agregar nuevas preguntas, asi
+    como editarlas sin la necesidad de ir a otra página. Por el momento, todas las preguntas de selección múltiple tienen exactamente 5
+    opciones, pero la base de datos está preparada para que tengan un número dinámico de opciones.</p>
+
+@foreach (var item in Model) {
+    Html.RenderAction("Details", new { id = item.Id });
+}

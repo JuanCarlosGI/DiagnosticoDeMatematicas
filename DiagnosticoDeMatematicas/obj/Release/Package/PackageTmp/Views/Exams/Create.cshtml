@@ -1,10 +1,10 @@
 ﻿@model DiagnosticoDeMatematicas.Models.Exam
 
 @{
-    ViewBag.Title = "Crear examen";
+    ViewBag.Title = "Crear diagnóstico";
 }
 
-<h2>Crear examen</h2>
+<h2>Crear diagnóstico</h2>
 
 
 @using (Html.BeginForm()) 
@@ -31,6 +31,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
@@ -49,7 +57,7 @@
 }
 
 <div>
-    @Html.ActionLink("Regresar a lista de examenes", "Index")
+    @Html.ActionLink("Regresar a lista de diagnósticos", "Index")
 </div>
 
 @section Scripts {

@@ -10,6 +10,8 @@
 
 <h2>Contestar examen</h2>
 
+<h3>@Model.Exam.Comments</h3>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -26,8 +28,8 @@
 
             <div>
                 <div class="panel panel-primary">
-                    <div class="panel-heading"><h6>Pregunta @(counter + 1)</h6></div>
-                    <div class="panel-body">@Html.Raw(ChartBuilder.QuestionWithChart(questionEvaluated.Description))</div>
+                    <div class="panel-heading"><h4>PREGUNTA @(counter + 1)</h4></div>
+                    <div class="panel-body"><h4>@Html.Raw(ChartBuilder.QuestionWithChart(questionEvaluated.Description))</h4></div>
                     @Html.HiddenFor(m => Model.Choices[counter].QuestionID)
                     @Html.HiddenFor(m => Model.Choices[counter].Guid)
                     <div class="panel-footer">
@@ -44,6 +46,8 @@
                                 @Html.Raw(ChartBuilder.QuestionWithChart(questionEvaluated.OptionB))
                                 <br /><br />
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-lg-6">
                                 @Html.RadioButtonFor(m => Model.Choices[counter].SelectedOption, 2)
                                 &nbsp;&nbsp;&nbsp;&nbsp;

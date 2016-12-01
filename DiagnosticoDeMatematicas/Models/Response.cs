@@ -14,7 +14,7 @@
         /// Gets or sets the ID of the response.
         /// </summary>
         [Display(Name = "Respuesta")]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of the user that this response belongs to.
@@ -22,14 +22,15 @@
         [Required]
         [ForeignKey("User")]
         [Display(Name = "Usuario")]
-        public string UserID { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of the exam being answered.
         /// </summary>
         [Required]
+        [ForeignKey("Exam")]
         [Display(Name = "Examen")]
-        public int ExamID { get; set; }
+        public int ExamId { get; set; }
 
         /// <summary>
         /// Gets or sets the date on which the response was created.
@@ -52,9 +53,9 @@
                 if (Answers != null)
                 {
                     var count = 0.0;
-                    foreach (Answer answer in Answers)
+                    foreach (SingleSelectionAnswer answer in Answers)
                     {
-                        if (answer.IsCorrect)
+                        if (answer != null && answer.IsCorrect)
                         {
                             count++;
                         }
@@ -80,6 +81,6 @@
         /// <summary>
         /// Gets or sets the answers belonging to this response.
         /// </summary>
-        public virtual ICollection<Answer> Answers { get; set; }
+        public virtual ICollection<AnswerAbstract> Answers { get; set; }
     }
 }

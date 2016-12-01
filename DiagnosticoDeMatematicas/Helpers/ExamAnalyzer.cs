@@ -24,7 +24,7 @@
             EndDate = endDate;
 
             Responses = from r in Exam.Responses
-                        where r.ExamID == Exam.ID
+                        where r.ExamId == Exam.ID
                         where !StartDate.HasValue || r.Date >= StartDate.Value
                         where !EndDate.HasValue || r.Date <= EndDate.Value
                         select r;
@@ -108,7 +108,7 @@
                 return 0;
             }
 
-            return Responses.Where(r => r.Grade >= lowerLimit && r.Grade < upperLimit).Count() / AmountOfResponses * 100;
+            return Responses.Where(r => r.Grade >= lowerLimit && r.Grade < upperLimit).Count() * 100.0 / AmountOfResponses;
         }
 
         /// <summary>
@@ -130,29 +130,11 @@
                 {
                     foreach (var answer in response.Answers)
                     {
-                        if (answer.QuestionID == question.ID)
-                        {
-                            if (answer.Choice == Choice.A)
-                            {
-                                optionA++;
-                            }
-                            else if (answer.Choice == Choice.B)
-                            {
-                                optionB++;
-                            }
-                            else if (answer.Choice == Choice.C)
-                            {
-                                optionC++;
-                            }
-                            else if (answer.Choice == Choice.D)
-                            {
-                                optionD++;
-                            }
-                        }
+                        //  Logic goes here.
                     }
                 }
 
-                result.Add(question.ID, new Tuple<int, int, int, int>(optionA, optionB, optionC, optionD));
+                result.Add(question.Id, new Tuple<int, int, int, int>(optionA, optionB, optionC, optionD));
             }
 
             return result;

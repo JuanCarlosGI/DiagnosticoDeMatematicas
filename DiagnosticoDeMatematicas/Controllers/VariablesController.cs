@@ -55,7 +55,7 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            Variable variable = new Variable { QuestionID = questionID.Value };
+            Variable variable = new Variable { QuestionId = questionID.Value };
             return View(variable);
         }
 
@@ -81,7 +81,7 @@
                 db.Variables.Add(variable);
                 db.SaveChanges();
 
-                return RedirectToAction("Details", "Questions", new { id = variable.QuestionID });
+                return RedirectToAction("Details", "Questions", new { id = variable.QuestionId });
             }
 
             return View(variable);
@@ -122,7 +122,7 @@
             Variable variable = db.Variables.Find(symbol, questionID);
             db.Variables.Remove(variable);
             db.SaveChanges();
-            return RedirectToAction("Details", "Questions", new { id = variable.QuestionID });
+            return RedirectToAction("Details", "Questions", new { id = variable.QuestionId });
         }
 
         protected override void Dispose(bool disposing)

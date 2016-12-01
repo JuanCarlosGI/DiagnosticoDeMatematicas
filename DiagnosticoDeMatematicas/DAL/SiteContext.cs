@@ -29,8 +29,8 @@
         /// <summary>
         /// Gets or sets all the answers in the database.
         /// </summary>
-        public DbSet<Answer> Answers { get; set; }
-
+        public DbSet<SingleSelectionAnswer> SingleSelectionAnswers { get; set; }
+        
         /// <summary>
         /// Gets or sets all the exams in the database.
         /// </summary>
@@ -39,7 +39,7 @@
         /// <summary>
         /// Gets or sets all the questions in the database.
         /// </summary>
-        public DbSet<Question> Questions { get; set; }
+        public DbSet<SingleSelectionQuestion> SingleSelectionQuestions { get; set; }
 
         /// <summary>
         /// Gets or sets all the variables in the database.
@@ -55,10 +55,18 @@
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            modelBuilder.Entity<Answer>()
+            modelBuilder.Entity<AnswerAbstract>()
                 .HasRequired(f => f.Question)
                 .WithMany()
                 .WillCascadeOnDelete(false);
         }
+
+        public DbSet<MultipleSelectionQuestion> MultipleSelectionQuestions { get; set; }
+
+        public DbSet<QuestionOption> QuestionOptions { get; set; }
+
+        public DbSet<MultipleSelectionAnswer> MultipleSelectionAnswers { get; set; }
+
+        public DbSet<SelectionQuestion> QuestionAbstracts { get; set; }
     }
 }

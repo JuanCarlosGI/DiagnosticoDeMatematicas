@@ -1,0 +1,28 @@
+﻿@using DiagnosticoDeMatematicas.Models
+@model MultipleSelectionAnswer
+@{
+    var optionDummy = new QuestionOption();
+    var selectionDummy = new BinaryOptionSelection();
+}
+
+<h3>@Model.MultipleSelectionQuestion.Description</h3>
+@if (Model.IsCorrect()) { <h4>Correcto</h4> } else { <h4>Inorrecto</h4> }
+
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(description => optionDummy.Description)</th>
+        <th>@Html.DisplayNameFor(isCorrect => optionDummy.IsCorrect)</th>
+        <th>@Html.DisplayNameFor(selected => selectionDummy.Selected)</th>
+        <th>@Html.DisplayNameFor(feedback => optionDummy.Feedback)</th>
+    </tr>
+
+    @foreach (var selection in Model.Selections)
+    {
+        <tr>
+            <td>@Html.DisplayFor(description => selection.QuestionOption.Description)</td>
+            <td>@Html.DisplayFor(isCorrect => selection.QuestionOption.IsCorrect)</td>
+            <td>@Html.DisplayFor(selected => selection.Selected)</td>
+            <td>@if (selection.Selected) { @Html.DisplayFor(feedback => selection.QuestionOption.Feedback) }</td>
+        </tr>
+    }
+</table>

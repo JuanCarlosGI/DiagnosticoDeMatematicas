@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = Model.Name;
-    var QuestionDummy = new DiagnosticoDeMatematicas.Models.Question();
 }
 
 <h2>@Model.Name</h2>
@@ -48,14 +47,13 @@
 <p>
     @Html.ActionLink("Agregar pregunta", "Create", "Questions", new { examId = Model.ID }, null)
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(modelItem => QuestionDummy.Description)
-        </th>
-        <th></th>
-    </tr>
 
+@foreach (var question in Model.Questions)
+{
+    Html.RenderAction("Details", "Questions", new { id = question.Id});
+}
+
+<table class="table">
     @foreach (var item in Model.Questions)
     {
         <tr>
@@ -66,9 +64,9 @@
                 @Html.DisplayFor(subitem => parameter)
             </td>
             <td>
-                @Html.ActionLink("Detalles", "Details", "Questions", new { id = item.ID }, null) |
-                @Html.ActionLink("Editar", "Edit", "Questions", new { id = item.ID }, null) |
-                @Html.ActionLink("Eliminar", "Delete", "Questions", new { id = item.ID }, null)
+                @Html.ActionLink("Detalles", "Details", "Questions", new { id = item.Id }, null) |
+                @Html.ActionLink("Editar", "Edit", "Questions", new { id = item.Id }, null) |
+                @Html.ActionLink("Eliminar", "Delete", "Questions", new { id = item.Id }, null)
             </td>
         </tr>
     }

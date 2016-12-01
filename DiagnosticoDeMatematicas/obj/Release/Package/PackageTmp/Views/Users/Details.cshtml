@@ -1,157 +1,141 @@
-﻿@model DiagnosticoDeMatematicas.Models.User
+﻿@model DiagnosticoDeMatematicas.Models.ViewModels.UserWithExamsViewModel
 
 @{
     ViewBag.Title = "Detalles de cuenta";
     var ResponseDummy = new DiagnosticoDeMatematicas.Models.Response();
 }
 
-<h2>@Model.FullName</h2>
+<h2 style="text-align:center">@Model.User.FullName</h2>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Role)
-        </dt>
+<div class="row">
+    <div class="col-md-6">
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.Role)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Role)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Role)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.Email)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Email)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.FirstName)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.User.FirstName)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.LastName)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.User.LastName)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.DateOfBirth)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.User.DateOfBirth)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.Gender)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateOfBirth)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Gender)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.Interest)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Interest)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Interest)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.Facility)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Interest)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Facility)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Facility)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.User.Liking)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Facility)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.User.Liking)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Liking)
-        </dt>
+            </dl>
+        </div>
+        @if (DiagnosticoDeMatematicas.Helpers.SessionValidator.IsAdminSignedIn)
+        {
+            <p>
+                @Html.ActionLink("Editar", "Edit", new { id = Model.User.Email.ToString() + "/" }) |
+                @Html.ActionLink("Borrar", "Delete", new { id = Model.User.Email.ToString() + "/" }) |
+                @Html.ActionLink("Regresar a lista de usuarios", "Index")
+            </p>
+        }
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Liking)
-        </dd>
-
-    </dl>
+    <div class="col-md-6">
+        <img style="width:100%; max-width:500px; align-content:center;" src="data:image/png;base64,@Model.RadarChart" />
+    </div>
 </div>
-@if (DiagnosticoDeMatematicas.Helpers.SessionValidator.IsAdminSignedIn)
-{
-    <p>
-        @Html.ActionLink("Editar", "Edit", new { id = Model.Email.ToString() + "/" }) |
-        @Html.ActionLink("Borrar", "Delete", new { id = Model.Email.ToString() + "/" }) |
-        @Html.ActionLink("Regresar a lista de usuarios", "Index")
-    </p>
-}
 
-<h2>Historial de respuestas</h2>
+<h2 style="text-align:center;">HISTORIAL</h2>
 
-<table class="table table-hover table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => ResponseDummy.ExamID)
-        </th>
-        <th>
-            Número de intento
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => ResponseDummy.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => ResponseDummy.Grade)
-        </th>
-    </tr>
-    @{ 
-        var counter = 0;
-        int? lastExam = null;
-    }
-    @foreach (var item in Model.Responses.OrderBy(m => m.ExamID).ThenBy(m => m.Date))
+<div class="row">
+    @foreach (var exam in Model.User.Responses.Select(r => r.Exam).Distinct())
     {
-        if (lastExam == null)
-        {
-            lastExam = item.ExamID;
-        }
+        <div class="col-md-4">
+            <h4 style="text-align:center;">Diagnóstico @exam.Name</h4>
+            <table class="table table-hover table-striped">
+                <tr>
+                    <th>
+                        Intento
+                    </th>
+                    <th>
+                        Reactivos correctos
+                    </th>
+                </tr>
 
-        if (item.ExamID != lastExam.Value)
-        {
-            counter = 0;
-        }
+                @{
+                    var responses = Model.User.Responses.Where(r => r.ExamID == exam.ID).OrderByDescending(r => r.Date);
+                    var counter = responses.Count();
+                }
+                @foreach (var item in responses)
+                {
+                    <tr>
+                        <td>
+                            @counter (@item.Date.ToShortDateString())
+                        </td>
+                        <td>
+                            @((int)(item.Grade / 100.0 * 20.0)) de 20
+                        </td>
+                    </tr>
 
-        lastExam = item.ExamID;
-
-        counter++;
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Exam.Name)
-            </td>
-            <td>
-                @counter
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Grade)
-            </td>
-        </tr>
+                    counter--;
+                }
+            </table>
+        </div>    
     }
-
-</table>
-
+</div>

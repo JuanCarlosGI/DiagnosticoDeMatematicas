@@ -5,7 +5,7 @@
     using DAL;
     using Helpers;
     using Models.ViewModels;
-
+    using System;
     public class StatisticsController : Controller
     {
         private SiteContext db = new SiteContext();
@@ -46,6 +46,15 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
+            if (details.EndDate == null && details.StartDate != null)
+            {
+                details.EndDate = DateTime.Today;
+                if (details.EndDate >= details.StartDate)
+                {
+                    ModelState["EndDate"].Errors.Clear();
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 if (!details.ExamID.HasValue)
@@ -56,6 +65,7 @@
                 return RedirectToAction("Statistics", "Statistics", details);
             }
 
+            ViewBag.ExamID = new SelectList(db.Exams, "ID", "Name", string.Empty);
             return View(details);
         }
 

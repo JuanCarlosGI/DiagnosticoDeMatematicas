@@ -29,12 +29,12 @@
         /// </summary>
         [Key, ForeignKey("Question"), Column(Order = 1)]
         [Display(Name = "Pregunta")]
-        public int QuestionID { get; set; }
+        public int QuestionId { get; set; }
 
         /// <summary>
         /// Gets or sets the question to which the variable belongs to.
         /// </summary>
-        public virtual Question Question { get; set; }
+        public virtual QuestionAbstract Question { get; set; }
 
         /// <summary>
         /// Gets or sets the ranges belonging to the variable.
@@ -49,6 +49,11 @@
         {
             if (Ranges != null)
             {
+                if(Ranges.Count == 0)
+                {
+                    return 0;
+                }
+
                 var values = new List<int>();
                 foreach (var range in Ranges)
                 {

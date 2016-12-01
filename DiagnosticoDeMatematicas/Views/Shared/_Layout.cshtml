@@ -20,16 +20,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Diagnostico de Matematicas", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Diagnóstico de Matematicas", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @if (SessionValidator.IsAdminSignedIn)
                     {
-                        <li>@Html.ActionLink("Examenes", "Index", "Exams")</li>
+                        <li>@Html.ActionLink("Diagnósticos", "Index", "Exams")</li>
                         <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
                         <li>@Html.ActionLink("Estadisticas", "StatisticDetails", "Statistics")</li>
-                        <li>@Html.ActionLink("Historial de respuestas", "Index", "Responses")</li>
+                        <li>@Html.ActionLink("Historial", "Index", "Responses")</li>
                     }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

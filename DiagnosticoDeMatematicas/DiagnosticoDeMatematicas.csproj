@@ -169,6 +169,9 @@
     <Compile Include="App_Start\RouteConfig.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Controllers\MultipleSelectionAnswersController.cs" />
+    <Compile Include="Controllers\MultipleSelectionQuestionsController.cs" />
+    <Compile Include="Controllers\SelectionQuestionsController.cs" />
     <Compile Include="Controllers\StatisticsController.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -223,6 +226,7 @@
     </Compile>
     <Compile Include="Helpers\ExamAnalyzer.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
+    <Compile Include="Helpers\Extensions\EnumerableExtensions.cs" />
     <Compile Include="Helpers\Functions\Function.cs" />
     <Compile Include="Helpers\Functions\FunctionTypes\Polynomial.cs" />
     <Compile Include="Helpers\IEncoder\IEncoder.cs" />
@@ -233,23 +237,15 @@
     <Compile Include="Helpers\Session\SessionService.cs" />
     <Compile Include="Helpers\Session\SessionValidator.cs" />
     <Compile Include="Helpers\IEncoder\StringEncoder.cs" />
-    <Compile Include="Migrations\201607261447158_InitialCreate.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Migrations\201607261447158_InitialCreate.Designer.cs">
-      <DependentUpon>201607261447158_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607271652430_AddCommentToExam.cs" />
-    <Compile Include="Migrations\201607271652430_AddCommentToExam.Designer.cs">
-      <DependentUpon>201607271652430_AddCommentToExam.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Models\ViewModels\QuestionAnswer.cs" />
-    <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\AnswerAbstract\AnswerAbstract.cs" />
+    <Compile Include="Models\AnswerAbstract\SelectionAnswer.cs" />
+    <Compile Include="Models\QuestionAbstract\MultipleSelectionQuestion.cs" />
+    <Compile Include="Models\QuestionAbstract\QuestionAbstract.cs" />
+    <Compile Include="Models\QuestionAbstract\SelectionQuestion.cs" />
+    <Compile Include="Models\QuestionOption.cs" />
+    <Compile Include="Models\AnswerAbstract\SingleSelectionAnswer.cs" />
     <Compile Include="Models\Exam.cs" />
-    <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\QuestionAbstract\SingleSelectionQuestion.cs" />
     <Compile Include="Models\Range.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\User.cs" />
@@ -257,9 +253,11 @@
     <Compile Include="Models\ViewModels\GlobalStatisticsViewModel.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Models\ViewModels\ResponseWithAnswersViewModel.cs" />
     <Compile Include="Models\ViewModels\StatisticDetailsViewModel.cs" />
     <Compile Include="Models\ViewModels\StatisticsViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserWithExamsViewModel.cs" />
+    <Compile Include="Models\AnswerAbstract\MultipleSelectionAnswer.cs" />
+    <Compile Include="Models\BinaryOptionSelection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -282,6 +280,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Models\ZZ - ModelClassDiagram.cd" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -341,12 +340,22 @@
     <Content Include="Views\Statistics\GlobalStatistics.cshtml" />
     <Content Include="Views\Responses\ThankYou.cshtml" />
     <Content Include="Views\Questions\Instructions.cshtml" />
+    <Content Include="Views\Questions\_Details.cshtml" />
+    <Content Include="Views\Questions\_Edit.cshtml" />
+    <Content Include="Views\MultipleSelectionQuestions\Index.cshtml" />
+    <Content Include="Views\MultipleSelectionAnswers\Create.cshtml" />
+    <Content Include="Views\MultipleSelectionAnswers\Delete.cshtml" />
+    <Content Include="Views\MultipleSelectionAnswers\_Details.cshtml" />
+    <Content Include="Views\MultipleSelectionAnswers\Edit.cshtml" />
+    <Content Include="Views\MultipleSelectionAnswers\Index.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\SelectionQuestions\" />
+    <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -355,14 +364,6 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607261447158_InitialCreate.resx">
-      <DependentUpon>201607261447158_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607271652430_AddCommentToExam.resx">
-      <DependentUpon>201607271652430_AddCommentToExam.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

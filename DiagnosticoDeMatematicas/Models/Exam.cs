@@ -11,7 +11,7 @@
         /// <summary>
         /// Gets or sets the ID of the exam.
         /// </summary>
-        [Display(Name = "Examen")]
+        [Display(Name = "ID")]
         public int ID { get; set; }
 
         /// <summary>
@@ -67,7 +67,7 @@
         /// <summary>
         /// Gets or sets the questions that the exam has.
         /// </summary>
-        public virtual ICollection<Question> Questions { get; set; }
+        public virtual ICollection<QuestionAbstract> Questions { get; set; }
 
         /// <summary>
         /// Gets or sets the responses that the exam has.

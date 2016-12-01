@@ -9,9 +9,11 @@
         int ExamCounter = 0;
         int QuestionCounter = 0;
         int RangeCounter = 0;
+        int OptionCounter = 0;
 
         List<Exam> Exams = new List<Exam>();
-        List<Question> Questions = new List<Question>();
+        List<SingleSelectionQuestion> Questions = new List<SingleSelectionQuestion>();
+        List<QuestionOption> Options = new List<QuestionOption>();
         List<Variable> Variables = new List<Variable>();
         List<Range> Ranges = new List<Range>();
 
@@ -37,33 +39,42 @@
             NumbersExam();
             FormulasExam();
             GraphsExams();
-
-            foreach (var exam in Exams)
+            
+            using (var transaction = context.Database.BeginTransaction())
             {
-                context.Exams.Add(exam);
+                foreach (var exam in Exams)
+                {
+                    context.Exams.Add(exam);
+                }
+                context.SaveChanges();
+                
+                foreach (var question in Questions)
+                {
+                    context.QuestionAbstracts.Add(question);
+                }
+                context.SaveChanges();
+                
+                foreach (var option in Options)
+                {
+                    context.QuestionOptions.Add(option);
+                }
+                context.SaveChanges();
+                
+                foreach (var variable in Variables)
+                {
+                    context.Variables.Add(variable);
+                }
+                context.SaveChanges();
+                
+                foreach (var range in Ranges)
+                {
+                    context.Ranges.Add(range);
+                }
+                context.SaveChanges();
+
+                transaction.Commit();
             }
-            context.SaveChanges();
-
-            foreach (var question in Questions)
-            {
-                context.Questions.Add(question);
-            }
-
-            context.SaveChanges();
-
-            foreach (var variable in Variables)
-            {
-                context.Variables.Add(variable);
-            }
-
-            context.SaveChanges();
-
-            foreach (var range in Ranges)
-            {
-                context.Ranges.Add(range);
-            }
-
-            context.SaveChanges();
+            
         }
     }
 }

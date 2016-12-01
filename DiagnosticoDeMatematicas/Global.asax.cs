@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using DiagnosticoDeMatematicas.Models;
+using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
@@ -12,6 +15,8 @@ namespace DiagnosticoDeMatematicas
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            ModelBinders.Binders.Add(new KeyValuePair<Type, IModelBinder>(typeof(AnswerAbstract), new AnswerBinder()));
         }
     }
 }
