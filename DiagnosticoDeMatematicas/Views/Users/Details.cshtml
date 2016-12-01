@@ -12,85 +12,39 @@
         <div>
             <hr />
             <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.User.Role)
-                </dt>
+                <dt>@Html.DisplayNameFor(model => model.User.Role)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Role)</dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.User.Role)
-                </dd>
+                <dt>@Html.DisplayNameFor(model => model.User.Email)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Email)</dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.User.Email)
-                </dt>
+                <dt>@Html.DisplayNameFor(model => model.User.FirstName)</dt>
+                <dd>@Html.DisplayFor(model => model.User.FirstName)</dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.User.Email)
-                </dd>
+                <dt>@Html.DisplayNameFor(model => model.User.LastName)</dt>
+                <dd>@Html.DisplayFor(model => model.User.LastName)</dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.User.FirstName)
-                </dt>
+                <dt>@Html.DisplayNameFor(model => model.User.DateOfBirth)</dt>
+                <dd>@Html.DisplayFor(model => model.User.DateOfBirth)</dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.User.FirstName)
-                </dd>
+                <dt>@Html.DisplayNameFor(model => model.User.Gender)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Gender)</dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.User.LastName)
-                </dt>
+                <dt>@Html.DisplayNameFor(model => model.User.Interest)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Interest)</dd>
 
-                <dd>
-                    @Html.DisplayFor(model => model.User.LastName)
-                </dd>
+                <dt>@Html.DisplayNameFor(model => model.User.Facility)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Facility)</dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.User.DateOfBirth)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.User.DateOfBirth)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.User.Gender)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.User.Gender)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.User.Interest)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.User.Interest)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.User.Facility)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.User.Facility)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.User.Liking)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.User.Liking)
-                </dd>
-
+                <dt>@Html.DisplayNameFor(model => model.User.Liking)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Liking)</dd>
             </dl>
         </div>
         @if (DiagnosticoDeMatematicas.Helpers.SessionValidator.IsAdminSignedIn)
         {
             <p>
-                @Html.ActionLink("Editar", "Edit", new { id = Model.User.Email.ToString() + "/" }) |
-                @Html.ActionLink("Borrar", "Delete", new { id = Model.User.Email.ToString() + "/" }) |
+                @Html.ActionLink("Editar", "Edit", new { id = Model.User.Email + "/" }) |
+                @Html.ActionLink("Borrar", "Delete", new { id = Model.User.Email + "/" }) |
                 @Html.ActionLink("Regresar a lista de usuarios", "Index")
             </p>
         }
@@ -119,7 +73,7 @@
                 </tr>
 
                 @{
-                    var responses = Model.User.Responses.Where(r => r.ExamID == exam.ID).OrderByDescending(r => r.Date);
+                    var responses = Model.User.Responses.Where(r => r.ExamId == exam.ID).OrderByDescending(r => r.Date);
                     var counter = responses.Count();
                 }
                 @foreach (var item in responses)

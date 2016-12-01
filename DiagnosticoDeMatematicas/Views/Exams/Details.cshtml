@@ -4,46 +4,10 @@
     ViewBag.Title = Model.Name;
 }
 
-<h2>@Model.Name</h2>
+@Html.Action("DetailsPartial", new {examId = Model.ID})
 
-<div>
-    <h4>Datalles</h4>
-    <hr />
-    <dl class="dl-horizontal">
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Comments)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Comments)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Active)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Active)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Editar examen", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Regresar a lista de examenes.", "Index")
-</p>
-
+<hr />
 <h3>Preguntas</h3>
-
 <p>
     @Html.ActionLink("Agregar pregunta", "Create", "Questions", new { examId = Model.ID }, null)
 </p>

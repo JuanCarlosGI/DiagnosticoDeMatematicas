@@ -54,6 +54,30 @@
             return View(exam);
         }
 
+        public PartialViewResult DetailsPartial(int examId)
+        {
+            Exam exam = db.Exams.Find(examId);
+            return PartialView("_Details", exam);
+        }
+
+        public PartialViewResult EditPartial(int examId)
+        {
+            Exam exam = db.Exams.Find(examId);
+            return PartialView("_Edit", exam);
+        }
+
+        [HttpPost]
+        public PartialViewResult EditPartial([Bind(Include = "ID,Name,Description,Comments,Active")] Exam exam)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(exam).State = EntityState.Modified;
+                db.SaveChanges();
+                return PartialView("_Details", exam);
+            }
+            return PartialView("_Edit", exam);
+        }
+
         // GET: Exams/Create
         public ActionResult Create()
         {
@@ -82,46 +106,6 @@
                 return RedirectToAction("Index");
             }
 
-            return View(exam);
-        }
-
-        // GET: Exams/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
-            }
-
-            Exam exam = db.Exams.Find(id);
-            if (exam == null)
-            {
-                return HttpNotFound();
-            }
-            return View(exam);
-        }
-
-        // POST: Exams/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Description,Comments,Active")] Exam exam)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(exam).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
             return View(exam);
         }
 

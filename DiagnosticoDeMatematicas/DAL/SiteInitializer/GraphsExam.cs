@@ -64,7 +64,7 @@
                 ExamID = ExamCounter,
                 Description = "De las sigueintes gráficas de rectas, escoge aquella cuya pendiente es menor a %n."
             });
-            Options.Add(new QuestionOption { Description = "&& Polynomial - 9 9 - 9 9 |% n * 3.0 / 4.0 | 0 &&", IsCorrect = true, Feedback = "Correcto", Id = ++OptionCounter, QuestionId = QuestionCounter });
+            Options.Add(new QuestionOption { Description = "&& Polynomial - 9 9 - 9 9 |%n * 3.0 / 4.0 | 0 &&", IsCorrect = true, Feedback = "Correcto", Id = ++OptionCounter, QuestionId = QuestionCounter });
             Options.Add(new QuestionOption { Description = "&& VerticalLine -9 9 -9 9 |%n - 1.0 / 2.0| &&", IsCorrect = false, Feedback = "La pendiente está indefinida.", Id = ++OptionCounter, QuestionId = QuestionCounter });
             Options.Add(new QuestionOption { Description = "&& Polynomial -9 9 -9 9 %n 0 &&", IsCorrect = false, Feedback = "Su pendiente es n.", Id = ++OptionCounter, QuestionId = QuestionCounter });
             Options.Add(new QuestionOption { Description = "&& Polynomial -9 9 -9 9 |%n * 4.0 / 3.0| 0 &&", IsCorrect = false, Feedback = "Su pendiente es mayor que n.", Id = ++OptionCounter, QuestionId = QuestionCounter });
