@@ -84,6 +84,7 @@ namespace DiagnosticoDeMatematicas.Controllers
 
                 db.SaveChanges();
 
+                question = db.MultipleSelectionQuestions.Find(question.Id);
                 var evaluator = new NotationlessEvaluator();
                 question = evaluator.Evaluate(question) as MultipleSelectionQuestion;
                 return PartialView("_Details", question);
