@@ -1,4 +1,5 @@
-﻿@model DiagnosticoDeMatematicas.Models.Exam
+﻿@using DiagnosticoDeMatematicas.Models
+@model DiagnosticoDeMatematicas.Models.Exam
 
 @{
     ViewBag.Title = Model.Name;
@@ -7,31 +8,24 @@
 @Html.Action("DetailsPartial", new {examId = Model.ID})
 
 <hr />
-<h3>Preguntas</h3>
+<h2>Preguntas</h2>
 <p>
-    @Html.ActionLink("Agregar pregunta", "Create", "Questions", new { examId = Model.ID }, null)
+    @Ajax.ActionLink("Agregar pregunta", "CreateNew", "Questions", new { examId = Model.ID }, new AjaxOptions {UpdateTargetId = "newQuestion", InsertionMode = InsertionMode.ReplaceWith})
 </p>
 
+<div id="newQuestion"></div>
 @foreach (var question in Model.Questions)
 {
-    Html.RenderAction("Details", "Questions", new { id = question.Id});
-}
-
-<table class="table">
-    @foreach (var item in Model.Questions)
+    if (question is MultipleSelectionQuestion)
     {
-        <tr>
-            <td>
-                @{ 
-                    string parameter = item.Description.Replace("%", "").Replace("|", "");
-                }
-                @Html.DisplayFor(subitem => parameter)
-            </td>
-            <td>
-                @Html.ActionLink("Detalles", "Details", "Questions", new { id = item.Id }, null) |
-                @Html.ActionLink("Editar", "Edit", "Questions", new { id = item.Id }, null) |
-                @Html.ActionLink("Eliminar", "Delete", "Questions", new { id = item.Id }, null)
-            </td>
-        </tr>
+        Html.RenderAction("Details", "MultipleSelectionQuestions", new { questionId = question.Id });
     }
-</table>
+    else if (question is SingleSelectionQuestion)
+    {
+        Html.RenderAction("Details", "SingleSelectionQuestions", new { questionId = question.Id});
+    }
+    else
+    {
+        <p>ERROR</p>
+    }
+}

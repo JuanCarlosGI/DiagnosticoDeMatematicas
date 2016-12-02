@@ -11,4 +11,14 @@ namespace DiagnosticoDeMatematicas.Models
     public class MultipleSelectionQuestion : SelectionQuestion
     {
     }
+
+    public class MultipleSelectionQuestionWithOptionsViewModel
+    {
+        public int Id { get; set; }
+
+        public int ExamId { get; set; }
+        public string Description { get; set; }
+
+        public List<QuestionOption> Options { get; set; }
+    }
 }

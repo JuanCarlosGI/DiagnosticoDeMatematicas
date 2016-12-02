@@ -1,9 +1,9 @@
 ﻿@model DiagnosticoDeMatematicas.Models.Exam
 
 <div id="edit">
-    <h2>@Model.Name</h2>
+    <h1>@Model.Name</h1>
     <hr />
-    <h3>Editar</h3>
+    <h2>Editar</h2>
     @using (Ajax.BeginForm("EditPartial", new {examId = Model.ID}, new AjaxOptions {UpdateTargetId = "edit", InsertionMode = InsertionMode.ReplaceWith, HttpMethod = "POST"}))
     {
         @Html.AntiForgeryToken()

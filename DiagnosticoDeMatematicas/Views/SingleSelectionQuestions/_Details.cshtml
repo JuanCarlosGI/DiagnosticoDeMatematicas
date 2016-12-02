@@ -1,0 +1,36 @@
+﻿@using DiagnosticoDeMatematicas.Charts
+@using DiagnosticoDeMatematicas.Models
+@model SingleSelectionQuestion
+
+@{
+    QuestionOption dummy = new QuestionOption();
+}
+
+<div id="@Model.Id">
+    <h3>@Html.Raw(ChartBuilder.QuestionWithChart(Model.Description))</h3>
+
+    <h4>Opciones:</h4>
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(description => dummy.Description)</th>
+            <th>@Html.DisplayNameFor(isCorrect => dummy.IsCorrect)</th>
+            <th>@Html.DisplayNameFor(feedback => dummy.Feedback)</th>
+        </tr>
+
+        @foreach (var option in Model.Options)
+        {
+            <tr>
+                <td>@Html.Raw(ChartBuilder.QuestionWithChart(option.Description))</td>
+                <td>@Html.DisplayFor(isCorrect => option.IsCorrect)</td>
+                <td>@Html.DisplayFor(feedback => option.Feedback)</td>
+            </tr>
+        }
+    </table>
+
+    <p>
+        @Ajax.ActionLink("Editar pregunta", "Edit", "SingleSelectionQuestions", new { questionId = Model.Id }, new AjaxOptions { InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = $"{Model.Id}" })
+    </p>
+    <p>
+        @Ajax.ActionLink("Borrar pregunta", "Delete", "SingleSelectionQuestions", new { questionId = Model.Id }, new AjaxOptions { InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = $"{Model.Id}", HttpMethod = "POST" })
+    </p>
+</div>

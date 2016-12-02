@@ -172,6 +172,7 @@
     <Compile Include="Controllers\MultipleSelectionAnswersController.cs" />
     <Compile Include="Controllers\MultipleSelectionQuestionsController.cs" />
     <Compile Include="Controllers\SelectionQuestionsController.cs" />
+    <Compile Include="Controllers\SingleSelectionQuestionsController.cs" />
     <Compile Include="Controllers\StatisticsController.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -340,8 +341,7 @@
     <Content Include="Views\Responses\ThankYou.cshtml" />
     <Content Include="Views\Questions\Instructions.cshtml" />
     <Content Include="Views\Questions\_Details.cshtml" />
-    <Content Include="Views\Questions\_Edit.cshtml" />
-    <Content Include="Views\MultipleSelectionQuestions\Index.cshtml" />
+    <Content Include="Views\MultipleSelectionQuestions\_Edit.cshtml" />
     <Content Include="Views\MultipleSelectionAnswers\Create.cshtml" />
     <Content Include="Views\MultipleSelectionAnswers\Delete.cshtml" />
     <Content Include="Views\MultipleSelectionAnswers\_Details.cshtml" />
@@ -349,6 +349,12 @@
     <Content Include="Views\MultipleSelectionAnswers\Index.cshtml" />
     <Content Include="Views\Exams\_Details.cshtml" />
     <Content Include="Views\Exams\_Edit.cshtml" />
+    <Content Include="Views\Questions\CreateNew.cshtml" />
+    <Content Include="Views\MultipleSelectionQuestions\_Details.cshtml" />
+    <Content Include="Views\SingleSelectionQuestions\_Details.cshtml" />
+    <Content Include="Views\SingleSelectionQuestions\_Edit.cshtml" />
+    <Content Include="Views\SingleSelectionQuestions\DeleteConfirmed.cshtml" />
+    <Content Include="Views\MultipleSelectionQuestions\DeleteConfirmed.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

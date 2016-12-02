@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DiagnosticoDeMatematicas.DAL;
+using DiagnosticoDeMatematicas.Helpers.IEvaluator;
 using DiagnosticoDeMatematicas.Models;
 
 namespace DiagnosticoDeMatematicas.Controllers
@@ -15,121 +16,95 @@ namespace DiagnosticoDeMatematicas.Controllers
     {
         private SiteContext db = new SiteContext();
 
-        public ActionResult Index()
+        [HttpPost]
+        public PartialViewResult Create(int examId)
         {
-            return View(db.MultipleSelectionQuestions.ToList());
-        }
-        // GET: MultipleSelectionQuestions/Details/5
-        public PartialViewResult Details(int id)
-        {
-            MultipleSelectionQuestion multipleSelectionQuestion = db.MultipleSelectionQuestions.Find(id);
-            return PartialView("_Details", multipleSelectionQuestion);
-        }
-
-        // GET: MultipleSelectionQuestions/Create
-        public ActionResult Create()
-        {
-            var model = new MultipleSelectionQuestion { Description = "Pregunta nueva" };
+            var question = new MultipleSelectionQuestion { Description = "Pregunta nueva", ExamID = examId};
 
             var list = new List<QuestionOption>();
 
-            list.Add(new QuestionOption { Description = "Opción 1", Feedback = "Feedback de opción 1", IsCorrect = true,  });
-            list.Add(new QuestionOption { Description = "Opción 2", Feedback = "Feedback de opción 2", IsCorrect = false, });
-            list.Add(new QuestionOption { Description = "Opción 3", Feedback = "Feedback de opción 3", IsCorrect = false, });
-            list.Add(new QuestionOption { Description = "Opción 4", Feedback = "Feedback de opción 4", IsCorrect = false, });
-            list.Add(new QuestionOption { Description = "Opción 5", Feedback = "Feedback de opción 5", IsCorrect = false, });
+            list.Add(new QuestionOption { Description = "Opción 1", Feedback = "Feedback de opción 1", IsCorrect = true });
+            list.Add(new QuestionOption { Description = "Opción 2", Feedback = "Feedback de opción 2", IsCorrect = false });
+            list.Add(new QuestionOption { Description = "Opción 3", Feedback = "Feedback de opción 3", IsCorrect = false });
+            list.Add(new QuestionOption { Description = "Opción 4", Feedback = "Feedback de opción 4", IsCorrect = false });
+            list.Add(new QuestionOption { Description = "Opción 5", Feedback = "Feedback de opción 5", IsCorrect = false });
 
-            model.Options = list;
+            question.Options = list;
 
-            return Create(model);
+            db.MultipleSelectionQuestions.Add(question);
+            db.SaveChanges();
+
+            var evaluator = new NotationlessEvaluator();
+            question = evaluator.Evaluate(question) as MultipleSelectionQuestion;
+            return PartialView("_Details", question);
         }
 
-        // POST: MultipleSelectionQuestions/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Description,Options")] MultipleSelectionQuestion multipleSelectionQuestion)
+        public PartialViewResult Details(int questionId)
         {
-            if (ModelState.IsValid)
-            {
-                db.MultipleSelectionQuestions.Add(multipleSelectionQuestion);
-                db.SaveChanges();
+            var question = db.MultipleSelectionQuestions.Find(questionId);
 
-                return RedirectToAction("Index");
-            }
-
-            return View(multipleSelectionQuestion);
+            var evaluator = new NotationlessEvaluator();
+            question = evaluator.Evaluate(question) as MultipleSelectionQuestion;
+            return PartialView("_Details", question);
         }
 
-        // GET: MultipleSelectionQuestions/Edit/5
-        public PartialViewResult Edit(int id)
+        public PartialViewResult Edit(int questionId)
         {
-            MultipleSelectionQuestion multipleSelectionQuestion = db.MultipleSelectionQuestions.Find(id);
-            SelectionQuestionWithOptionsViewModel model = new SelectionQuestionWithOptionsViewModel
+            var question = db.MultipleSelectionQuestions.Find(questionId);
+            MultipleSelectionQuestionWithOptionsViewModel model = new MultipleSelectionQuestionWithOptionsViewModel
             {
-                Id = id,
-                Description = multipleSelectionQuestion.Description,
-                Options = multipleSelectionQuestion.Options.ToList()
+                Id = questionId,
+                ExamId = question.ExamID,
+                Description = question.Description,
+                Options = question.Options.ToList()
             };
 
             return PartialView("_Edit", model);
         }
 
-        // POST: MultipleSelectionQuestions/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public PartialViewResult Edit([Bind(Include = "Id,Description,Options")] SelectionQuestionWithOptionsViewModel model)
+        public PartialViewResult Edit([Bind(Include = "Id,Description,Options,ExamId")] MultipleSelectionQuestionWithOptionsViewModel model)
         {
             if (ModelState.IsValid)
             {
-                MultipleSelectionQuestion multipleSelectionQuestion = new MultipleSelectionQuestion
+                MultipleSelectionQuestion question = new MultipleSelectionQuestion
                 {
                     Id = model.Id,
+                    ExamID = model.ExamId,
                     Description = model.Description,
                     Options = model.Options
                 };
 
-                db.Entry(multipleSelectionQuestion).State = EntityState.Modified;
-                foreach(var option in multipleSelectionQuestion.Options)
+                db.Entry(question).State = EntityState.Modified;
+                foreach (var option in question.Options)
                 {
                     db.Entry(option).State = EntityState.Modified;
                 }
 
                 db.SaveChanges();
 
-                return PartialView("_Details", multipleSelectionQuestion);
+                var evaluator = new NotationlessEvaluator();
+                question = evaluator.Evaluate(question) as MultipleSelectionQuestion;
+                return PartialView("_Details", question);
             }
 
             return PartialView("_Edit", model);
         }
 
-        // GET: MultipleSelectionQuestions/Delete/5
-        public ActionResult Delete(int? id)
+        [HttpPost]
+        public PartialViewResult Delete(int questionId)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MultipleSelectionQuestion multipleSelectionQuestion = db.MultipleSelectionQuestions.Find(id);
-            if (multipleSelectionQuestion == null)
-            {
-                return HttpNotFound();
-            }
-            return View(multipleSelectionQuestion);
-        }
+            var question = db.MultipleSelectionQuestions.Find(questionId);
 
-        // POST: MultipleSelectionQuestions/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            MultipleSelectionQuestion multipleSelectionQuestion = db.MultipleSelectionQuestions.Find(id);
-            db.MultipleSelectionQuestions.Remove(multipleSelectionQuestion);
+            var options = question.Options.ToArray();
+            foreach (var option in options)
+                db.QuestionOptions.Remove(option);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            db.MultipleSelectionQuestions.Remove(question);
+            db.SaveChanges();
+            return PartialView("DeleteConfirmed");
         }
 
         protected override void Dispose(bool disposing)

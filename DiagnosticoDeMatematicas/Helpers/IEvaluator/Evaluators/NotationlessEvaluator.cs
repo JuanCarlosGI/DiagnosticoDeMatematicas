@@ -16,16 +16,29 @@
         {
             if (question is SelectionQuestion)
             {
-                SelectionQuestion aux = new SelectionQuestion
-                {
-                    Description = question.Description,
-                    ExamID = question.ExamID,
-                    Options = (question as SelectionQuestion).Options,
-                    Answers = question.Answers,
-                    Exam = question.Exam,
-                    Id = question.Id,
-                    Variables = question.Variables
-                };
+                SelectionQuestion aux;
+                if (question is MultipleSelectionQuestion)
+                    aux = new MultipleSelectionQuestion
+                    {
+                        Description = question.Description,
+                        ExamID = question.ExamID,
+                        Options = ((SelectionQuestion)question).Options,
+                        Answers = question.Answers,
+                        Exam = question.Exam,
+                        Id = question.Id,
+                        Variables = question.Variables
+                    };
+                else
+                    aux = new SingleSelectionQuestion
+                    {
+                        Description = question.Description,
+                        ExamID = question.ExamID,
+                        Options = ((SelectionQuestion)question).Options,
+                        Answers = question.Answers,
+                        Exam = question.Exam,
+                        Id = question.Id,
+                        Variables = question.Variables
+                    };
 
                 aux.Description = aux.Description.Replace("%", string.Empty).Replace("|", string.Empty);
 
