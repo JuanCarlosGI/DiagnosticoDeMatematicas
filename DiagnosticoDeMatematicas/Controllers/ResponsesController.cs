@@ -83,7 +83,7 @@
                 if (question is SingleSelectionQuestion)
                     answers.Add(new SingleSelectionAnswer { Question = question as SingleSelectionQuestion, QuestionId = question.Id });
                 else if (question is MultipleSelectionQuestion)
-                    answers.Add(new MultipleSelectionAnswer(question as MultipleSelectionQuestion, null));
+                    answers.Add(new MultipleSelectionAnswer(question as MultipleSelectionQuestion));
             }
 
             var evaluator = new RandomValueEvaluator();
@@ -91,8 +91,9 @@
             {
                 if (answer is SelectionAnswer)
                 {
-                    (answer.Question as SelectionQuestion).Options = (answer.Question as SelectionQuestion).Options.ToList().Shuffle().ToList();
-                    answer.Question = evaluator.Evaluate(answer.Question);
+                    var question = db.QuestionAbstracts.Find(answer.QuestionId);
+                    question.Options = question.Options.ToList().Shuffle().ToList();
+                    answer.Question = evaluator.Evaluate(question);
                 }
             }
 

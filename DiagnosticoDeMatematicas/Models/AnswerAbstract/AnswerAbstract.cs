@@ -31,7 +31,11 @@ namespace DiagnosticoDeMatematicas.Models
             if (modelType.Equals(typeof(AnswerAbstract)))
             {
                 // Todo: Add support for different types
-                Type instantiationType = typeof(SingleSelectionAnswer);
+                //Type instantiationType = typeof(SingleSelectionAnswer);
+
+                string typeName = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".type").AttemptedValue;
+                Type instantiationType = Type.GetType(typeName);
+
                 var obj = Activator.CreateInstance(instantiationType);
                 bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => obj, instantiationType);
                 bindingContext.ModelMetadata.Model = obj;

@@ -53,7 +53,7 @@
                 if (Answers != null)
                 {
                     var count = 0.0;
-                    foreach (SingleSelectionAnswer answer in Answers)
+                    foreach (var answer in Answers)
                     {
                         if (answer != null && answer.IsCorrect)
                         {

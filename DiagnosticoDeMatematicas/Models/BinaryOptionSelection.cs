@@ -23,7 +23,7 @@ namespace DiagnosticoDeMatematicas.Models
 
         public bool IsCorrect()
         {
-            return QuestionOption.IsCorrect == Selected;
+            return QuestionOption?.IsCorrect == Selected;
         }
 
         [ForeignKey("ResponseId,MultipleSelectionQuestionId")]
