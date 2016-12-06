@@ -5,7 +5,7 @@
     /// <summary>
     /// Chart with a polynomial, its derivate, and its second derivate.
     /// </summary>
-    public class PolynomialWithDoubleDerivateChart : PolynomialWithDerivateChart
+    public sealed class PolynomialWithDoubleDerivateChart : PolynomialWithDerivateChart
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PolynomialWithDoubleDerivateChart"/> class.
@@ -20,13 +20,15 @@
         {
             if (ValidateCoefficients(stringCoefficients))
             {
-                var coefficients = ParseCoefficients(stringCoefficients);
+                ParseCoefficients(stringCoefficients);
 
                 DoubleDerivate = Derivate.Derivate() as Polynomial;
 
-                var doubleDerivateSeries = new FunctionSeries(DoubleDerivate, ChartAreas["Chart"]);
-                doubleDerivateSeries.BorderWidth = 2;
-                doubleDerivateSeries.Color = SeriesColorHierarchy[2];
+                var doubleDerivateSeries = new FunctionSeries(DoubleDerivate, ChartAreas["Chart"])
+                {
+                    BorderWidth = 2,
+                    Color = SeriesColorHierarchy[2]
+                };
 
                 Series.Add(doubleDerivateSeries);
             }

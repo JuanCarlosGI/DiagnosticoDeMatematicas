@@ -12,7 +12,7 @@
         /// Gets or sets the ID of the exam.
         /// </summary>
         [Display(Name = "ID")]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the exam.

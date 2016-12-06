@@ -16,7 +16,7 @@
     </dl>
 
     <p>
-        @Ajax.ActionLink("Editar diagnóstico", "EditPartial", new {examId = Model.ID},
+        @Ajax.ActionLink("Editar diagnóstico", "EditPartial", new {examId = Model.Id},
                  new AjaxOptions {InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "details"})
     </p>
     <p>@Html.ActionLink("Regresar a lista de diagnósticos", "Index")</p>

@@ -13,7 +13,7 @@
         /// Gets or sets the ID of the exam that is being analyzed.
         /// </summary>
         [Display(Name = "Examen")]
-        public int? ExamID { get; set; }
+        public int? ExamId { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum for the Date value of responses in order for them to be considered. If it is null, there is no minimum.

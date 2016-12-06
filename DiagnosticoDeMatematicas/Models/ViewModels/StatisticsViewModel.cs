@@ -23,9 +23,11 @@
         /// <returns>String containing the image of a column chart.</returns>
         public string ColumnChart()
         {
-            var chart = new Chart();
-            chart.Width = 1000;
-            chart.Height = 400;
+            var chart = new Chart
+            {
+                Width = 1000,
+                Height = 400
+            };
             chart.ChartAreas.Add("Chart").BackColor = Color.White;
             chart.Series.Add(ExamAnalyzer.Exam.Name);
 

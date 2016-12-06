@@ -1,11 +1,10 @@
-﻿@model DiagnosticoDeMatematicas.Models.Response
-@using DiagnosticoDeMatematicas.Charts
+﻿@using DiagnosticoDeMatematicas.Charts
 @using DiagnosticoDeMatematicas.Models
+@model Response
 
 @{
     ViewBag.Title = "Contestar examen";
     var counter = 0;
-    var evaluator = new DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator();
 }
 
 <h2>Contestar examen</h2>
@@ -35,38 +34,43 @@
 
                             @if (answer is SelectionAnswer)
                             {
-                                var options = (answer.Question as SelectionQuestion).Options;
-                                if (answer is MultipleSelectionAnswer)
+                                var selectionQuestion = answer.Question as SelectionQuestion;
+                                if (selectionQuestion != null)
                                 {
-                                    <input type="hidden" name="Answers[@counter].type" value="DiagnosticoDeMatematicas.Models.MultipleSelectionAnswer" />
-
-                                    var optionCounter = 0;
-                                    foreach (var option in options)
+                                    var options = selectionQuestion.Options;
+                                    if (answer is MultipleSelectionAnswer)
                                     {
-                                        <input type="hidden" name="Answers[@counter].Selections[@optionCounter].QuestionOptionId" value="@option.Id"/>
-                                        <div class="col-lg-6">
-                                            <input type="checkbox" data-val="true" data-val-required="" name="Answers[@counter].Selections[@optionCounter].Selected" value="true" />
-                                            <input type="hidden" value="false" name="Answers[@counter].Selections[@optionCounter].Selected" />
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                            @Html.Raw(ChartBuilder.QuestionWithChart(option.Description))
-                                            <br /><br />
-                                        </div>
+                                        <input type="hidden" name="Answers[@counter].type" value="DiagnosticoDeMatematicas.Models.MultipleSelectionAnswer" />
 
-                                        optionCounter++;
+                                        var optionCounter = 0;
+                                        foreach (var option in options)
+                                        {
+                                            <input type="hidden" name="Answers[@counter].Selections[@optionCounter].QuestionOptionId" value="@option.Id"/>
+                                            <div class="col-lg-6">
+                                                <input type="checkbox" data-val="true" data-val-required="" name="Answers[@counter].Selections[@optionCounter].Selected" value="true" />
+                                                <input type="hidden" value="false" name="Answers[@counter].Selections[@optionCounter].Selected" />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                @Html.Raw(ChartBuilder.QuestionWithChart(option.Description))
+                                                <br /><br />
+                                            </div>
+
+                                            optionCounter++;
+                                        }
                                     }
-                                }
-                                else if (answer is SingleSelectionAnswer)
-                                {
-                                    <input type="hidden" name="Answers[@counter].type" value="DiagnosticoDeMatematicas.Models.SingleSelectionAnswer" />
-
-                                    foreach (var option in options)
+                                    else {if (answer is SingleSelectionAnswer)
                                     {
-                                        <div class="col-lg-6">
-                                            <input type="radio" data-val="true" data-val-required="" name="Answers[@counter].SelectionId" value="@option.Id"/>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                            @Html.Raw(ChartBuilder.QuestionWithChart(option.Description))
-                                            <br/><br/>
-                                        </div>
+                                        <input type="hidden" name="Answers[@counter].type" value="DiagnosticoDeMatematicas.Models.SingleSelectionAnswer" />
+
+                                        foreach (var option in options)
+                                        {
+                                            <div class="col-lg-6">
+                                                <input type="radio" data-val="true" data-val-required="" name="Answers[@counter].SelectionId" value="@option.Id"/>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                @Html.Raw(ChartBuilder.QuestionWithChart(option.Description))
+                                                <br/><br/>
+                                            </div>
+                                        }
+                                    }
                                     }
                                 }
                             }

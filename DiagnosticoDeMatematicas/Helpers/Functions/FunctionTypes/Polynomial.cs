@@ -11,7 +11,7 @@
         /// <summary>
         /// List of coefficients representing the polynomial function.
         /// </summary>
-        private readonly List<double> coefficients;
+        private readonly List<double> _coefficients;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Polynomial"/> class.
@@ -19,34 +19,22 @@
         /// <param name="coefficients">Array of coefficients representing the polynomial.</param>
         public Polynomial(params double[] coefficients)
         {
-            this.coefficients = new List<double>();
+            _coefficients = new List<double>();
             foreach (var coefficient in coefficients)
             {
-                this.coefficients.Add(coefficient);
+                _coefficients.Add(coefficient);
             }
         }
 
         /// <summary>
         /// Gets the degree of the polynomial function.
         /// </summary>
-        public int Degree
-        {
-            get
-            {
-                return Coefficients.Length - 1;
-            }
-        }
+        public int Degree => Coefficients.Length - 1;
 
         /// <summary>
         /// Gets the array of coefficients representing the polynomial.
         /// </summary>
-        public double[] Coefficients
-        {
-            get
-            {
-                return coefficients.ToArray();
-            }
-        }
+        public double[] Coefficients => _coefficients.ToArray();
 
         /// <summary>
         /// Evaluates the polynomial function.
@@ -72,7 +60,7 @@
         {
             if (Degree <= 0)
             {
-                return new Polynomial(new double[] { 0 });
+                return new Polynomial(0);
             }
 
             List<double> newCoefficients = new List<double>();

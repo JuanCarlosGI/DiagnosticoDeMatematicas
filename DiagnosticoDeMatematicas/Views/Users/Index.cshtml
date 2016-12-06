@@ -47,9 +47,9 @@
             @Html.DisplayFor(modelItem => item.Gender)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Email.ToString() + "/" }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Email.ToString() + "/" }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Email.ToString() + "/" })
+            @Html.ActionLink("Edit", "Edit", new { id=item.Email + "/" }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Email + "/" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Email + "/" })
         </td>
     </tr>
 }

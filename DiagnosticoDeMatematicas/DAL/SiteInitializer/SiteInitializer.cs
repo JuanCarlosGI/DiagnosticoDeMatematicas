@@ -6,16 +6,16 @@
 
     public partial class SiteInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<SiteContext>
     {
-        int ExamCounter = 0;
-        int QuestionCounter = 0;
-        int RangeCounter = 0;
-        int OptionCounter = 0;
+        int _examCounter;
+        int _questionCounter;
+        int _rangeCounter;
+        int _optionCounter;
 
-        List<Exam> Exams = new List<Exam>();
-        List<SingleSelectionQuestion> Questions = new List<SingleSelectionQuestion>();
-        List<QuestionOption> Options = new List<QuestionOption>();
-        List<Variable> Variables = new List<Variable>();
-        List<Range> Ranges = new List<Range>();
+        readonly List<Exam> _exams = new List<Exam>();
+        readonly List<SingleSelectionQuestion> _questions = new List<SingleSelectionQuestion>();
+        readonly List<QuestionOption> _options = new List<QuestionOption>();
+        readonly List<Variable> _variables = new List<Variable>();
+        readonly List<Range> _ranges = new List<Range>();
 
         protected override void Seed(SiteContext context)
         {
@@ -42,31 +42,31 @@
             
             using (var transaction = context.Database.BeginTransaction())
             {
-                foreach (var exam in Exams)
+                foreach (var exam in _exams)
                 {
                     context.Exams.Add(exam);
                 }
                 context.SaveChanges();
                 
-                foreach (var question in Questions)
+                foreach (var question in _questions)
                 {
                     context.QuestionAbstracts.Add(question);
                 }
                 context.SaveChanges();
                 
-                foreach (var option in Options)
+                foreach (var option in _options)
                 {
                     context.QuestionOptions.Add(option);
                 }
                 context.SaveChanges();
                 
-                foreach (var variable in Variables)
+                foreach (var variable in _variables)
                 {
                     context.Variables.Add(variable);
                 }
                 context.SaveChanges();
                 
-                foreach (var range in Ranges)
+                foreach (var range in _ranges)
                 {
                     context.Ranges.Add(range);
                 }

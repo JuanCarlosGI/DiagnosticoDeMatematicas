@@ -201,13 +201,7 @@
         /// Gets the full name of the user.
         /// </summary>
         [Display(Name = "Nombre completo")]
-        public string FullName
-        {
-            get
-            {
-                return $"{FirstName} {LastName}";
-            }
-        }
+        public string FullName => $"{FirstName} {LastName}";
 
         /// <summary>
         /// Gets or sets the responses belonging to the user.

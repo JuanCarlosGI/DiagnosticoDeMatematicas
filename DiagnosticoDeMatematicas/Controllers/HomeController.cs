@@ -7,11 +7,11 @@
 
     public class HomeController : Controller
     {
-        private SiteContext db = new SiteContext();
+        private readonly SiteContext _db = new SiteContext();
 
         public ActionResult Index()
         {
-            return View(db.Exams.Where(m => m.Active == true).ToList());
+            return View(_db.Exams.Where(m => m.Active).ToList());
         }
 
         public ActionResult SignIn(string email, string password)
@@ -31,11 +31,6 @@
         }
 
         public ActionResult AccessDenied()
-        {
-            return View();
-        }
-
-        public ActionResult TestView()
         {
             return View();
         }

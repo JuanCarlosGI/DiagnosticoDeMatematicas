@@ -6,7 +6,7 @@
     /// <summary>
     /// Class in charge of encoding string using SHA256.
     /// </summary>
-    public class EncoderSHA256 : IEncoder
+    public class EncoderSha256 : IEncoder
     {
         /// <summary>
         /// Encodes a string using SHA256.

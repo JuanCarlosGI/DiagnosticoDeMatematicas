@@ -10,23 +10,11 @@
         /// <summary>
         /// Gets a value indicating whether a user is currently signed in.
         /// </summary>
-        public static bool IsSignedIn
-        {
-            get
-            {
-                return SessionService.User != null;
-            }
-        }
+        public static bool IsSignedIn => SessionService.User != null;
 
         /// <summary>
         /// Gets a value indicating whether an administrator is signed in.
         /// </summary>
-        public static bool IsAdminSignedIn
-        {
-            get
-            {
-                return IsSignedIn && SessionService.User.Role == Role.Administrador;
-            }
-        }
+        public static bool IsAdminSignedIn => IsSignedIn && SessionService.User.Role == Role.Administrador;
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace DiagnosticoDeMatematicas.Helpers.Extensions
 {
@@ -14,8 +13,8 @@ namespace DiagnosticoDeMatematicas.Helpers.Extensions
 
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source, Random rng)
         {
-            if (source == null) throw new ArgumentNullException("source");
-            if (rng == null) throw new ArgumentNullException("rng");
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (rng == null) throw new ArgumentNullException(nameof(rng));
 
             return source.ShuffleIterator(rng);
         }

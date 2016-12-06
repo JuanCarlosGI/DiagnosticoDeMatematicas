@@ -24,15 +24,16 @@
             EndDate = endDate;
 
             Responses = from r in Exam.Responses
-                        where r.ExamId == Exam.ID
+                        where r.ExamId == Exam.Id
                         where !StartDate.HasValue || r.Date >= StartDate.Value
                         where !EndDate.HasValue || r.Date <= EndDate.Value
                         select r;
 
-            AmountOfResponses = Responses.Count();
+            var responses = Responses as Response[] ?? Responses.ToArray();
+            AmountOfResponses = responses.Length;
 
             var sum = 0.0;
-            foreach (var response in Responses)
+            foreach (var response in responses)
             {
                 sum += response.Grade;
             }
@@ -108,7 +109,7 @@
                 return 0;
             }
 
-            return Responses.Where(r => r.Grade >= lowerLimit && r.Grade < upperLimit).Count() * 100.0 / AmountOfResponses;
+            return Responses.Count(r => r.Grade >= lowerLimit && r.Grade < upperLimit) * 100.0 / AmountOfResponses;
         }
 
         /// <summary>
@@ -128,7 +129,7 @@
 
                 foreach (var response in Responses)
                 {
-                    foreach (var answer in response.Answers)
+                    foreach (var _ in response.Answers)
                     {
                         //  Logic goes here.
                     }

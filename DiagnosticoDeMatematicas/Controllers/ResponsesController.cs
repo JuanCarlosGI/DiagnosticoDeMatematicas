@@ -9,12 +9,11 @@
     using DAL;
     using Helpers;
     using Models;
-    using Models.ViewModels;
     using Helpers.Extensions;
     using Helpers.IEvaluator;
     public class ResponsesController : Controller
     {
-        private SiteContext db = new SiteContext();
+        private readonly SiteContext _db = new SiteContext();
 
         // GET: Responses
         public ActionResult Index()
@@ -29,7 +28,19 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            var responses = db.Responses.Include(r => r.Exam).Include(r => r.User).ToList();
+            var responses = _db.Responses.Include(r => r.Exam).Include(r => r.User).ToList();
+            foreach(var response in responses)
+                foreach (var answer in response.Answers.ToArray())
+                {
+                    var multipleAnswer = answer as MultipleSelectionAnswer;
+                    if (multipleAnswer != null)
+                    {
+                        response.Answers.Remove(answer);
+                        response.Answers.Add(_db.MultipleSelectionAnswers
+                            .Include(a => a.Selections)
+                            .SingleOrDefault(e => e.QuestionId == answer.QuestionId && e.ResponseId == answer.ResponseId));
+                    }
+                }
             
             return View(responses);
         }
@@ -47,10 +58,24 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            Response response = db.Responses.Find(id);
+            Response response = _db.Responses.Find(id);
             if (response == null)
             {
                 return HttpNotFound();
+            }
+
+            foreach (var answer in response.Answers.ToArray())
+            {
+                var multipleAnswer = answer as MultipleSelectionAnswer;
+                if (multipleAnswer != null)
+                {
+                    response.Answers.Remove(answer);
+                    response.Answers.Add(_db.MultipleSelectionAnswers
+                        .Include(a => a.Selections)
+                        .Include(a => a.Question)
+                        .Include(a => a.Response)
+                        .SingleOrDefault(e => e.QuestionId == answer.QuestionId && e.ResponseId == answer.ResponseId));
+                }
             }
 
             if (!SessionValidator.IsAdminSignedIn &&
@@ -70,12 +95,12 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            if (examId == null || db.Exams.Find(examId.Value) == null)
+            if (examId == null || _db.Exams.Find(examId.Value) == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Response response = new Response { ExamId = examId.Value, UserId = SessionService.User.Email, Exam = db.Exams.Find(examId) };
+            Response response = new Response { ExamId = examId.Value, UserId = SessionService.User.Email, Exam = _db.Exams.Find(examId) };
 
             var answers = new List<AnswerAbstract>();
             foreach (var question in response.Exam.Questions)
@@ -91,7 +116,7 @@
             {
                 if (answer is SelectionAnswer)
                 {
-                    var question = db.QuestionAbstracts.Find(answer.QuestionId);
+                    var question = _db.QuestionAbstracts.Find(answer.QuestionId);
                     question.Options = question.Options.ToList().Shuffle().ToList();
                     answer.Question = evaluator.Evaluate(question);
                 }
@@ -108,19 +133,19 @@
         public ActionResult Create([Bind(Include = "Id,UserId,ExamId,Answers")]Response response)
         {
             response.Date = DateTime.Now;
-            response.Exam = db.Exams.Find(response.ExamId);
-            response.User = db.Users.Find(response.UserId);
+            response.Exam = _db.Exams.Find(response.ExamId);
+            response.User = _db.Users.Find(response.UserId);
 
             foreach(var answer in response.Answers)
             {
-                answer.Question = db.QuestionAbstracts.Find(answer.QuestionId);
+                answer.Question = _db.QuestionAbstracts.Find(answer.QuestionId);
             }
 
             if (ModelState.IsValid)
             {
-                db.Responses.Add(response);
-                db.Entry(response).State = EntityState.Added;
-                db.SaveChanges();
+                _db.Responses.Add(response);
+                _db.Entry(response).State = EntityState.Added;
+                _db.SaveChanges();
 
                 return RedirectToAction("ThankYou");
             }
@@ -146,7 +171,7 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            Response response = db.Responses.Find(id);
+            Response response = _db.Responses.Find(id);
             if (response == null)
             {
                 return HttpNotFound();
@@ -166,9 +191,9 @@
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Response response = db.Responses.Find(id);
-            db.Responses.Remove(response);
-            db.SaveChanges();
+            Response response = _db.Responses.Find(id);
+            _db.Responses.Remove(response);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -176,7 +201,7 @@
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
 
             base.Dispose(disposing);

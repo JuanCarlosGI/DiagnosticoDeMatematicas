@@ -13,7 +13,7 @@
         /// Gets or sets the ID of the range
         /// </summary>
         [Display(Name = "Rango")]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of the question this range belongs to.

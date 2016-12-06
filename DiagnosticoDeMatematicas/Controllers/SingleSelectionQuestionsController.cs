@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using DiagnosticoDeMatematicas.DAL;
 using DiagnosticoDeMatematicas.Helpers.IEvaluator;
@@ -14,25 +10,27 @@ namespace DiagnosticoDeMatematicas.Controllers
 {
     public class SingleSelectionQuestionsController : Controller
     {
-        private SiteContext db = new SiteContext();
+        private readonly SiteContext _db = new SiteContext();
 
         [HttpPost]
         public PartialViewResult Create(int examId)
         {
-            var question = new SingleSelectionQuestion { Description = "Pregunta nueva", ExamID = examId };
+            var question = new SingleSelectionQuestion { Description = "Pregunta nueva", ExamId = examId };
 
-            var list = new List<QuestionOption>();
+            var list = new List<QuestionOption>
+            {
+                new QuestionOption {Description = "Opción 1", Feedback = "Feedback de opción 1", IsCorrect = true},
+                new QuestionOption {Description = "Opción 2", Feedback = "Feedback de opción 2", IsCorrect = false},
+                new QuestionOption {Description = "Opción 3", Feedback = "Feedback de opción 3", IsCorrect = false},
+                new QuestionOption {Description = "Opción 4", Feedback = "Feedback de opción 4", IsCorrect = false},
+                new QuestionOption {Description = "Opción 5", Feedback = "Feedback de opción 5", IsCorrect = false}
+            };
 
-            list.Add(new QuestionOption { Description = "Opción 1", Feedback = "Feedback de opción 1", IsCorrect = true });
-            list.Add(new QuestionOption { Description = "Opción 2", Feedback = "Feedback de opción 2", IsCorrect = false });
-            list.Add(new QuestionOption { Description = "Opción 3", Feedback = "Feedback de opción 3", IsCorrect = false });
-            list.Add(new QuestionOption { Description = "Opción 4", Feedback = "Feedback de opción 4", IsCorrect = false });
-            list.Add(new QuestionOption { Description = "Opción 5", Feedback = "Feedback de opción 5", IsCorrect = false });
 
             question.Options = list;
 
-            db.SingleSelectionQuestions.Add(question);
-            db.SaveChanges();
+            _db.SingleSelectionQuestions.Add(question);
+            _db.SaveChanges();
 
             var evaluator = new NotationlessEvaluator();
             question = evaluator.Evaluate(question) as SingleSelectionQuestion;
@@ -41,7 +39,7 @@ namespace DiagnosticoDeMatematicas.Controllers
 
         public PartialViewResult Details(int questionId)
         {
-            var question = db.SingleSelectionQuestions.Find(questionId);
+            var question = _db.SingleSelectionQuestions.Find(questionId);
 
             var evaluator = new NotationlessEvaluator();
             question = evaluator.Evaluate(question) as SingleSelectionQuestion;
@@ -50,11 +48,11 @@ namespace DiagnosticoDeMatematicas.Controllers
 
         public PartialViewResult Edit(int questionId)
         {
-            var question = db.SingleSelectionQuestions.Find(questionId);
+            var question = _db.SingleSelectionQuestions.Find(questionId);
             SingleSelectionQuestionWithOptionsViewModel model = new SingleSelectionQuestionWithOptionsViewModel
             {
                 Id = questionId,
-                ExamId = question.ExamID,
+                ExamId = question.ExamId,
                 Description = question.Description,
                 Options = question.Options.ToList()
             };
@@ -71,20 +69,20 @@ namespace DiagnosticoDeMatematicas.Controllers
                 SingleSelectionQuestion question = new SingleSelectionQuestion
                 {
                     Id = model.Id,
-                    ExamID = model.ExamId,
+                    ExamId = model.ExamId,
                     Description = model.Description,
                     Options = model.Options
                 };
 
-                db.Entry(question).State = EntityState.Modified;
+                _db.Entry(question).State = EntityState.Modified;
                 foreach (var option in question.Options)
                 {
-                    db.Entry(option).State = EntityState.Modified;
+                    _db.Entry(option).State = EntityState.Modified;
                 }
 
-                db.SaveChanges();
+                _db.SaveChanges();
 
-                question = db.SingleSelectionQuestions.Find(question.Id);
+                question = _db.SingleSelectionQuestions.Find(question.Id);
                 var evaluator = new NotationlessEvaluator();
                 question = evaluator.Evaluate(question) as SingleSelectionQuestion;
                 return PartialView("_Details", question);
@@ -96,15 +94,15 @@ namespace DiagnosticoDeMatematicas.Controllers
         [HttpPost]
         public PartialViewResult Delete(int questionId)
         {
-            var question = db.SingleSelectionQuestions.Find(questionId);
+            var question = _db.SingleSelectionQuestions.Find(questionId);
 
             var options = question.Options.ToArray();
             foreach (var option in options)
-                db.QuestionOptions.Remove(option);
-            db.SaveChanges();
+                _db.QuestionOptions.Remove(option);
+            _db.SaveChanges();
 
-            db.SingleSelectionQuestions.Remove(question);
-            db.SaveChanges();
+            _db.SingleSelectionQuestions.Remove(question);
+            _db.SaveChanges();
             return PartialView("DeleteConfirmed");
         }
 
@@ -112,7 +110,7 @@ namespace DiagnosticoDeMatematicas.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

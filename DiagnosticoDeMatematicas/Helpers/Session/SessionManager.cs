@@ -34,7 +34,7 @@
                 return false;
             }
 
-            var encoder = new EncoderSHA256();
+            var encoder = new EncoderSha256();
             var encodedPassword = encoder.Encode(password);
 
             if (encodedPassword != user.Password)

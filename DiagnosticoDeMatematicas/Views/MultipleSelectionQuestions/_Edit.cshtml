@@ -33,7 +33,7 @@
                     var optionNumber = 0;
                 }
 
-                @foreach (var option in Model.Options)
+                @foreach (var _ in Model.Options)
             {
                     <tr>
                         @Html.HiddenFor(model => Model.Options[optionNumber].Id)

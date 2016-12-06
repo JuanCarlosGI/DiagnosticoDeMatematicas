@@ -19,6 +19,8 @@
         public MultiPolynomialChart(string[] stringOptions, int minX, int maxX, int minY, int maxY) 
             : base(minX, maxX, minY, maxY)
         {
+            Polynomials = new List<Polynomial>();
+
             if (ValidateOptions(stringOptions))
             {
                 var coefficientsList = ParseOptions(stringOptions);
@@ -28,14 +30,14 @@
                 {
                     var polynomial = new Polynomial(coefficients);
 
-                    var polynomialSeries = new FunctionSeries(polynomial, ChartAreas["Chart"]);
-                    polynomialSeries.BorderWidth = 2;
+                    var polynomialSeries = new FunctionSeries(polynomial, ChartAreas["Chart"]) {BorderWidth = 2};
                     if (series < SeriesColorHierarchy.Length)
                     {
                         polynomialSeries.Color = SeriesColorHierarchy[series];
                     }
 
                     Series.Add(polynomialSeries);
+                    Polynomials.Add(polynomial);
                     series++;
                 }
             }
@@ -58,15 +60,13 @@
                 return false;
             }
 
-            bool isValid = true;
-
             int optionCounter = 0;
             while (optionCounter < options.Length)
             {
                 var option = options[optionCounter];
 
-                int degree = 0;
-                isValid = int.TryParse(option, out degree);
+                int degree;
+                var isValid = int.TryParse(option, out degree);
                 if (!isValid || degree < 0)
                 {
                     return false;

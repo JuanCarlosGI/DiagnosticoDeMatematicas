@@ -473,7 +473,7 @@
             Class representing a polynomial function.
             </summary>
         </member>
-        <member name="F:DiagnosticoDeMatematicas.Helpers.Functions.FunctionTypes.Polynomial.coefficients">
+        <member name="F:DiagnosticoDeMatematicas.Helpers.Functions.FunctionTypes.Polynomial._coefficients">
             <summary>
             List of coefficients representing the polynomial function.
             </summary>
@@ -519,12 +519,12 @@
             <param name="text">String to be encoded.</param>
             <returns>Encoded string.</returns>
         </member>
-        <member name="T:DiagnosticoDeMatematicas.Helpers.IEncoder.EncoderSHA256">
+        <member name="T:DiagnosticoDeMatematicas.Helpers.IEncoder.EncoderSha256">
             <summary>
             Class in charge of encoding string using SHA256.
             </summary>
         </member>
-        <member name="M:DiagnosticoDeMatematicas.Helpers.IEncoder.EncoderSHA256.Encode(System.String)">
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEncoder.EncoderSha256.Encode(System.String)">
             <summary>
             Encodes a string using SHA256.
             </summary>
@@ -676,12 +676,56 @@
             Gets a value indicating whether an administrator is signed in.
             </summary>
         </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.AnswerAbstract">
+            <summary>
+            Class representing an abstract answer to a given question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.AnswerAbstract.ResponseId">
+            <summary>
+            Gets or sets the ID of the response it belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.AnswerAbstract.QuestionId">
+            <summary>
+            Gets or sets the ID of the question it is answering.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.AnswerAbstract.Response">
+            <summary>
+            Gets or sets the response it belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.AnswerAbstract.Question">
+            <summary>
+            Gets or sets the question it is answering.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.AnswerAbstract.IsCorrect">
+            <summary>
+            Gets a value indicating whether the answer is correct.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.AnswerBinder">
+            <summary>
+            Binder in charge of creating different subclasses of AnswerAbstract
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Models.AnswerBinder.CreateModel(System.Web.Mvc.ControllerContext,System.Web.Mvc.ModelBindingContext,System.Type)">
+            <summary>
+            Creates the object of the subclass.
+            </summary>
+            <param name="controllerContext">The controller context.</param>
+            <param name="bindingContext">The binding context.</param>
+            <param name="modelType">The type of model that is being created.</param>
+            <returns>The created object.</returns>
+        </member>
         <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.Id">
             <summary>
             Gets or sets the ID of the question.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.ExamID">
+        <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.ExamId">
             <summary>
             Gets or sets the ID of the exam to which this question belongs.
             </summary>
@@ -760,7 +804,7 @@
             Model representing an exam.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Exam.ID">
+        <member name="P:DiagnosticoDeMatematicas.Models.Exam.Id">
             <summary>
             Gets or sets the ID of the exam.
             </summary>
@@ -810,7 +854,7 @@
             Model representing a range of integers.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.Range.ID">
+        <member name="P:DiagnosticoDeMatematicas.Models.Range.Id">
             <summary>
             Gets or sets the ID of the range
             </summary>
@@ -1045,7 +1089,7 @@
             Model representing a variable inside a question.
             </summary>
         </member>
-        <member name="F:DiagnosticoDeMatematicas.Models.Variable.rnd">
+        <member name="F:DiagnosticoDeMatematicas.Models.Variable.Rnd">
             <summary>
             Object used to generate random values consistently.
             </summary>
@@ -1119,7 +1163,7 @@
             View Model for the view Responses/StatisticDetails
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel.ExamID">
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel.ExamId">
             <summary>
             Gets or sets the ID of the exam that is being analyzed.
             </summary>

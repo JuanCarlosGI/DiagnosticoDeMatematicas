@@ -169,9 +169,7 @@
     <Compile Include="App_Start\RouteConfig.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Controllers\MultipleSelectionAnswersController.cs" />
     <Compile Include="Controllers\MultipleSelectionQuestionsController.cs" />
-    <Compile Include="Controllers\SelectionQuestionsController.cs" />
     <Compile Include="Controllers\SingleSelectionQuestionsController.cs" />
     <Compile Include="Controllers\StatisticsController.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
@@ -203,16 +201,10 @@
     <Compile Include="Controllers\QuestionsController.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Controllers\RangesController.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
     <Compile Include="Controllers\ResponsesController.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Controllers\UsersController.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="Controllers\VariablesController.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="DAL\SiteContext.cs">
@@ -238,15 +230,15 @@
     <Compile Include="Helpers\Session\SessionService.cs" />
     <Compile Include="Helpers\Session\SessionValidator.cs" />
     <Compile Include="Helpers\IEncoder\StringEncoder.cs" />
-    <Compile Include="Models\AnswerAbstract\AnswerAbstract.cs" />
-    <Compile Include="Models\AnswerAbstract\SelectionAnswer.cs" />
-    <Compile Include="Models\QuestionAbstract\MultipleSelectionQuestion.cs" />
-    <Compile Include="Models\QuestionAbstract\QuestionAbstract.cs" />
-    <Compile Include="Models\QuestionAbstract\SelectionQuestion.cs" />
+    <Compile Include="Models\AnswerAbstract.cs" />
+    <Compile Include="Models\SelectionAnswer.cs" />
+    <Compile Include="Models\MultipleSelectionQuestion.cs" />
+    <Compile Include="Models\QuestionAbstract.cs" />
+    <Compile Include="Models\SelectionQuestion.cs" />
     <Compile Include="Models\QuestionOption.cs" />
-    <Compile Include="Models\AnswerAbstract\SingleSelectionAnswer.cs" />
+    <Compile Include="Models\SingleSelectionAnswer.cs" />
     <Compile Include="Models\Exam.cs" />
-    <Compile Include="Models\QuestionAbstract\SingleSelectionQuestion.cs" />
+    <Compile Include="Models\SingleSelectionQuestion.cs" />
     <Compile Include="Models\Range.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\User.cs" />
@@ -257,7 +249,7 @@
     <Compile Include="Models\ViewModels\StatisticDetailsViewModel.cs" />
     <Compile Include="Models\ViewModels\StatisticsViewModel.cs" />
     <Compile Include="Models\ViewModels\UserWithExamsViewModel.cs" />
-    <Compile Include="Models\AnswerAbstract\MultipleSelectionAnswer.cs" />
+    <Compile Include="Models\MultipleSelectionAnswer.cs" />
     <Compile Include="Models\BinaryOptionSelection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -313,10 +305,6 @@
     <Content Include="Views\Exams\Delete.cshtml" />
     <Content Include="Views\Exams\Details.cshtml" />
     <Content Include="Views\Exams\Index.cshtml" />
-    <Content Include="Views\Questions\Create.cshtml" />
-    <Content Include="Views\Questions\Delete.cshtml" />
-    <Content Include="Views\Questions\Details.cshtml" />
-    <Content Include="Views\Questions\Edit.cshtml" />
     <Content Include="Views\Responses\Create.cshtml" />
     <Content Include="Views\Responses\Delete.cshtml" />
     <Content Include="Views\Responses\Details.cshtml" />
@@ -327,26 +315,13 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\Variables\Create.cshtml" />
-    <Content Include="Views\Variables\Delete.cshtml" />
-    <Content Include="Views\Variables\Details.cshtml" />
-    <Content Include="Views\Ranges\Create.cshtml" />
-    <Content Include="Views\Ranges\Delete.cshtml" />
-    <Content Include="Views\Ranges\Edit.cshtml" />
-    <Content Include="Views\Questions\View.cshtml" />
     <Content Include="Views\Home\AccessDenied.cshtml" />
     <Content Include="Views\Statistics\StatisticDetails.cshtml" />
     <Content Include="Views\Statistics\Statistics.cshtml" />
     <Content Include="Views\Statistics\GlobalStatistics.cshtml" />
     <Content Include="Views\Responses\ThankYou.cshtml" />
     <Content Include="Views\Questions\Instructions.cshtml" />
-    <Content Include="Views\Questions\_Details.cshtml" />
     <Content Include="Views\MultipleSelectionQuestions\_Edit.cshtml" />
-    <Content Include="Views\MultipleSelectionAnswers\Create.cshtml" />
-    <Content Include="Views\MultipleSelectionAnswers\Delete.cshtml" />
-    <Content Include="Views\MultipleSelectionAnswers\_Details.cshtml" />
-    <Content Include="Views\MultipleSelectionAnswers\Edit.cshtml" />
-    <Content Include="Views\MultipleSelectionAnswers\Index.cshtml" />
     <Content Include="Views\Exams\_Details.cshtml" />
     <Content Include="Views\Exams\_Edit.cshtml" />
     <Content Include="Views\Questions\CreateNew.cshtml" />
@@ -361,7 +336,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\SelectionQuestions\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>

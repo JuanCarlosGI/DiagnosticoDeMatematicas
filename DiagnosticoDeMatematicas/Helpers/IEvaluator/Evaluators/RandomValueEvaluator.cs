@@ -1,4 +1,6 @@
-﻿namespace DiagnosticoDeMatematicas.Helpers.IEvaluator
+﻿using System.Globalization;
+
+namespace DiagnosticoDeMatematicas.Helpers.IEvaluator
 {
     using System.Text.RegularExpressions;
     using Models;
@@ -15,17 +17,18 @@
         /// <returns>The evaluated question.</returns>
         public QuestionAbstract Evaluate(QuestionAbstract question)
         {
-            if (question is SelectionQuestion)
+            var selectionQuestion = question as SelectionQuestion;
+            if (selectionQuestion != null)
             {
                 SelectionQuestion aux = new SelectionQuestion
                 {
-                    Description = question.Description,
-                    ExamID = question.ExamID,
-                    Options = (question as SelectionQuestion).Options,
-                    Answers = question.Answers,
-                    Exam = question.Exam,
-                    Id = question.Id,
-                    Variables = question.Variables
+                    Description = selectionQuestion.Description,
+                    ExamId = selectionQuestion.ExamId,
+                    Options = selectionQuestion.Options,
+                    Answers = selectionQuestion.Answers,
+                    Exam = selectionQuestion.Exam,
+                    Id = selectionQuestion.Id,
+                    Variables = selectionQuestion.Variables
                 };
 
                 // Evaluate each variable
@@ -64,7 +67,7 @@
             var partSegments = part.Split('|');
             for (int operation = 1; operation < partSegments.Length; operation += 2)
             {
-                partSegments[operation] = Evaluate(partSegments[operation]).ToString();
+                partSegments[operation] = Evaluate(partSegments[operation]).ToString(CultureInfo.CurrentCulture);
             }
 
             var aux = string.Join(string.Empty, partSegments);
@@ -99,15 +102,10 @@
         /// <returns>Modified string.</returns>
         private string EliminateDoubleSigns(string expression)
         {
-            string pattern;
-            string replacement;
-            Regex rgx;
-            string result;
-
-            pattern = Regex.Escape("+") + "\\s*-";
-            replacement = "-";
-            rgx = new Regex(pattern);
-            result = rgx.Replace(expression, replacement);
+            var pattern = Regex.Escape("+") + "\\s*-";
+            var replacement = "-";
+            var rgx = new Regex(pattern);
+            var result = rgx.Replace(expression, replacement);
 
             pattern = "-\\s*-";
             replacement = "+";

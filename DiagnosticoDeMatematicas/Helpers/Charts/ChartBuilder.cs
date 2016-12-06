@@ -12,8 +12,7 @@
         /// <summary>
         /// Pairs of valid translations from strings to CustomChartTypes
         /// </summary>
-        private static readonly Tuple<string, CustomChartTypes>[] ValidTranslations = new Tuple<string, CustomChartTypes>[] 
-        {
+        private static readonly Tuple<string, CustomChartTypes>[] ValidTranslations = {
             new Tuple<string, CustomChartTypes>("Polynomial", CustomChartTypes.Polynomial),
             new Tuple<string, CustomChartTypes>("PolynomialWithDerivate", CustomChartTypes.PolynomialWithDerivate),
             new Tuple<string, CustomChartTypes>("PolynomialWithDoubleDerivate", CustomChartTypes.PolynomialWithDoubleDerivate),
@@ -59,8 +58,8 @@
         /// <returns>String with all instances matching a possible chart modified.</returns>
         public static string QuestionWithChart(string question)
         {
-            var chartTexts = question.Split(new string[] { "&&" }, StringSplitOptions.None);
-            for (int segment = 1; segment < chartTexts.Count(); segment += 2)
+            var chartTexts = question.Split(new[] { "&&" }, StringSplitOptions.None);
+            for (int segment = 1; segment < chartTexts.Length; segment += 2)
             {
                 chartTexts[segment] = HtmlImageChart(chartTexts[segment]);
             }
@@ -85,9 +84,9 @@
         /// <returns>The string representation of the image of a chart.</returns>
         public static string CreateChart(string chartData)
         {
-            string[] parameters = chartData.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            string[] parameters = chartData.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (parameters.Count() < 6)
+            if (parameters.Length < 6)
             {
                 return null;
             }
@@ -155,12 +154,7 @@
                     break;
             }
 
-            if (chart == null)
-            {
-                return null;
-            }
-            
-            return chart.ToString();
+            return chart?.ToString();
         }
     }
 }

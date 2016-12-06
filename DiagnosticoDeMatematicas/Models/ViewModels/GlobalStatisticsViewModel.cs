@@ -60,9 +60,11 @@
         {
             get
             {
-                var chart = new Chart();
-                chart.Width = 600;
-                chart.Height = 600;
+                var chart = new Chart
+                {
+                    Width = 600,
+                    Height = 600
+                };
                 chart.ChartAreas.Add("Chart").BackColor = Color.White;
                 chart.Series.Add("Chart");
 
@@ -93,9 +95,11 @@
         {
             get
             {
-                var chart = new Chart();
-                chart.Width = 1000;
-                chart.Height = 400;
+                var chart = new Chart
+                {
+                    Width = 1000,
+                    Height = 400
+                };
                 chart.ChartAreas.Add("Chart").BackColor = Color.White;
 
                 double max = 0;

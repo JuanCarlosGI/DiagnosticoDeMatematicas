@@ -19,9 +19,11 @@
             {
                 var value = ParseOptions(stringValue);
 
-                var series = new VerticalSeries(value, ChartAreas["Chart"]);
-                series.Color = SeriesColorHierarchy[0];
-                series.BorderWidth = 3;
+                var series = new VerticalSeries(value, ChartAreas["Chart"])
+                {
+                    Color = SeriesColorHierarchy[0],
+                    BorderWidth = 3
+                };
 
                 Series.Add(series);
             }

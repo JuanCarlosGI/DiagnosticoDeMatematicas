@@ -13,7 +13,7 @@
         /// <summary>
         /// Object used to generate random values consistently.
         /// </summary>
-        private static Random rnd = new Random();
+        private static readonly Random Rnd = new Random();
         
         /// <summary>
         /// Gets or sets the symbol representing the variable.
@@ -63,7 +63,7 @@
                     }
                 }
 
-                int r = rnd.Next(values.Count);
+                int r = Rnd.Next(values.Count);
                 return values[r];
             }
 

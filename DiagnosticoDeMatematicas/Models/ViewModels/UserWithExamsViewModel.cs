@@ -1,5 +1,4 @@
-﻿using DiagnosticoDeMatematicas.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -17,12 +16,13 @@ namespace DiagnosticoDeMatematicas.Models.ViewModels
             Responses = new List<Response>();
             foreach( var exam in exams)
             {
-                var responses = user.Responses.Where(r => r.ExamId == exam.ID);
+                var responses = user.Responses.Where(r => r.ExamId == exam.Id);
                 Response response = null;
 
-                if (responses.Count() != 0)
+                var enumerable = responses as Response[] ?? responses.ToArray();
+                if (enumerable.Length != 0)
                 {
-                    response = responses.OrderByDescending(r => r.Date).First();
+                    response = enumerable.OrderByDescending(r => r.Date).First();
                 }
 
                 if (response == null)
@@ -39,15 +39,17 @@ namespace DiagnosticoDeMatematicas.Models.ViewModels
 
         public User User { get; }
 
-        private List<Response> Responses { set; get; }
+        private List<Response> Responses { get; }
 
         public string RadarChart
         {
             get
             {
-                var chart = new Chart();
-                chart.Width = 600;
-                chart.Height = 600;
+                var chart = new Chart
+                {
+                    Width = 600,
+                    Height = 600
+                };
                 chart.ChartAreas.Add("Chart").BackColor = Color.White;
                 chart.Series.Add("Chart");
 

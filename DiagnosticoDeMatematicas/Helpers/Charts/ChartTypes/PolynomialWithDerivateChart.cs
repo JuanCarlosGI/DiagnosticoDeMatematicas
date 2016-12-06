@@ -24,9 +24,11 @@
 
                 Derivate = Polynomial.Derivate() as Polynomial;
 
-                var derivateSeries = new FunctionSeries(new Polynomial(coefficients).Derivate(), ChartAreas["Chart"]);
-                derivateSeries.BorderWidth = 2;
-                derivateSeries.Color = SeriesColorHierarchy[1];
+                var derivateSeries = new FunctionSeries(new Polynomial(coefficients).Derivate(), ChartAreas["Chart"])
+                {
+                    BorderWidth = 2,
+                    Color = SeriesColorHierarchy[1]
+                };
 
                 Series.Add(derivateSeries);
             }

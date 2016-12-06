@@ -10,7 +10,7 @@
 
     public class ExamsController : Controller
     {
-        private SiteContext db = new SiteContext();
+        private readonly SiteContext _db = new SiteContext();
 
         // GET: Exams
         public ActionResult Index()
@@ -25,7 +25,7 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            return View(db.Exams.ToList());
+            return View(_db.Exams.ToList());
         }
 
         // GET: Exams/Details/5
@@ -46,7 +46,7 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            Exam exam = db.Exams.Find(id);
+            Exam exam = _db.Exams.Find(id);
             if (exam == null)
             {
                 return HttpNotFound();
@@ -56,13 +56,13 @@
 
         public PartialViewResult DetailsPartial(int examId)
         {
-            Exam exam = db.Exams.Find(examId);
+            Exam exam = _db.Exams.Find(examId);
             return PartialView("_Details", exam);
         }
 
         public PartialViewResult EditPartial(int examId)
         {
-            Exam exam = db.Exams.Find(examId);
+            Exam exam = _db.Exams.Find(examId);
             return PartialView("_Edit", exam);
         }
 
@@ -71,8 +71,8 @@
         {
             if (ModelState.IsValid)
             {
-                db.Entry(exam).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(exam).State = EntityState.Modified;
+                _db.SaveChanges();
                 return PartialView("_Details", exam);
             }
             return PartialView("_Edit", exam);
@@ -101,8 +101,8 @@
         {
             if (ModelState.IsValid)
             {
-                db.Exams.Add(exam);
-                db.SaveChanges();
+                _db.Exams.Add(exam);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -127,7 +127,7 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            Exam exam = db.Exams.Find(id);
+            Exam exam = _db.Exams.Find(id);
             if (exam == null)
             {
                 return HttpNotFound();
@@ -150,9 +150,9 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            Exam exam = db.Exams.Find(id);
-            db.Exams.Remove(exam);
-            db.SaveChanges();
+            Exam exam = _db.Exams.Find(id);
+            _db.Exams.Remove(exam);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -160,7 +160,7 @@
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
 
             base.Dispose(disposing);

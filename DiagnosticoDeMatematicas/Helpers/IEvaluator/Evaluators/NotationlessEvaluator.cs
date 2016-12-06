@@ -14,30 +14,31 @@
         /// <returns>Evaluated question.</returns>
         public QuestionAbstract Evaluate(QuestionAbstract question)
         {
-            if (question is SelectionQuestion)
+            var selectionQuestion = question as SelectionQuestion;
+            if (selectionQuestion != null)
             {
                 SelectionQuestion aux;
                 if (question is MultipleSelectionQuestion)
                     aux = new MultipleSelectionQuestion
                     {
-                        Description = question.Description,
-                        ExamID = question.ExamID,
-                        Options = ((SelectionQuestion)question).Options,
-                        Answers = question.Answers,
-                        Exam = question.Exam,
-                        Id = question.Id,
-                        Variables = question.Variables
+                        Description = selectionQuestion.Description,
+                        ExamId = selectionQuestion.ExamId,
+                        Options = selectionQuestion.Options,
+                        Answers = selectionQuestion.Answers,
+                        Exam = selectionQuestion.Exam,
+                        Id = selectionQuestion.Id,
+                        Variables = selectionQuestion.Variables
                     };
                 else
                     aux = new SingleSelectionQuestion
                     {
-                        Description = question.Description,
-                        ExamID = question.ExamID,
-                        Options = ((SelectionQuestion)question).Options,
-                        Answers = question.Answers,
-                        Exam = question.Exam,
-                        Id = question.Id,
-                        Variables = question.Variables
+                        Description = selectionQuestion.Description,
+                        ExamId = selectionQuestion.ExamId,
+                        Options = selectionQuestion.Options,
+                        Answers = selectionQuestion.Answers,
+                        Exam = selectionQuestion.Exam,
+                        Id = selectionQuestion.Id,
+                        Variables = selectionQuestion.Variables
                     };
 
                 aux.Description = aux.Description.Replace("%", string.Empty).Replace("|", string.Empty);

@@ -8,7 +8,7 @@
     using System;
     public class StatisticsController : Controller
     {
-        private SiteContext db = new SiteContext();
+        private readonly SiteContext _db = new SiteContext();
 
         // GET: Statistics
         public ActionResult Index()
@@ -28,7 +28,7 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            ViewBag.ExamID = new SelectList(db.Exams, "ID", "Name", string.Empty);
+            ViewBag.ExamID = new SelectList(_db.Exams, "ID", "Name", string.Empty);
             return View();
         }
 
@@ -57,7 +57,7 @@
 
             if (ModelState.IsValid)
             {
-                if (!details.ExamID.HasValue)
+                if (!details.ExamId.HasValue)
                 {
                     return RedirectToAction("GlobalStatistics", "Statistics", details);
                 }
@@ -65,7 +65,7 @@
                 return RedirectToAction("Statistics", "Statistics", details);
             }
 
-            ViewBag.ExamID = new SelectList(db.Exams, "ID", "Name", string.Empty);
+            ViewBag.ExamID = new SelectList(_db.Exams, "ID", "Name", string.Empty);
             return View(details);
         }
 
@@ -83,7 +83,7 @@
 
             var statistics = new StatisticsViewModel
             {
-                ExamAnalyzer = new ExamAnalyzer(db.Exams.Find(details.ExamID), details.StartDate, details.EndDate)
+                ExamAnalyzer = new ExamAnalyzer(_db.Exams.Find(details.ExamId), details.StartDate, details.EndDate)
             };
 
             return View(statistics);
@@ -101,7 +101,7 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            var model = new GlobalStatisticsViewModel(db.Exams.ToList(), details.StartDate, details.EndDate);
+            var model = new GlobalStatisticsViewModel(_db.Exams.ToList(), details.StartDate, details.EndDate);
 
             return View(model);
         }

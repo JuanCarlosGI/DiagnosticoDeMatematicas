@@ -25,9 +25,11 @@
 
                 Polynomial = new Polynomial(coefficients);
 
-                var polynomialSeries = new FunctionSeries(Polynomial, ChartAreas["Chart"]);
-                polynomialSeries.BorderWidth = 3;
-                polynomialSeries.Color = SeriesColorHierarchy[0];
+                var polynomialSeries = new FunctionSeries(Polynomial, ChartAreas["Chart"])
+                {
+                    BorderWidth = 3,
+                    Color = SeriesColorHierarchy[0]
+                };
 
                 Series.Add(polynomialSeries);
             }
@@ -43,7 +45,7 @@
         /// </summary>
         /// <param name="coefficients">Array of strings.</param>
         /// <returns>A value indicating whether the coefficients are correctly formatted.</returns>
-        protected virtual bool ValidateCoefficients(string[] coefficients)
+        protected bool ValidateCoefficients(string[] coefficients)
         {
             if (coefficients.Length < 1)
             {

@@ -1,16 +1,16 @@
 ﻿@using DiagnosticoDeMatematicas.Models
-@model DiagnosticoDeMatematicas.Models.Exam
+@model Exam
 
 @{
     ViewBag.Title = Model.Name;
 }
 
-@Html.Action("DetailsPartial", new {examId = Model.ID})
+@Html.Action("DetailsPartial", new {examId = Model.Id})
 
 <hr />
 <h2>Preguntas</h2>
 <p>
-    @Ajax.ActionLink("Agregar pregunta", "CreateNew", "Questions", new { examId = Model.ID }, new AjaxOptions {UpdateTargetId = "newQuestion", InsertionMode = InsertionMode.ReplaceWith})
+    @Ajax.ActionLink("Agregar pregunta", "CreateNew", "Questions", new { examId = Model.Id }, new AjaxOptions {UpdateTargetId = "newQuestion", InsertionMode = InsertionMode.ReplaceWith})
 </p>
 
 <div id="newQuestion"></div>

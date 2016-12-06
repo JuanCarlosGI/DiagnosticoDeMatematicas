@@ -11,7 +11,7 @@
     using Models.ViewModels;
     public class UsersController : Controller
     {
-        private SiteContext db = new SiteContext();
+        private readonly SiteContext _db = new SiteContext();
 
         // GET: Users
         public ActionResult Index()
@@ -26,7 +26,7 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            return View(db.Users.ToList());
+            return View(_db.Users.ToList());
         }
 
         // GET: Users/Details/5
@@ -42,7 +42,7 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            User user = db.Users.Find(id);
+            User user = _db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -54,7 +54,7 @@
                 return RedirectToAction("AccessDenied", "Home");
             }
 
-            return View(new UserWithExamsViewModel(user, db.Exams));
+            return View(new UserWithExamsViewModel(user, _db.Exams));
         }
 
         // GET: Users/Create
@@ -77,8 +77,8 @@
                 byte[] plainTextBytes = System.Text.Encoding.Unicode.GetBytes(user.Password);
                 byte[] hash = hashAlgo.ComputeHash(plainTextBytes);
                 user.Password = System.Text.Encoding.Unicode.GetString(hash);
-                db.Users.Add(user);
-                db.SaveChanges();
+                _db.Users.Add(user);
+                _db.SaveChanges();
                 return RedirectToAction("SignIn", "Home");
             }
 
@@ -98,7 +98,7 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            User user = db.Users.Find(id);
+            User user = _db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -122,8 +122,8 @@
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(user).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -148,7 +148,7 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            User user = db.Users.Find(id);
+            User user = _db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -162,9 +162,9 @@
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
+            User user = _db.Users.Find(id);
+            _db.Users.Remove(user);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -172,7 +172,7 @@
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
 
             base.Dispose(disposing);

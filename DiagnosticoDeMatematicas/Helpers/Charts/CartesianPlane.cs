@@ -1,4 +1,6 @@
-﻿namespace DiagnosticoDeMatematicas.Charts
+﻿using System.Web.UI.WebControls;
+
+namespace DiagnosticoDeMatematicas.Charts
 {
     using System;
     using System.Drawing;
@@ -15,7 +17,6 @@
         /// Blue is the primary color, red the secondary, and green the tertiary.
         /// </summary>
         protected static readonly Color[] SeriesColorHierarchy =
-            new Color[]
             {
                 Color.Blue,
                 Color.Red,
@@ -69,7 +70,7 @@
         /// <param name="maxX">Maximum value for the x-axis</param>
         /// <param name="minY">Minimum value for the y-axis.</param>
         /// <param name="maxY">Maximum value for the y-axis</param>
-        public CartesianPlane(int minX, int maxX, int minY, int maxY) : base()
+        public CartesianPlane(int minX, int maxX, int minY, int maxY)
         {
             Width = ChartWidth;
             Height = ChartHeight;
@@ -90,6 +91,18 @@
             ChartAreas[0].AxisY.MajorGrid.Interval = GridInterval;
             ChartAreas[0].AxisY.Minimum = minY;
             ChartAreas[0].AxisY.Maximum = maxY;
+        }
+
+        public sealed override Unit Height
+        {
+            get { return base.Height; }
+            set { base.Height = value; }
+        }
+
+        public sealed override Unit Width
+        {
+            get { return base.Width; }
+            set { base.Width = value; }
         }
 
         /// <summary>
