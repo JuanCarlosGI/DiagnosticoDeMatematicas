@@ -1,12 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Web.Mvc;
-using DiagnosticoDeMatematicas.DAL;
-using DiagnosticoDeMatematicas.Helpers;
-using DiagnosticoDeMatematicas.Models.ViewModels;
-
-namespace DiagnosticoDeMatematicas.Controllers
+﻿namespace DiagnosticoDeMatematicas.Controllers
 {
+    using System;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Web.Mvc;
+    using DAL;
+    using Helpers;
+    using Models;
+    using Models.ViewModels;
+
     public class StatisticsController : Controller
     {
         private readonly SiteContext _db = new SiteContext();
@@ -82,9 +84,25 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return RedirectToAction("SignIn", "Home");
             }
 
+            var exam = _db.Exams.Find(details.ExamId);
+            var responses = exam.Responses.ToList();
+            foreach (var response in responses)
+                foreach (var answer in response.Answers.ToArray())
+                {
+                    var multipleAnswer = answer as MultipleSelectionAnswer;
+                    if (multipleAnswer != null)
+                    {
+                        response.Answers.Remove(answer);
+                        response.Answers.Add(_db.MultipleSelectionAnswers
+                            .Include(a => a.Selections)
+                            .SingleOrDefault(e => e.QuestionId == answer.QuestionId && e.ResponseId == answer.ResponseId));
+                    }
+                }
+            exam.Responses = responses;
+
             var statistics = new StatisticsViewModel
             {
-                ExamAnalyzer = new ExamAnalyzer(_db.Exams.Find(details.ExamId), details.StartDate, details.EndDate)
+                ExamAnalyzer = new ExamAnalyzer(exam, details.StartDate, details.EndDate)
             };
 
             return View(statistics);
@@ -102,7 +120,26 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            var model = new GlobalStatisticsViewModel(_db.Exams.ToList(), details.StartDate, details.EndDate);
+            var exams = _db.Exams.ToList();
+            foreach (var exam in exams)
+            {
+                var responses = exam.Responses.ToList();
+                foreach (var response in responses)
+                    foreach (var answer in response.Answers.ToArray())
+                    {
+                        var multipleAnswer = answer as MultipleSelectionAnswer;
+                        if (multipleAnswer != null)
+                        {
+                            response.Answers.Remove(answer);
+                            response.Answers.Add(_db.MultipleSelectionAnswers
+                                .Include(a => a.Selections)
+                                .SingleOrDefault(e => e.QuestionId == answer.QuestionId && e.ResponseId == answer.ResponseId));
+                        }
+                    }
+                exam.Responses = responses;
+            }
+            
+            var model = new GlobalStatisticsViewModel(exams, details.StartDate, details.EndDate);
 
             return View(model);
         }

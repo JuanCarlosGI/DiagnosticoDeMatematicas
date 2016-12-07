@@ -223,7 +223,7 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Helpers\ExamAnalyzer.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\Functions\Function.cs" />

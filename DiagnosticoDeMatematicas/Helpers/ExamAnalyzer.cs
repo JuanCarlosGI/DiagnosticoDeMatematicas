@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using DiagnosticoDeMatematicas.Models;
-
-namespace DiagnosticoDeMatematicas.Helpers
+﻿namespace DiagnosticoDeMatematicas.Helpers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using Models;
+
     /// <summary>
     /// Class in charge of analyzing an exam.
     /// </summary>
@@ -113,6 +113,21 @@ namespace DiagnosticoDeMatematicas.Helpers
         }
 
         /// <summary>
+        /// Gets the percentage of the responses analyzed that have an exact grade.
+        /// </summary>
+        /// <param name="value">The grade to be compared.</param>
+        /// <returns>The percentage of responses meeting the criteria.</returns>
+        public double PercentageWithValue(double value)
+        {
+            if (AmountOfResponses == 0)
+            {
+                return 0;
+            }
+
+            return Responses.Count(r => r.Grade == value) * 100.0 / AmountOfResponses;
+        }
+
+        /// <summary>
         /// Creates the QuestionResponses dictionary.
         /// </summary>
         /// <returns>The created dictionary</returns>
@@ -153,7 +168,7 @@ namespace DiagnosticoDeMatematicas.Helpers
                 gradeRanges.Add(PercentageBetweenGrades(grade, grade + 5));
             }
 
-            gradeRanges.Add(PercentageBetweenGrades(100, 100));
+            gradeRanges.Add(PercentageWithValue(100));
             return gradeRanges.ToArray();
         }
     }
