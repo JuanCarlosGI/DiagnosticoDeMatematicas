@@ -30,7 +30,7 @@
                 {
                     var polynomial = new Polynomial(coefficients);
 
-                    var polynomialSeries = new FunctionSeries(polynomial, ChartAreas["Chart"]) {BorderWidth = 2};
+                    var polynomialSeries = new FunctionSeries(polynomial, ChartAreas["Chart"]) { BorderWidth = 2 };
                     if (series < SeriesColorHierarchy.Length)
                     {
                         polynomialSeries.Color = SeriesColorHierarchy[series];

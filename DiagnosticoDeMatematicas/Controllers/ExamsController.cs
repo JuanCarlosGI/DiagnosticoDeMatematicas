@@ -1,13 +1,13 @@
-﻿namespace DiagnosticoDeMatematicas.Controllers
-{
-    using System.Data.Entity;
-    using System.Linq;
-    using System.Net;
-    using System.Web.Mvc;
-    using DAL;
-    using Models;
-    using Helpers;
+﻿using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web.Mvc;
+using DiagnosticoDeMatematicas.DAL;
+using DiagnosticoDeMatematicas.Helpers;
+using DiagnosticoDeMatematicas.Models;
 
+namespace DiagnosticoDeMatematicas.Controllers
+{
     public class ExamsController : Controller
     {
         private readonly SiteContext _db = new SiteContext();

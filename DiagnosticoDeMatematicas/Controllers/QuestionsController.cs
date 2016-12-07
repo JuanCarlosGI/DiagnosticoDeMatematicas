@@ -1,8 +1,8 @@
-﻿namespace DiagnosticoDeMatematicas.Controllers
-{
-    using System.Web.Mvc;
-    using DAL;
+﻿using System.Web.Mvc;
+using DiagnosticoDeMatematicas.DAL;
 
+namespace DiagnosticoDeMatematicas.Controllers
+{
     public class QuestionsController : Controller
     {
         private readonly SiteContext _db = new SiteContext();

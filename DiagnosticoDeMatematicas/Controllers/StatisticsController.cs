@@ -1,11 +1,12 @@
-﻿namespace DiagnosticoDeMatematicas.Controllers
+﻿using System;
+using System.Linq;
+using System.Web.Mvc;
+using DiagnosticoDeMatematicas.DAL;
+using DiagnosticoDeMatematicas.Helpers;
+using DiagnosticoDeMatematicas.Models.ViewModels;
+
+namespace DiagnosticoDeMatematicas.Controllers
 {
-    using System.Linq;
-    using System.Web.Mvc;
-    using DAL;
-    using Helpers;
-    using Models.ViewModels;
-    using System;
     public class StatisticsController : Controller
     {
         private readonly SiteContext _db = new SiteContext();

@@ -1,16 +1,16 @@
-﻿namespace DiagnosticoDeMatematicas.Controllers
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web.Mvc;
+using DiagnosticoDeMatematicas.DAL;
+using DiagnosticoDeMatematicas.Helpers;
+using DiagnosticoDeMatematicas.Helpers.IEvaluator;
+using DiagnosticoDeMatematicas.Models;
+
+namespace DiagnosticoDeMatematicas.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data.Entity;
-    using System.Linq;
-    using System.Net;
-    using System.Web.Mvc;
-    using DAL;
-    using Helpers;
-    using Models;
-    using Helpers.Extensions;
-    using Helpers.IEvaluator;
     public class ResponsesController : Controller
     {
         private readonly SiteContext _db = new SiteContext();

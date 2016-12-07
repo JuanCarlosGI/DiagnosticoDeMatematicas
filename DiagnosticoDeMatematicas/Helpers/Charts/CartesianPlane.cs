@@ -1,6 +1,4 @@
-﻿using System.Web.UI.WebControls;
-
-namespace DiagnosticoDeMatematicas.Charts
+﻿namespace DiagnosticoDeMatematicas.Charts
 {
     using System;
     using System.Drawing;
@@ -91,18 +89,6 @@ namespace DiagnosticoDeMatematicas.Charts
             ChartAreas[0].AxisY.MajorGrid.Interval = GridInterval;
             ChartAreas[0].AxisY.Minimum = minY;
             ChartAreas[0].AxisY.Maximum = maxY;
-        }
-
-        public sealed override Unit Height
-        {
-            get { return base.Height; }
-            set { base.Height = value; }
-        }
-
-        public sealed override Unit Width
-        {
-            get { return base.Width; }
-            set { base.Width = value; }
         }
 
         /// <summary>

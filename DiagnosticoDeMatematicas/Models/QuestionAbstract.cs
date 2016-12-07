@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace DiagnosticoDeMatematicas.Models
+﻿namespace DiagnosticoDeMatematicas.Models
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    /// <summary>
+    /// Model representing a question.
+    /// </summary>
     public class QuestionAbstract
     {
         /// <summary>

@@ -1,7 +1,7 @@
-﻿using System.Globalization;
-
-namespace DiagnosticoDeMatematicas.Helpers.IEvaluator
+﻿namespace DiagnosticoDeMatematicas.Helpers.IEvaluator
 {
+    using System.Data;
+    using System.Globalization;
     using System.Text.RegularExpressions;
     using Models;
 
@@ -88,8 +88,8 @@ namespace DiagnosticoDeMatematicas.Helpers.IEvaluator
         /// <returns>The resulting value.</returns>
         private double Evaluate(string expression)
         {
-            var dataTable = new System.Data.DataTable();
-            var dataColumn = new System.Data.DataColumn("Eval", typeof(double), expression);
+            var dataTable = new DataTable();
+            var dataColumn = new DataColumn("Eval", typeof(double), expression);
             dataTable.Columns.Add(dataColumn);
             dataTable.Rows.Add(0);
             return (double)dataTable.Rows[0]["Eval"];
@@ -148,7 +148,7 @@ namespace DiagnosticoDeMatematicas.Helpers.IEvaluator
         }
 
         /// <summary>
-        /// Modifies a string so that if a division is present in which either the numerator or the denumerator are 
+        /// Modifies a string so that if a division is present in which either the numerator or the denominator are 
         /// negative (but not both), the negative sign is put outside the division instead.
         /// </summary>
         /// <param name="expression">String to be modified.</param>

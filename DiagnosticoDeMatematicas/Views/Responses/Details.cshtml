@@ -1,9 +1,11 @@
-﻿@model DiagnosticoDeMatematicas.Models.Response
+﻿@using DiagnosticoDeMatematicas.Helpers.IEvaluator
+@using DiagnosticoDeMatematicas.Models
+@model Response
 
 @{
     ViewBag.Title = "Detalles de respuesta";
-    var answerDummy = new DiagnosticoDeMatematicas.Models.SingleSelectionAnswer();
-    var evaluator = new DiagnosticoDeMatematicas.Helpers.IEvaluator.NotationlessEvaluator();
+    var answerDummy = new SingleSelectionAnswer();
+    var evaluator = new NotationlessEvaluator();
 }
 
 <h2>Detalles de respuesta</h2>

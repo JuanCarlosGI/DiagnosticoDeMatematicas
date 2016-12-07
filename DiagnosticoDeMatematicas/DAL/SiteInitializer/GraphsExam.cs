@@ -1,7 +1,7 @@
-﻿namespace DiagnosticoDeMatematicas.DAL
-{
-    using Models;
+﻿using DiagnosticoDeMatematicas.Models;
 
+namespace DiagnosticoDeMatematicas.DAL
+{
     public partial class SiteInitializer
     {
         private void GraphsExams()

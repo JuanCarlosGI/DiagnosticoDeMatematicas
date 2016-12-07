@@ -49,7 +49,7 @@
         {
             if (Ranges != null)
             {
-                if(Ranges.Count == 0)
+                if (Ranges.Count == 0)
                 {
                     return 0;
                 }

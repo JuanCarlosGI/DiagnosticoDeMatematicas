@@ -1,11 +1,11 @@
-﻿namespace DiagnosticoDeMatematicas.Helpers
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using Models;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using DiagnosticoDeMatematicas.Models;
 
+namespace DiagnosticoDeMatematicas.Helpers
+{
     /// <summary>
     /// Class in charge of analyzing an exam.
     /// </summary>

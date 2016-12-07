@@ -9,9 +9,15 @@
     [Table("SingleSelectionAnswer")]
     public class SingleSelectionAnswer : SelectionAnswer
     {
+        /// <summary>
+        /// Gets or sets the ID of the <see cref="QuestionOption"/> that was selected.
+        /// </summary>
         [Required]
         public int SelectionId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the <see cref="QuestionOption"/> that was selected.
+        /// </summary>
         [ForeignKey("SelectionId")]
         public virtual QuestionOption Selection { get; set; } 
 

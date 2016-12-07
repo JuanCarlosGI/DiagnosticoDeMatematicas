@@ -169,11 +169,16 @@
     <Compile Include="App_Start\RouteConfig.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Controllers\MultipleSelectionQuestionsController.cs" />
-    <Compile Include="Controllers\SingleSelectionQuestionsController.cs" />
+    <Compile Include="Controllers\MultipleSelectionQuestionsController.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Controllers\SingleSelectionQuestionsController.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Controllers\StatisticsController.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="DAL\Binders\AnswerBinder.cs" />
     <Compile Include="DAL\SiteInitializer\GraphsExam.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -217,9 +222,10 @@
       <DependentUpon>Global.asax</DependentUpon>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Helpers\ExamAnalyzer.cs" />
+    <Compile Include="Helpers\ExamAnalyzer.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Helpers\ExtensionMethods.cs" />
-    <Compile Include="Helpers\Extensions\EnumerableExtensions.cs" />
     <Compile Include="Helpers\Functions\Function.cs" />
     <Compile Include="Helpers\Functions\FunctionTypes\Polynomial.cs" />
     <Compile Include="Helpers\IEncoder\IEncoder.cs" />
@@ -246,6 +252,8 @@
     <Compile Include="Models\ViewModels\GlobalStatisticsViewModel.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Models\ViewModels\MultipleSelectionQuestionWithOptionsViewModel.cs" />
+    <Compile Include="Models\ViewModels\SingleSelectionQuestionWithOptionsViewModel.cs" />
     <Compile Include="Models\ViewModels\StatisticDetailsViewModel.cs" />
     <Compile Include="Models\ViewModels\StatisticsViewModel.cs" />
     <Compile Include="Models\ViewModels\UserWithExamsViewModel.cs" />
@@ -336,6 +344,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Helpers\Extensions\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>

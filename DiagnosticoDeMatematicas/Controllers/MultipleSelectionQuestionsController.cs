@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using DiagnosticoDeMatematicas.DAL;
 using DiagnosticoDeMatematicas.Helpers.IEvaluator;
 using DiagnosticoDeMatematicas.Models;
+using DiagnosticoDeMatematicas.Models.ViewModels;
 
 namespace DiagnosticoDeMatematicas.Controllers
 {
@@ -49,7 +50,7 @@ namespace DiagnosticoDeMatematicas.Controllers
         public PartialViewResult Edit(int questionId)
         {
             var question = _db.MultipleSelectionQuestions.Find(questionId);
-            MultipleSelectionQuestionWithOptionsViewModel model = new MultipleSelectionQuestionWithOptionsViewModel
+            var model = new MultipleSelectionQuestionWithOptionsViewModel
             {
                 Id = questionId,
                 ExamId = question.ExamId,

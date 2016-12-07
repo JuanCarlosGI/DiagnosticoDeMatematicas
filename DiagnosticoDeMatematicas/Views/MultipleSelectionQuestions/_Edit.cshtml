@@ -1,18 +1,18 @@
 ﻿@using DiagnosticoDeMatematicas.Models
-@model MultipleSelectionQuestionWithOptionsViewModel
+@model DiagnosticoDeMatematicas.Models.ViewModels.MultipleSelectionQuestionWithOptionsViewModel
 
 @{
     var dummy = new QuestionOption();
 }
 <div id="@Model.Id">
-    @using (Ajax.BeginForm("Edit", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = $"{Model.Id}", HttpMethod = "Post" }))
+    @using (Ajax.BeginForm("Edit", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = $"{Model.Id}", HttpMethod = "Post" }))
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(id => Model.Id)
         @Html.HiddenFor(examId => Model.ExamId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })

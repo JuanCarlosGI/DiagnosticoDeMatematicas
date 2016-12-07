@@ -4,6 +4,20 @@
         <name>DiagnosticoDeMatematicas</name>
     </assembly>
     <members>
+        <member name="T:DiagnosticoDeMatematicas.DAL.Binders.AnswerBinder">
+            <summary>
+            Binder in charge of creating different subclasses of AnswerAbstract
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.DAL.Binders.AnswerBinder.CreateModel(System.Web.Mvc.ControllerContext,System.Web.Mvc.ModelBindingContext,System.Type)">
+            <summary>
+            Creates the object of the subclass.
+            </summary>
+            <param name="controllerContext">The controller context.</param>
+            <param name="bindingContext">The binding context.</param>
+            <param name="modelType">The type of model that is being created.</param>
+            <returns>The created object.</returns>
+        </member>
         <member name="T:DiagnosticoDeMatematicas.DAL.SiteContext">
             <summary>
             Class with access to the site database.
@@ -450,6 +464,48 @@
             </summary>
             <returns>The created array.</returns>
         </member>
+        <member name="T:DiagnosticoDeMatematicas.Helpers.ExtensionMethods">
+            <summary>
+            Class serving as a container for all extension methods.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.ExtensionMethods.DisplayWithBreaksFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Returns HTML markup for each property in the object that is represented by the <see cref="T:System.Linq.Expressions.Expression"/> expression.
+            </summary>
+            <typeparam name="TModel">The type of the model.</typeparam>
+            <typeparam name="TValue">The type of the value.</typeparam>
+            <param name="html">The HTML helper instance that this method extends.</param>
+            <param name="expression">An expression that identifies the object that contains the properties to display.</param>
+            <returns>The HTML markup for each property in the object that is represented by the expression, including line breaks.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.ExtensionMethods.Shuffle``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Shuffles the IEnumerable using the Fisher-Yates algorithm.
+            </summary>
+            <typeparam name="T">The type of IEnumerable.</typeparam>
+            <param name="source">The IEnumerable that this method is extending.</param>
+            <returns>The shuffled IEnumerator.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.ExtensionMethods.Shuffle``1(System.Collections.Generic.IEnumerable{``0},System.Random)">
+            <summary>
+            Shuffles the IEnumerable using the Fisher-Yates algorithm.
+            </summary>
+            <typeparam name="T">The type of IEnumerable.</typeparam>
+            <param name="source">The IEnumerable that this method is extending.</param>
+            <param name="rng">The <see cref="T:System.Random"/> object to be used</param>
+            <returns>The shuffled IEnumerator.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.ExtensionMethods.ShuffleIterator``1(System.Collections.Generic.IEnumerable{``0},System.Random)">
+            <summary>
+            Shuffles the IEnumerable using the Fisher-Yates algorithm. For more information, 
+            see <a href="https://github.com/plasma-umass/DataDebug/blob/master/UserSimulation/EnumerableExtensions.cs">this link</a>.
+            </summary>
+            <typeparam name="T">The type of IEnumerable.</typeparam>
+            <param name="source">The IEnumerable that this method is extending.</param>
+            <param name="rng">The <see cref="T:System.Random"/> object to be used</param>
+            <returns>The shuffled IEnumerator.</returns>
+        </member>
         <member name="T:DiagnosticoDeMatematicas.Helpers.Functions.Function">
             <summary>
             Abstract class representing a function.
@@ -607,7 +663,7 @@
         </member>
         <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator.TakeSingleMinusOutOfDivision(System.String)">
             <summary>
-            Modifies a string so that if a division is present in which either the numerator or the denumerator are 
+            Modifies a string so that if a division is present in which either the numerator or the denominator are 
             negative (but not both), the negative sign is put outside the division instead.
             </summary>
             <param name="expression">String to be modified.</param>
@@ -706,19 +762,20 @@
             Gets a value indicating whether the answer is correct.
             </summary>
         </member>
-        <member name="T:DiagnosticoDeMatematicas.Models.AnswerBinder">
+        <member name="T:DiagnosticoDeMatematicas.Models.SelectionAnswer">
             <summary>
-            Binder in charge of creating different subclasses of AnswerAbstract
+            A class representing an answer consisting of some sort of selections.
             </summary>
         </member>
-        <member name="M:DiagnosticoDeMatematicas.Models.AnswerBinder.CreateModel(System.Web.Mvc.ControllerContext,System.Web.Mvc.ModelBindingContext,System.Type)">
+        <member name="T:DiagnosticoDeMatematicas.Models.MultipleSelectionQuestion">
             <summary>
-            Creates the object of the subclass.
+            Model representing a question which can be answered with multiple selections.
             </summary>
-            <param name="controllerContext">The controller context.</param>
-            <param name="bindingContext">The binding context.</param>
-            <param name="modelType">The type of model that is being created.</param>
-            <returns>The created object.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.QuestionAbstract">
+            <summary>
+            Model representing a question.
+            </summary>
         </member>
         <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.Id">
             <summary>
@@ -752,6 +809,16 @@
         <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.Variables">
             <summary>
             Gets or sets the variables that the question contains.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.SelectionQuestion">
+            <summary>
+            A model representing a question that will be answered using some sort of selections.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.SelectionQuestion.Options">
+            <summary>
+            Gets or sets the collection of options of the question.
             </summary>
         </member>
         <member name="T:DiagnosticoDeMatematicas.Models.QuestionOption">
@@ -792,6 +859,16 @@
         <member name="T:DiagnosticoDeMatematicas.Models.SingleSelectionAnswer">
             <summary>
             Class representing a question and the answer that was chosen.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.SingleSelectionAnswer.SelectionId">
+            <summary>
+            Gets or sets the ID of the <see cref="T:DiagnosticoDeMatematicas.Models.QuestionOption"/> that was selected.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.SingleSelectionAnswer.Selection">
+            <summary>
+            Gets or sets the <see cref="T:DiagnosticoDeMatematicas.Models.QuestionOption"/> that was selected.
             </summary>
         </member>
         <member name="P:DiagnosticoDeMatematicas.Models.SingleSelectionAnswer.IsCorrect">
@@ -846,7 +923,7 @@
         </member>
         <member name="T:DiagnosticoDeMatematicas.Models.SingleSelectionQuestion">
             <summary>
-            Model representing a question.
+            Model representing a question that will be answered by a single selection.
             </summary>
         </member>
         <member name="T:DiagnosticoDeMatematicas.Models.Range">
@@ -1193,6 +1270,83 @@
             Chart that displays the information on GradeRanges.
             </summary>
             <returns>String containing the image of a column chart.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.MultipleSelectionAnswer">
+            <summary>
+            Model representing an answer of a <see cref="T:DiagnosticoDeMatematicas.Models.MultipleSelectionQuestion"/>.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Models.MultipleSelectionAnswer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Models.MultipleSelectionAnswer"/> class.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Models.MultipleSelectionAnswer.#ctor(DiagnosticoDeMatematicas.Models.MultipleSelectionQuestion,DiagnosticoDeMatematicas.Models.Response)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Models.MultipleSelectionAnswer"/> class.
+            Initiates values according to a specific question that will be answered and
+            a specific response.
+            </summary>
+            <param name="question">Question that it will be answering.</param>
+            <param name="response">Response to which the answer will belong.</param>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Models.MultipleSelectionAnswer.#ctor(DiagnosticoDeMatematicas.Models.MultipleSelectionQuestion)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Models.MultipleSelectionAnswer"/> class.
+            Initiates values according to a specific question that will be answered.
+            </summary>
+            <param name="question">Question that it will be answering.</param>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.MultipleSelectionAnswer.Selections">
+            <summary>
+            Gets or sets a collection of all the selections that the answer has.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.MultipleSelectionAnswer.IsCorrect">
+            <summary>
+            Gets a value indicating whether the answer is correct.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.BinaryOptionSelection">
+            <summary>
+            Model representing the selection of an option in an answer.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.BinaryOptionSelection.ResponseId">
+            <summary>
+            Gets or sets the ID of the response it belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.BinaryOptionSelection.MultipleSelectionQuestionId">
+            <summary>
+            Gets or sets the ID of the question it belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.BinaryOptionSelection.QuestionOptionId">
+            <summary>
+            Gets or sets the ID of the question option it belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.BinaryOptionSelection.Selected">
+            <summary>
+            Gets or sets a value indicating whether the option was selected or not.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.BinaryOptionSelection.MultipleSelectionAnswer">
+            <summary>
+            Gets or sets the <see cref="P:DiagnosticoDeMatematicas.Models.BinaryOptionSelection.MultipleSelectionAnswer"/> it belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.BinaryOptionSelection.QuestionOption">
+            <summary>
+            Gets or sets the <see cref="P:DiagnosticoDeMatematicas.Models.BinaryOptionSelection.QuestionOption"/> it belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.BinaryOptionSelection.IsCorrect">
+            <summary>
+            Determines if the option is answered correctly.
+            </summary>
+            <returns>A value indicating whether the option was answered correctly.</returns>
         </member>
     </members>
 </doc>

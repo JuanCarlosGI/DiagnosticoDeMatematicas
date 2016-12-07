@@ -12,7 +12,8 @@
         /// <summary>
         /// Pairs of valid translations from strings to CustomChartTypes
         /// </summary>
-        private static readonly Tuple<string, CustomChartTypes>[] ValidTranslations = {
+        private static readonly Tuple<string, CustomChartTypes>[] ValidTranslations = 
+        {
             new Tuple<string, CustomChartTypes>("Polynomial", CustomChartTypes.Polynomial),
             new Tuple<string, CustomChartTypes>("PolynomialWithDerivate", CustomChartTypes.PolynomialWithDerivate),
             new Tuple<string, CustomChartTypes>("PolynomialWithDoubleDerivate", CustomChartTypes.PolynomialWithDoubleDerivate),

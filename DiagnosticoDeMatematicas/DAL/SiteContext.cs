@@ -1,9 +1,9 @@
-﻿namespace DiagnosticoDeMatematicas.DAL
-{
-    using System.Data.Entity;
-    using System.Data.Entity.ModelConfiguration.Conventions;
-    using Models;
+﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using DiagnosticoDeMatematicas.Models;
 
+namespace DiagnosticoDeMatematicas.DAL
+{
     /// <summary>
     /// Class with access to the site database.
     /// </summary>

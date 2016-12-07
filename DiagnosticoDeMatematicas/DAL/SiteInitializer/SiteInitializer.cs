@@ -1,10 +1,11 @@
-﻿namespace DiagnosticoDeMatematicas.DAL
-{
-    using System;
-    using System.Collections.Generic;
-    using Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using DiagnosticoDeMatematicas.Models;
 
-    public partial class SiteInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<SiteContext>
+namespace DiagnosticoDeMatematicas.DAL
+{
+    public partial class SiteInitializer : DropCreateDatabaseIfModelChanges<SiteContext>
     {
         int _examCounter;
         int _questionCounter;

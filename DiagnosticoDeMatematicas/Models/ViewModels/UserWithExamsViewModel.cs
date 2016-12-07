@@ -1,20 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Web.UI.DataVisualization.Charting;
-
-namespace DiagnosticoDeMatematicas.Models.ViewModels
+﻿namespace DiagnosticoDeMatematicas.Models.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Web.UI.DataVisualization.Charting;
+
+    /// <summary>
+    /// View model representing a user with all the exams he has answered.
+    /// </summary>
     public class UserWithExamsViewModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserWithExamsViewModel"/> class.
+        /// </summary>
+        /// <param name="user">The user that is being represented.</param>
+        /// <param name="exams">The list of exams that are being analyzed.</param>
         public UserWithExamsViewModel(User user, IEnumerable<Exam> exams)
         {
             User = user;
 
             Responses = new List<Response>();
-            foreach( var exam in exams)
+            foreach (var exam in exams)
             {
                 var responses = user.Responses.Where(r => r.ExamId == exam.Id);
                 Response response = null;
@@ -37,10 +45,14 @@ namespace DiagnosticoDeMatematicas.Models.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets the user that is being represented.
+        /// </summary>
         public User User { get; }
 
-        private List<Response> Responses { get; }
-
+        /// <summary>
+        /// Gets a string representing a radar chart of the user's latest attempts.
+        /// </summary>
         public string RadarChart
         {
             get
@@ -72,5 +84,10 @@ namespace DiagnosticoDeMatematicas.Models.ViewModels
                 return Convert.ToBase64String(arrbyte);
             }
         }
+
+        /// <summary>
+        /// Gets the list of responses that are going to be displayed at the radar chart.
+        /// </summary>
+        private List<Response> Responses { get; }
     }
 }

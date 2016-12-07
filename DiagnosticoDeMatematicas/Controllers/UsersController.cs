@@ -1,14 +1,17 @@
-﻿namespace DiagnosticoDeMatematicas.Controllers
+﻿using System;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web.Mvc;
+using DiagnosticoDeMatematicas.DAL;
+using DiagnosticoDeMatematicas.Helpers;
+using DiagnosticoDeMatematicas.Models;
+using DiagnosticoDeMatematicas.Models.ViewModels;
+
+namespace DiagnosticoDeMatematicas.Controllers
 {
-    using System;
-    using System.Data.Entity;
-    using System.Linq;
-    using System.Net;
-    using System.Web.Mvc;
-    using DAL;
-    using Models;
-    using Helpers;
-    using Models.ViewModels;
     public class UsersController : Controller
     {
         private readonly SiteContext _db = new SiteContext();
@@ -73,10 +76,10 @@
         {
             if (ModelState.IsValid)
             {
-                System.Security.Cryptography.HashAlgorithm hashAlgo = new System.Security.Cryptography.SHA256Managed();
-                byte[] plainTextBytes = System.Text.Encoding.Unicode.GetBytes(user.Password);
+                HashAlgorithm hashAlgo = new SHA256Managed();
+                byte[] plainTextBytes = Encoding.Unicode.GetBytes(user.Password);
                 byte[] hash = hashAlgo.ComputeHash(plainTextBytes);
-                user.Password = System.Text.Encoding.Unicode.GetString(hash);
+                user.Password = Encoding.Unicode.GetString(hash);
                 _db.Users.Add(user);
                 _db.SaveChanges();
                 return RedirectToAction("SignIn", "Home");

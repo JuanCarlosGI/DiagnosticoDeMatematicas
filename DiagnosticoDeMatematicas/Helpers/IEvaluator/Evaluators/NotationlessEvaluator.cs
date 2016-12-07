@@ -19,6 +19,7 @@
             {
                 SelectionQuestion aux;
                 if (question is MultipleSelectionQuestion)
+                {
                     aux = new MultipleSelectionQuestion
                     {
                         Description = selectionQuestion.Description,
@@ -29,7 +30,9 @@
                         Id = selectionQuestion.Id,
                         Variables = selectionQuestion.Variables
                     };
+                }
                 else
+                {
                     aux = new SingleSelectionQuestion
                     {
                         Description = selectionQuestion.Description,
@@ -40,6 +43,7 @@
                         Id = selectionQuestion.Id,
                         Variables = selectionQuestion.Variables
                     };
+                }
 
                 aux.Description = aux.Description.Replace("%", string.Empty).Replace("|", string.Empty);
 

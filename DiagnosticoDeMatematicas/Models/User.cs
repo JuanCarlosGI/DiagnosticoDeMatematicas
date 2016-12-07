@@ -103,7 +103,7 @@
         /// Gets or sets the email of the user.
         /// </summary>
         [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(Name = "Correo electronico")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }

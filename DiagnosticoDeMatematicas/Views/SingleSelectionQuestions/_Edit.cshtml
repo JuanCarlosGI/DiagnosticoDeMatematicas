@@ -1,11 +1,12 @@
 ﻿@using DiagnosticoDeMatematicas.Models
+@using DiagnosticoDeMatematicas.Models.ViewModels
 @model SingleSelectionQuestionWithOptionsViewModel
 
 @{
     var dummy = new QuestionOption();
 }
 <div id="@Model.Id">
-    @using (Ajax.BeginForm("Edit", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = $"{Model.Id}", HttpMethod = "Post" }))
+    @using (Ajax.BeginForm("Edit", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = $"{Model.Id}", HttpMethod = "Post" }))
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(id => Model.Id)
