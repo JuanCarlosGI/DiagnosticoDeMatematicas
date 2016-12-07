@@ -64,7 +64,7 @@ namespace DiagnosticoDeMatematicas.DAL
                 ExamId = _examCounter,
                 Description = "De las sigueintes gráficas de rectas, escoge aquella cuya pendiente es menor a %n."
             });
-            _options.Add(new QuestionOption { Description = "&& Polynomial - 9 9 - 9 9 |%n * 3.0 / 4.0 | 0 &&", IsCorrect = true, Feedback = "Correcto", Id = ++_optionCounter, QuestionId = _questionCounter });
+            _options.Add(new QuestionOption { Description = "&& Polynomial -9 9 -9 9 |%n * 3.0 / 4.0| 0 &&", IsCorrect = true, Feedback = "Correcto", Id = ++_optionCounter, QuestionId = _questionCounter });
             _options.Add(new QuestionOption { Description = "&& VerticalLine -9 9 -9 9 |%n - 1.0 / 2.0| &&", IsCorrect = false, Feedback = "La pendiente está indefinida.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _options.Add(new QuestionOption { Description = "&& Polynomial -9 9 -9 9 %n 0 &&", IsCorrect = false, Feedback = "Su pendiente es n.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _options.Add(new QuestionOption { Description = "&& Polynomial -9 9 -9 9 |%n * 4.0 / 3.0| 0 &&", IsCorrect = false, Feedback = "Su pendiente es mayor que n.", Id = ++_optionCounter, QuestionId = _questionCounter });

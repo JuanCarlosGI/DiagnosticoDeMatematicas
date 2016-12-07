@@ -57,6 +57,21 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return RedirectToAction("AccessDenied", "Home");
             }
 
+            var responses = user.Responses.ToList();
+            foreach (var response in responses)
+                foreach (var answer in response.Answers.ToArray())
+                {
+                    var multipleAnswer = answer as MultipleSelectionAnswer;
+                    if (multipleAnswer != null)
+                    {
+                        response.Answers.Remove(answer);
+                        response.Answers.Add(_db.MultipleSelectionAnswers
+                            .Include(a => a.Selections)
+                            .SingleOrDefault(e => e.QuestionId == answer.QuestionId && e.ResponseId == answer.ResponseId));
+                    }
+                }
+            user.Responses = responses;
+
             return View(new UserWithExamsViewModel(user, _db.Exams));
         }
 
