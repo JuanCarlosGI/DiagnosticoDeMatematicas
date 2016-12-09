@@ -115,7 +115,7 @@
                 return 0;
             }
 
-            return Responses.Count(r => r.Grade == value) * 100.0 / AmountOfResponses;
+            return Responses.Count(r => Math.Abs(r.Grade - value) < 0.01) * 100.0 / AmountOfResponses;
         }
 
         /// <summary>

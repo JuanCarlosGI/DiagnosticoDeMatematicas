@@ -12,6 +12,11 @@
     public static class ExtensionMethods
     {
         /// <summary>
+        /// Random object used throughout all execution.
+        /// </summary>
+        private static readonly Random Random = new Random();
+
+        /// <summary>
         /// Returns HTML markup for each property in the object that is represented by the <see cref="Expression"/> expression.
         /// </summary>
         /// <typeparam name="TModel">The type of the model.</typeparam>
@@ -40,7 +45,7 @@
         /// <returns>The shuffled IEnumerator.</returns>
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
         {
-            return source.Shuffle(new Random());
+            return source.Shuffle(Random);
         }
 
         /// <summary>

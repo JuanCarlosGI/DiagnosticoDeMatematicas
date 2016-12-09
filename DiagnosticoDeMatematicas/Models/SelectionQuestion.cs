@@ -1,7 +1,6 @@
 ﻿namespace DiagnosticoDeMatematicas.Models
 {
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     /// <summary>
     /// A model representing a question that will be answered using some sort of selections.

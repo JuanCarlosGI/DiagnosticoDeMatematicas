@@ -25,11 +25,11 @@
         /// </summary>
         [ForeignKey("ResponseId")]
         public virtual Response Response { get; set; }
-        
-        [ForeignKey("QuestionId")]
+
         /// <summary>
         /// Gets or sets the question it is answering.
         /// </summary>
+        [ForeignKey("QuestionId")]
         public virtual Question Question { get; set; }
 
         /// <summary>

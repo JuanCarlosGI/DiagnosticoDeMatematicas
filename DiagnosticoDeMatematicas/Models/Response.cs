@@ -52,7 +52,10 @@
             {
                 if (Answers != null)
                 {
-                    if (Answers.Count == 0) return 0;
+                    if (Answers.Count == 0)
+                    {
+                        return 0;
+                    }
 
                     var count = 0.0;
                     foreach (var answer in Answers)
