@@ -159,7 +159,7 @@
                 return RedirectToAction("SignIn", "Home");
             }
 
-            var exams = _db.Exams.ToList();
+            var exams = _db.Exams.Where(e => e.Active).ToList();
             foreach (var exam in exams)
             {
                 var responses = exam.Responses.ToList();

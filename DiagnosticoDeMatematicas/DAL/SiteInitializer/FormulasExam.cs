@@ -313,7 +313,7 @@ namespace DiagnosticoDeMatematicas.DAL
             });
             _options.Add(new QuestionOption { Description = "\\(x=\\pm\\sqrt{%n}\\)", IsCorrect = true, Feedback = "Correcto", Id = ++_optionCounter, QuestionId = _questionCounter });
             _options.Add(new QuestionOption { Description = "\\(x=\\pm\\sqrt{\\dfrac{1}{%n}}\\)", IsCorrect = false, Feedback = "Despeja mal al pasar dividiendo.", Id = ++_optionCounter, QuestionId = _questionCounter });
-            _options.Add(new QuestionOption { Description = "\\(x=\\pm%n\\)", IsCorrect = false, Feedback = "No despeja el cuadrado.", Id = ++_optionCounter, QuestionId = _questionCounter });
+            _options.Add(new QuestionOption { Description = "\\(x=\\pm %n\\)", IsCorrect = false, Feedback = "No despeja el cuadrado.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _options.Add(new QuestionOption { Description = "\\(x=\\pm\\sqrt{\\dfrac{%n}{2}}\\)", IsCorrect = false, Feedback = "Pasa x^2 multiplicando por 1 en vez de por 0.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _variables.Add(new Variable { QuestionId = _questionCounter, Symbol = "n" });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 3, Maximum = 3 });

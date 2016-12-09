@@ -62,7 +62,13 @@
 
     <div class="panel panel-primary">
         <div class="panel-body">
-            <h4>@counter) @questionNotation.Description</h4>
+            <h4>
+                @counter) @questionNotation.Description
+                @if (questionNotation is MultipleSelectionQuestion)
+                {
+                    <span style="font-size: 70%">Selección multiple</span>
+                }
+            </h4>
         </div>
 
         <div class="panel-footer">

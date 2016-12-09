@@ -13,67 +13,53 @@
 <div>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Exam.Id)
-        </dt>
+        <dt>@Html.DisplayNameFor(model => model.Exam.Id)</dt>
+        <dd>@Html.DisplayFor(model => model.Exam.Name)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Exam.Name)
-        </dd>
+        <dt>@Html.DisplayNameFor(model => model.User.FullName)</dt>
+        <dd>@Html.DisplayFor(model => model.User.FullName)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </dt>
+        <dt>@Html.DisplayNameFor(model => model.Date)</dt>
+        <dd>@Html.DisplayFor(model => model.Date)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.User.FullName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Grade)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Grade)
-        </dd>
+        <dt>@Html.DisplayNameFor(model => model.Grade)</dt>
+        <dd>@Html.DisplayFor(model => model.Grade)</dd>
 
     </dl>
 </div>
 
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(modelItem => answerDummy.Question.Description)
-        </th>
-        <th>
-            Eleccion
-        </th>
-        <th>
-            Es correcta
-        </th>
-        <th>
-            Retroalimentacion
-        </th>
+        <th>@Html.DisplayNameFor(modelItem => answerDummy.Question.Description)</th>
+        <th>Eleccion</th>
+        <th>Es correcta</th>
+        <th>Retroalimentacion</th>
     </tr>
 
     @foreach (var answer in Model.Answers)
     {
+        var questionNotation = evaluator.Evaluate(answer.Question);
         <tr>
-            @{ 
-                var questionNotation = evaluator.Evaluate(answer.Question);
-            }
             <td>@questionNotation.Description.Replace("%", "").Replace("|", "")</td>
-            <td>TODO</td>
+            @if (questionNotation is SingleSelectionQuestion)
+            {
+                var singleSelectionAnswer = (SingleSelectionAnswer) answer;
+                <td>@singleSelectionAnswer.Selection.Description.Replace("%", "").Replace("|", "")</td>
+            }
+            else
+            {
+                <td>TO DO</td>
+            }
             <td>@Html.DisplayFor(m => answer.IsCorrect)</td>
-            <td>TODO</td>
+            @if (questionNotation is SingleSelectionQuestion)
+            {
+                var singleSelectionAnswer = (SingleSelectionAnswer)answer;
+                <td>@singleSelectionAnswer.Selection.Feedback</td>
+            }
+            else
+            {
+                <td>TO DO</td>
+            }
         </tr>
     }
 </table>

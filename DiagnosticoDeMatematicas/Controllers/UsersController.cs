@@ -57,7 +57,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return RedirectToAction("AccessDenied", "Home");
             }
 
-            var responses = user.Responses.ToList();
+            var responses = user.Responses.Where(r => r.Exam.Active).ToList();
             foreach (var response in responses)
                 foreach (var answer in response.Answers.ToArray())
                 {
@@ -72,7 +72,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                 }
             user.Responses = responses;
 
-            return View(new UserWithExamsViewModel(user, _db.Exams));
+            return View(new UserWithExamsViewModel(user, _db.Exams.Where(e => e.Active)));
         }
 
         // GET: Users/Create
