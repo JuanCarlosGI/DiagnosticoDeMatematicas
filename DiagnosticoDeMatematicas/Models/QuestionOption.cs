@@ -1,4 +1,7 @@
-﻿namespace DiagnosticoDeMatematicas.Models
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace DiagnosticoDeMatematicas.Models
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -46,5 +49,15 @@
         /// </summary>
         [ForeignKey("QuestionId")]
         public virtual SelectionQuestion Question { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of all answers that have chosen this option.
+        /// </summary>
+        public virtual ICollection<SingleSelectionAnswer> SingleSelectionAnswers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of binary option selections that have been made of this option.
+        /// </summary>
+        public virtual ICollection<BinaryOptionSelection> BinaryOptionSelections { get; set; }
     }
 }

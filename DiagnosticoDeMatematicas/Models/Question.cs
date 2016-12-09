@@ -6,7 +6,7 @@
     /// <summary>
     /// Model representing a question.
     /// </summary>
-    public class QuestionAbstract
+    public abstract class Question
     {
         /// <summary>
         /// Gets or sets the ID of the question.
@@ -41,7 +41,7 @@
         /// <summary>
         /// Gets or sets the answers that have been registered for this question.
         /// </summary>
-        public virtual ICollection<AnswerAbstract> Answers { get; set; }
+        public virtual ICollection<Answer> Answers { get; set; }
 
         /// <summary>
         /// Gets or sets the variables that the question contains.

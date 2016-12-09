@@ -51,16 +51,6 @@ namespace DiagnosticoDeMatematicas.DAL
         /// </summary>
         public DbSet<Range> Ranges { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
-            modelBuilder.Entity<AnswerAbstract>()
-                .HasRequired(f => f.Question)
-                .WithMany()
-                .WillCascadeOnDelete(false);
-        }
-
         public DbSet<MultipleSelectionQuestion> MultipleSelectionQuestions { get; set; }
 
         public DbSet<QuestionOption> QuestionOptions { get; set; }
@@ -68,5 +58,36 @@ namespace DiagnosticoDeMatematicas.DAL
         public DbSet<MultipleSelectionAnswer> MultipleSelectionAnswers { get; set; }
 
         public DbSet<SelectionQuestion> QuestionAbstracts { get; set; }
+
+        public DbSet<BinaryOptionSelection> BinaryOptionSelections { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<Answer>()
+                .HasRequired(f => f.Question)
+                .WithMany(q => q.Answers)
+                .HasForeignKey(a => a.QuestionId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<BinaryOptionSelection>()
+                .HasRequired(o => o.QuestionOption)
+                .WithMany(o => o.BinaryOptionSelections)
+                .HasForeignKey(s => s.QuestionOptionId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<BinaryOptionSelection>()
+                .HasRequired(s => s.MultipleSelectionAnswer)
+                .WithMany(a => a.Selections)
+                .HasForeignKey(s => new {s.ResponseId, s.MultipleSelectionQuestionId})
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<QuestionOption>()
+                .HasRequired(o => o.Question)
+                .WithMany(o => o.Options)
+                .HasForeignKey(o => o.QuestionId)
+                .WillCascadeOnDelete(true);
+        }
     }
 }

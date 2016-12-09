@@ -5,7 +5,7 @@
     using Models;
 
     /// <summary>
-    /// Binder in charge of creating different subclasses of AnswerAbstract
+    /// Binder in charge of creating different subclasses of Answer
     /// </summary>
     public class AnswerBinder : DefaultModelBinder
     {
@@ -18,7 +18,7 @@
         /// <returns>The created object.</returns>
         protected override object CreateModel(ControllerContext controllerContext, ModelBindingContext bindingContext, Type modelType)
         {
-            if (modelType == typeof(AnswerAbstract))
+            if (modelType == typeof(Answer))
             {
                 string typeName = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".type").AttemptedValue;
                 Type instantiationType = Type.GetType(typeName);

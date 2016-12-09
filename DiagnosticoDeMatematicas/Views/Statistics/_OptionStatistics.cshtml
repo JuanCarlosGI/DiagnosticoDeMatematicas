@@ -1,0 +1,6 @@
+﻿@model DiagnosticoDeMatematicas.Models.ViewModels.OptionStatisticsViewModel
+
+<div class="col-lg-3 col-sm-6">
+    <h3><input type="checkbox" disabled="disabled" checked="@Model.IsCorrect"/>@($"{Model.Percentage:n2}")%</h3>
+    <p>@Model.Description</p>
+</div>

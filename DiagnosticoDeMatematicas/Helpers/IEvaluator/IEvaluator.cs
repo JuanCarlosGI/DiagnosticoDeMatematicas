@@ -12,6 +12,6 @@
         /// </summary>
         /// <param name="question">Question to be evaluated.</param>
         /// <returns>Evaluated question.</returns>
-        QuestionAbstract Evaluate(QuestionAbstract question);
+        Question Evaluate(Question question);
     }
 }

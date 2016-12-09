@@ -6,8 +6,7 @@
     /// <summary>
     /// A model representing a question that will be answered using some sort of selections.
     /// </summary>
-    [Table("SelectionQuestion")]
-    public class SelectionQuestion : QuestionAbstract
+    public class SelectionQuestion : Question
     {
         /// <summary>
         /// Gets or sets the collection of options of the question.

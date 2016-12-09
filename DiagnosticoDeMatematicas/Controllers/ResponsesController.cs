@@ -102,7 +102,7 @@ namespace DiagnosticoDeMatematicas.Controllers
 
             Response response = new Response { ExamId = examId.Value, UserId = SessionService.User.Email, Exam = _db.Exams.Find(examId) };
 
-            var answers = new List<AnswerAbstract>();
+            var answers = new List<Answer>();
             foreach (var question in response.Exam.Questions)
             {
                 if (question is SingleSelectionQuestion)

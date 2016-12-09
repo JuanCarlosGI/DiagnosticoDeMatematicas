@@ -52,6 +52,8 @@
             {
                 if (Answers != null)
                 {
+                    if (Answers.Count == 0) return 0;
+
                     var count = 0.0;
                     foreach (var answer in Answers)
                     {
@@ -81,6 +83,6 @@
         /// <summary>
         /// Gets or sets the answers belonging to this response.
         /// </summary>
-        public virtual ICollection<AnswerAbstract> Answers { get; set; }
+        public virtual ICollection<Answer> Answers { get; set; }
     }
 }

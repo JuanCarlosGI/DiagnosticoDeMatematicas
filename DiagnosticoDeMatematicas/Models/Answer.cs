@@ -6,7 +6,7 @@
     /// <summary>
     /// Class representing an abstract answer to a given question.
     /// </summary>
-    public abstract class AnswerAbstract
+    public abstract class Answer
     {
         /// <summary>
         /// Gets or sets the ID of the response it belongs to.
@@ -19,18 +19,18 @@
         /// </summary>
         [Key, Column(Order = 1)]
         public int QuestionId { get; set; }
-
+        
         /// <summary>
         /// Gets or sets the response it belongs to.
         /// </summary>
         [ForeignKey("ResponseId")]
         public virtual Response Response { get; set; }
-
+        
+        [ForeignKey("QuestionId")]
         /// <summary>
         /// Gets or sets the question it is answering.
         /// </summary>
-        [ForeignKey("QuestionId")]
-        public virtual QuestionAbstract Question { get; set; }
+        public virtual Question Question { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether the answer is correct.

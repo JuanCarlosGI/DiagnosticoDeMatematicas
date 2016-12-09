@@ -1,77 +1,168 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="DiagnosticoDeMatematicas.Models.Answer">
-    <Position X="9" Y="5.75" Width="1.5" />
-    <Members>
-      <Property Name="QuestionID" Hidden="true" />
-      <Property Name="Response" Hidden="true" />
-      <Property Name="ResponseID" Hidden="true" />
-    </Members>
+  <Class Name="DiagnosticoDeMatematicas.Models.Answer" Collapsed="true">
+    <Position X="8.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAAAAAAABAAAAAAAAAQAAAAAAACAAEAAIAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAEAAAAAEAAIAAAQAAAA=</HashCode>
       <FileName>Models\Answer.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Question" />
-    </ShowAsAssociation>
   </Class>
-  <Class Name="DiagnosticoDeMatematicas.Models.Exam">
-    <Position X="6" Y="2.25" Width="1.5" />
+  <Class Name="DiagnosticoDeMatematicas.Models.BinaryOptionSelection" Collapsed="true">
+    <Position X="9.5" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAABggAAAAAAAAAQAAAAAAAAkAAAAAgAAIAA=</HashCode>
+      <HashCode>AgAAAAAAAAAAAAACAAAAAAAAAEAAAAAAAAIAIAACAAI=</HashCode>
+      <FileName>Models\BinaryOptionSelection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DiagnosticoDeMatematicas.Models.Exam" Collapsed="true">
+    <Position X="5.75" Y="6" Width="1.5" />
+    <AssociationLine Name="Responses" Type="DiagnosticoDeMatematicas.Models.Response">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.06" Y="0.311" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAABgAAAAAAAAAAQAAAAAAAAkAAAAAgAAIAA=</HashCode>
       <FileName>Models\Exam.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Questions" />
+      <Property Name="Responses" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="DiagnosticoDeMatematicas.Models.Question">
-    <Position X="8.5" Y="0.75" Width="1.75" />
-    <Members>
-      <Property Name="Answers" Hidden="true" />
-      <Property Name="Exam" Hidden="true" />
-      <Property Name="ExamID" Hidden="true" />
-    </Members>
+  <Class Name="DiagnosticoDeMatematicas.Models.MultipleSelectionAnswer" Collapsed="true">
+    <Position X="7.5" Y="9.75" Width="1.5" />
+    <InheritanceLine Type="DiagnosticoDeMatematicas.Models.SelectionAnswer" FixedFromPoint="true">
+      <Path>
+        <Point X="8.75" Y="9.062" />
+        <Point X="8.125" Y="9.062" />
+        <Point X="8.125" Y="9.75" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="Selections" Type="DiagnosticoDeMatematicas.Models.BinaryOptionSelection">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.154" Y="0.123" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAggHAAAAAAAAAAKgAAAABAQISMcACAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Models\MultipleSelectionAnswer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Selections" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DiagnosticoDeMatematicas.Models.MultipleSelectionQuestion" Collapsed="true">
+    <Position X="10.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\MultipleSelectionQuestion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DiagnosticoDeMatematicas.Models.Question" Collapsed="true">
+    <Position X="8.5" Y="6" Width="1.5" />
+    <AssociationLine Name="Answers" Type="DiagnosticoDeMatematicas.Models.Answer">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.06" Y="0.244" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgAAAAAAAAAAAAAAAAAABAQAQAAACAAAA=</HashCode>
       <FileName>Models\Question.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
+      <Property Name="Answers" />
       <Property Name="Variables" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="DiagnosticoDeMatematicas.Models.Range">
-    <Position X="14.5" Y="1.25" Width="1.5" />
-    <Members>
-      <Property Name="QuestionId" Hidden="true" />
-      <Property Name="Symbol" Hidden="true" />
-      <Property Name="Variable" Hidden="true" />
-    </Members>
+  <Class Name="DiagnosticoDeMatematicas.Models.QuestionOption" Collapsed="true">
+    <Position X="11" Y="7.5" Width="1.5" />
+    <AssociationLine Name="SingleSelectionAnswers" Type="DiagnosticoDeMatematicas.Models.SingleSelectionAnswer">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.319" Y="1.332" Height="0.182" Width="1.759" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="BinaryOptionSelections" Type="DiagnosticoDeMatematicas.Models.BinaryOptionSelection" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.312" Y="8.062" />
+        <Point X="12.312" Y="10.907" />
+        <Point X="11" Y="10.907" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.412" Y="0.1" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>gAAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAQAAAQACAA=</HashCode>
+      <HashCode>AAACAAAAAAAgAAAAAAASAAAAAAAAAAAEAAIAAAQIAAA=</HashCode>
+      <FileName>Models\QuestionOption.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="SingleSelectionAnswers" />
+      <Property Name="BinaryOptionSelections" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DiagnosticoDeMatematicas.Models.Range" Collapsed="true">
+    <Position X="8.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAACAACAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAQACAA=</HashCode>
       <FileName>Models\Range.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DiagnosticoDeMatematicas.Models.Response">
-    <Position X="6" Y="5.75" Width="1.5" />
-    <Members>
-      <Property Name="ExamID" Hidden="true" />
-      <Property Name="User" Hidden="true" />
-      <Property Name="UserID" Hidden="true" />
-    </Members>
+  <Class Name="DiagnosticoDeMatematicas.Models.Response" Collapsed="true">
+    <Position X="5.75" Y="7.5" Width="1.5" />
+    <AssociationLine Name="Answers" Type="DiagnosticoDeMatematicas.Models.Answer">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.217" Y="-0.275" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAABAAAAAAAAgAAAAAAAAAgAAAAAAABBQAAAAAGAAAA=</HashCode>
+      <HashCode>AAADAAAAAAAAAAAAAAAAAAgAAAAAAABBQAAAAAGAAAA=</HashCode>
       <FileName>Models\Response.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Exam" />
-    </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="Answers" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="DiagnosticoDeMatematicas.Models.User">
-    <Position X="3" Y="4.75" Width="1.5" />
+  <Class Name="DiagnosticoDeMatematicas.Models.SelectionAnswer" Collapsed="true">
+    <Position X="8.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\SelectionAnswer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DiagnosticoDeMatematicas.Models.SelectionQuestion" Collapsed="true">
+    <Position X="10.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Models\SelectionQuestion.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Options" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DiagnosticoDeMatematicas.Models.SingleSelectionAnswer" Collapsed="true">
+    <Position X="9.75" Y="9.75" Width="1.5" />
+    <InheritanceLine Type="DiagnosticoDeMatematicas.Models.SelectionAnswer" FixedFromPoint="true">
+      <Path>
+        <Point X="10.25" Y="9.125" />
+        <Point X="10.656" Y="9.125" />
+        <Point X="10.656" Y="9.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAIAAAAAQAA=</HashCode>
+      <FileName>Models\SingleSelectionAnswer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DiagnosticoDeMatematicas.Models.SingleSelectionQuestion" Collapsed="true">
+    <Position X="13" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\SingleSelectionQuestion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DiagnosticoDeMatematicas.Models.User" Collapsed="true">
+    <Position X="3.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIAEAAACBAAICAEEAAACAAAAAQAAACAAQAAAAAAAg=</HashCode>
       <FileName>Models\User.cs</FileName>
@@ -80,61 +171,15 @@
       <Property Name="Responses" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="DiagnosticoDeMatematicas.Models.Variable">
-    <Position X="11.5" Y="1.25" Width="1.5" />
-    <Members>
-      <Property Name="Question" Hidden="true" />
-    </Members>
+  <Class Name="DiagnosticoDeMatematicas.Models.Variable" Collapsed="true">
+    <Position X="8.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAEAAAAAAAgCAAAAAAAAAAAAAAAAAAEAAAAAAAACAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgCAAAAAAAAAAAAAAAAAAEAAAAAAQADAA=</HashCode>
       <FileName>Models\Variable.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Ranges" />
     </ShowAsCollectionAssociation>
-  </Class>
-  <Class Name="DiagnosticoDeMatematicas.Models.MultipleSelectionQuestion">
-    <Position X="10" Y="12.75" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
-      <FileName>Models\MultipleSelectionQuestion.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DiagnosticoDeMatematicas.Models.QuestionOption">
-    <Position X="7.25" Y="12.75" Width="1.5" />
-    <Members>
-      <Property Name="Question" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAgAAAAAAACAAAAAAAAAAAEAAIAAAQAAAA=</HashCode>
-      <FileName>Models\QuestionOption.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DiagnosticoDeMatematicas.Models.MultipleSelectionAnswer">
-    <Position X="10.75" Y="9.75" Width="2" />
-    <Members>
-      <Property Name="MultipleSelectionQuestionId" Hidden="true" />
-    </Members>
-    <TypeIdentifier>
-      <HashCode>AhAAAAAAAABAAAAAAAAAACAAAEAAAAAAAAIAAAAAAAA=</HashCode>
-      <FileName>Models\MultipleSelectionAnswer.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="MultipleSelectionQuestion" />
-    </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="Selections" />
-    </ShowAsCollectionAssociation>
-  </Class>
-  <Class Name="DiagnosticoDeMatematicas.Models.BinaryOptionSelection">
-    <Position X="7.25" Y="9.75" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AgAAAAAAAAAAAAACAAAAAAAAAEAAAAAAAAIAIAACAAI=</HashCode>
-      <FileName>Models\OptionSelection.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="QuestionOption" />
-    </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

@@ -15,7 +15,7 @@
         /// </summary>
         /// <param name="question">Question to be evaluated.</param>
         /// <returns>The evaluated question.</returns>
-        public QuestionAbstract Evaluate(QuestionAbstract question)
+        public Question Evaluate(Question question)
         {
             var selectionQuestion = question as SelectionQuestion;
             if (selectionQuestion != null)

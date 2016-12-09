@@ -41,8 +41,6 @@
             AverageGrade = Math.Round(sum / AmountOfResponses, 2);
 
             GradeRanges = CreateGradeRanges();
-
-            QuestionResponses = CreateQuestionResponses();
         }
 
         /// <summary>
@@ -90,19 +88,12 @@
         public double[] GradeRanges { get; }
 
         /// <summary>
-        /// Gets the dictionary containing the amount of times each option was chosen for a given question. The key is
-        /// the ID of the question, and the value is a tuple containing the amount of times optionA, optionB, optionC,
-        /// and OptionD were chosen, respectively.
-        /// </summary>
-        public Dictionary<int, Tuple<int, int, int, int>> QuestionResponses { get; }
-
-        /// <summary>
         /// Gets the percentage of the responses analyzed that have a grade within the limits specified.
         /// </summary>
         /// <param name="lowerLimit">Inclusive lower limit of the range of grades.</param>
         /// <param name="upperLimit">Non-inclusive upper limit of the range of grades.</param>
         /// <returns>The percentage of responses meeting the criteria.</returns>
-        public double PercentageBetweenGrades(double lowerLimit, double upperLimit)
+        private double PercentageBetweenGrades(double lowerLimit, double upperLimit)
         {
             if (AmountOfResponses == 0)
             {
@@ -117,7 +108,7 @@
         /// </summary>
         /// <param name="value">The grade to be compared.</param>
         /// <returns>The percentage of responses meeting the criteria.</returns>
-        public double PercentageWithValue(double value)
+        private double PercentageWithValue(double value)
         {
             if (AmountOfResponses == 0)
             {
@@ -125,35 +116,6 @@
             }
 
             return Responses.Count(r => r.Grade == value) * 100.0 / AmountOfResponses;
-        }
-
-        /// <summary>
-        /// Creates the QuestionResponses dictionary.
-        /// </summary>
-        /// <returns>The created dictionary</returns>
-        private Dictionary<int, Tuple<int, int, int, int>> CreateQuestionResponses()
-        {
-            var result = new Dictionary<int, Tuple<int, int, int, int>>();
-
-            foreach (var question in Exam.Questions)
-            {
-                var optionA = 0;
-                var optionB = 0;
-                var optionC = 0;
-                var optionD = 0;
-
-                foreach (var response in Responses)
-                {
-                    foreach (var _ in response.Answers)
-                    {
-                        //  Logic goes here.
-                    }
-                }
-
-                result.Add(question.Id, new Tuple<int, int, int, int>(optionA, optionB, optionC, optionD));
-            }
-
-            return result;
         }
 
         /// <summary>

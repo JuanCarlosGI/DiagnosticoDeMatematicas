@@ -107,6 +107,45 @@
 
             return View(statistics);
         }
+        
+        public PartialViewResult OptionStatistics(int optionId)
+        {
+            var option =
+                _db.QuestionOptions.Include(o => o.BinaryOptionSelections)
+                    .Include(o => o.SingleSelectionAnswers)
+                    .Include(o => o.Question.Answers)
+                    .SingleOrDefault(o => o.Id == optionId);
+
+            if (option == null)
+            {
+                return null;
+            }
+
+            double percentage;
+            if (option.BinaryOptionSelections.Count != 0)
+            {
+                percentage = (double)option.BinaryOptionSelections.Count(s => s.Selected)/option.BinaryOptionSelections.Count * 100;
+            }
+            else if (option.SingleSelectionAnswers.Count != 0)
+            {
+                var amountOfResponses =
+                    _db.SingleSelectionAnswers.Count(a => a.QuestionId == option.QuestionId);
+                percentage = (double)option.SingleSelectionAnswers.Count/amountOfResponses * 100;
+            }
+            else
+            {
+                percentage = 0;
+            }
+
+            var model = new OptionStatisticsViewModel
+            {
+                Description = option.Description.Replace("|", "").Replace("%", ""),
+                IsCorrect = option.IsCorrect,
+                Percentage = percentage
+            };
+
+            return PartialView("_OptionStatistics", model);
+        }
 
         public ActionResult GlobalStatistics(StatisticDetailsViewModel details)
         {

@@ -23,8 +23,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                 new QuestionOption {Description = "Opción 1", Feedback = "Feedback de opción 1", IsCorrect = true},
                 new QuestionOption {Description = "Opción 2", Feedback = "Feedback de opción 2", IsCorrect = false},
                 new QuestionOption {Description = "Opción 3", Feedback = "Feedback de opción 3", IsCorrect = false},
-                new QuestionOption {Description = "Opción 4", Feedback = "Feedback de opción 4", IsCorrect = false},
-                new QuestionOption {Description = "Opción 5", Feedback = "Feedback de opción 5", IsCorrect = false}
+                new QuestionOption {Description = "Opción 4", Feedback = "Feedback de opción 4", IsCorrect = false}
             };
 
 
@@ -97,12 +96,11 @@ namespace DiagnosticoDeMatematicas.Controllers
         {
             var question = _db.MultipleSelectionQuestions.Find(questionId);
 
-            var options = question.Options.ToArray();
-            foreach (var option in options)
-                _db.QuestionOptions.Remove(option);
+            foreach (var answer in question.Answers.ToArray())
+                _db.MultipleSelectionAnswers.Remove(answer as MultipleSelectionAnswer);
             _db.SaveChanges();
 
-            _db.MultipleSelectionQuestions.Remove(question);
+            _db.QuestionAbstracts.Remove(question);
             _db.SaveChanges();
             return PartialView("DeleteConfirmed");
         }

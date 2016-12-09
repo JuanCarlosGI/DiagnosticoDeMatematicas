@@ -18,7 +18,7 @@ namespace DiagnosticoDeMatematicas
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            ModelBinders.Binders.Add(new KeyValuePair<Type, IModelBinder>(typeof(AnswerAbstract), new AnswerBinder()));
+            ModelBinders.Binders.Add(new KeyValuePair<Type, IModelBinder>(typeof(Answer), new AnswerBinder()));
         }
     }
 }

@@ -67,7 +67,7 @@
         /// <summary>
         /// Gets or sets the questions that the exam has.
         /// </summary>
-        public virtual ICollection<QuestionAbstract> Questions { get; set; }
+        public virtual ICollection<Question> Questions { get; set; }
 
         /// <summary>
         /// Gets or sets the responses that the exam has.

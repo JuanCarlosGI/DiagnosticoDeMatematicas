@@ -236,10 +236,10 @@
     <Compile Include="Helpers\Session\SessionService.cs" />
     <Compile Include="Helpers\Session\SessionValidator.cs" />
     <Compile Include="Helpers\IEncoder\StringEncoder.cs" />
-    <Compile Include="Models\AnswerAbstract.cs" />
+    <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\SelectionAnswer.cs" />
     <Compile Include="Models\MultipleSelectionQuestion.cs" />
-    <Compile Include="Models\QuestionAbstract.cs" />
+    <Compile Include="Models\Question.cs" />
     <Compile Include="Models\SelectionQuestion.cs" />
     <Compile Include="Models\QuestionOption.cs" />
     <Compile Include="Models\SingleSelectionAnswer.cs" />
@@ -253,6 +253,7 @@
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Models\ViewModels\MultipleSelectionQuestionWithOptionsViewModel.cs" />
+    <Compile Include="Models\ViewModels\OptionStatisticsViewModel.cs" />
     <Compile Include="Models\ViewModels\SingleSelectionQuestionWithOptionsViewModel.cs" />
     <Compile Include="Models\ViewModels\StatisticDetailsViewModel.cs" />
     <Compile Include="Models\ViewModels\StatisticsViewModel.cs" />
@@ -338,6 +339,7 @@
     <Content Include="Views\SingleSelectionQuestions\_Edit.cshtml" />
     <Content Include="Views\SingleSelectionQuestions\DeleteConfirmed.cshtml" />
     <Content Include="Views\MultipleSelectionQuestions\DeleteConfirmed.cshtml" />
+    <Content Include="Views\Statistics\_OptionStatistics.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
