@@ -64,7 +64,10 @@
                         }
                     }
                 </table>
-
+                
+                <p>
+                    @Html.ActionLink("Probar combinaciones", "TestCombinations", "Questions", new { questionId = Model.Id }, new {})
+                </p>
                 <p>
                     @Ajax.ActionLink("Editar pregunta", "Edit", "MultipleSelectionQuestions", new { questionId = Model.Id }, new AjaxOptions { InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = $"{Model.Id}" })
                 </p>

@@ -22,11 +22,11 @@
             Exam = exam;
             StartDate = startDate;
             EndDate = endDate;
-
+            
             Responses = from r in Exam.Responses
                         where r.ExamId == Exam.Id
                         where !StartDate.HasValue || r.Date >= StartDate.Value
-                        where !EndDate.HasValue || r.Date <= EndDate.Value
+                        where !EndDate.HasValue || r.Date <= EndDate.Value.AddDays(1).AddMilliseconds(-1)
                         select r;
 
             var responses = Responses as Response[] ?? Responses.ToArray();

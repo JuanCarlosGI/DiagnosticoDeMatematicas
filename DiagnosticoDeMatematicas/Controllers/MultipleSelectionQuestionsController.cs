@@ -100,7 +100,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                 _db.MultipleSelectionAnswers.Remove(answer as MultipleSelectionAnswer);
             _db.SaveChanges();
 
-            _db.QuestionAbstracts.Remove(question);
+            _db.Questions.Remove(question);
             _db.SaveChanges();
             return PartialView("DeleteConfirmed");
         }

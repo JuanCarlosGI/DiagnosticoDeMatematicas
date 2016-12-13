@@ -232,6 +232,8 @@
     <Compile Include="Helpers\IEvaluator\IEvaluator.cs" />
     <Compile Include="Helpers\IEvaluator\Evaluators\NotationlessEvaluator.cs" />
     <Compile Include="Helpers\IEvaluator\Evaluators\RandomValueEvaluator.cs" />
+    <Compile Include="Helpers\IEvaluator\SpecificEvaluator.cs" />
+    <Compile Include="Helpers\IEvaluator\SpectrumEvaluator.cs" />
     <Compile Include="Helpers\Session\SessionManager.cs" />
     <Compile Include="Helpers\Session\SessionService.cs" />
     <Compile Include="Helpers\Session\SessionValidator.cs" />
@@ -340,6 +342,7 @@
     <Content Include="Views\SingleSelectionQuestions\DeleteConfirmed.cshtml" />
     <Content Include="Views\MultipleSelectionQuestions\DeleteConfirmed.cshtml" />
     <Content Include="Views\Statistics\_OptionStatistics.cshtml" />
+    <Content Include="Views\Questions\TestCombinations.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

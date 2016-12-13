@@ -116,7 +116,7 @@ namespace DiagnosticoDeMatematicas.Controllers
             {
                 if (answer is SelectionAnswer)
                 {
-                    var question = _db.QuestionAbstracts.Find(answer.QuestionId);
+                    var question = _db.SelectionQuestions.Find(answer.QuestionId);
                     question.Options = question.Options.ToList().Shuffle().ToList();
                     answer.Question = evaluator.Evaluate(question);
                 }
@@ -138,7 +138,7 @@ namespace DiagnosticoDeMatematicas.Controllers
 
             foreach(var answer in response.Answers)
             {
-                answer.Question = _db.QuestionAbstracts.Find(answer.QuestionId);
+                answer.Question = _db.Questions.Find(answer.QuestionId);
             }
 
             if (ModelState.IsValid)

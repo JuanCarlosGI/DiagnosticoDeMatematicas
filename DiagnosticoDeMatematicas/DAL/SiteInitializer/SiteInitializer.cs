@@ -51,7 +51,7 @@ namespace DiagnosticoDeMatematicas.DAL
                 
                 foreach (var question in _questions)
                 {
-                    context.QuestionAbstracts.Add(question);
+                    context.Questions.Add(question);
                 }
                 context.SaveChanges();
                 
