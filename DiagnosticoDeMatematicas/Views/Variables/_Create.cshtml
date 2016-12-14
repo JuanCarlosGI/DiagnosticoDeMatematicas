@@ -1,0 +1,11 @@
+﻿@model DiagnosticoDeMatematicas.Models.Variable
+<div id="variable@(Model.QuestionId)">
+    @using (Ajax.BeginForm("Create", new AjaxOptions {HttpMethod = "Post", UpdateTargetId = $"variable{Model.QuestionId}", InsertionMode = InsertionMode.ReplaceWith}))
+    {
+        @Html.HiddenFor(m => m.QuestionId)
+        @Html.EditorFor(m => m.Symbol)
+        <div class="form-group">
+            <input type="submit" value="Crear" class="btn btn-default"/>
+        </div>
+    }
+</div>

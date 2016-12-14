@@ -4,11 +4,34 @@
 
 <h1>Probar combinaciones</h1>
 <p>@Html.ActionLink("Regresar a examen", "Details", "Exams", new { id = Model.First().ExamId }, new {})</p>
+
+<div class="panel panel-primary">
+    <div class="panel-body">
+        @{
+            var first = ViewBag.Notation as SelectionQuestion;
+        }
+        @if (first != null)
+            {
+            @first.Description
+            var options = first.Options;
+
+            <div class="row">
+                @foreach (var option in options)
+                {
+                    <div class="col-xs-6">
+                        @option.Description
+                        <br /><br />
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
 @foreach (var question in Model)
 {
     <div class="panel panel-primary">
         <div class="panel-body">
-
             @{
                 var selectionQuestion = question as SelectionQuestion;
             }
@@ -22,7 +45,7 @@
                     {
                         <div class="col-xs-6">
                             @Html.Raw(ChartBuilder.QuestionWithChart(option.Description))
-                            <br /><br />
+                            <br/><br/>
                         </div>
                     }
                 </div>

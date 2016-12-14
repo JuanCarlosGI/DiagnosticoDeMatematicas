@@ -36,32 +36,23 @@
                 </table>
 
                 <h4>Variables:</h4>
+                @Ajax.ActionLink("Agregar variable", "Create", "Variables", new { questionId = Model.Id }, new AjaxOptions { InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = $"variable{Model.Id}" })
                 <table class="table">
                     <tr>
                         <th>@Html.DisplayNameFor(description => variableDummy.Symbol)</th>
                         <th>Mínimo</th>
                         <th>Máximo</th>
+                        <th></th>
+                        <th></th>
                     </tr>
 
                     @if (Model.Variables != null)
                     {
                         foreach (var variable in Model.Variables)
                         {
-                            <tr>
-                                <td>@variable.Symbol</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            foreach (var range in variable.Ranges)
-                            {
-                                <tr>
-                                    <td></td>
-                                    <td>@range.Minimum</td>
-                                    <td>@range.Maximum</td>
-                                </tr>
-
-                            }
+                            Html.RenderAction("Details", "Variables", new { variable });
                         }
+                        <tbody id="variable@(Model.Id)"></tbody>
                     }
                 </table>
                 

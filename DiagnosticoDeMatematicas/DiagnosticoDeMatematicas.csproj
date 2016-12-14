@@ -178,6 +178,7 @@
     <Compile Include="Controllers\StatisticsController.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Controllers\VariablesController.cs" />
     <Compile Include="DAL\Binders\AnswerBinder.cs" />
     <Compile Include="DAL\SiteInitializer\GraphsExam.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
@@ -343,6 +344,10 @@
     <Content Include="Views\MultipleSelectionQuestions\DeleteConfirmed.cshtml" />
     <Content Include="Views\Statistics\_OptionStatistics.cshtml" />
     <Content Include="Views\Questions\TestCombinations.cshtml" />
+    <Content Include="Views\Variables\_Create.cshtml" />
+    <Content Include="Views\Variables\_DetailsNew.cshtml" />
+    <Content Include="Views\Variables\_Details.cshtml" />
+    <Content Include="Views\Variables\_DeleteConfirmed.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

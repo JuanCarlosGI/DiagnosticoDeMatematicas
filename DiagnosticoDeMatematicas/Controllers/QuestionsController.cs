@@ -30,7 +30,7 @@ namespace DiagnosticoDeMatematicas.Controllers
 
             var combinations = SpectrumEvaluator.Evaluate(question, question.Variables.ToList());
 
-            combinations.Insert(0, new NotationlessEvaluator().Evaluate(question));
+            ViewBag.Notation = new NotationlessEvaluator().Evaluate(question);
 
             return View(combinations);
         }
