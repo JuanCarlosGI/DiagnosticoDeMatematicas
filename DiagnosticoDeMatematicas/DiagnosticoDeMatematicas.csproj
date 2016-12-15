@@ -172,6 +172,7 @@
     <Compile Include="Controllers\MultipleSelectionQuestionsController.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Controllers\RangesController.cs" />
     <Compile Include="Controllers\SingleSelectionQuestionsController.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -347,7 +348,9 @@
     <Content Include="Views\Variables\_Create.cshtml" />
     <Content Include="Views\Variables\_DetailsNew.cshtml" />
     <Content Include="Views\Variables\_Details.cshtml" />
-    <Content Include="Views\Variables\_DeleteConfirmed.cshtml" />
+    <Content Include="Views\Ranges\_Details.cshtml" />
+    <Content Include="Views\Ranges\_DetailsNew.cshtml" />
+    <Content Include="Views\Ranges\_Create.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

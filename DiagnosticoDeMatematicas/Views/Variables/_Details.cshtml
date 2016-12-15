@@ -5,19 +5,13 @@
         <td>@Model.Symbol</td>
         <td></td>
         <td></td>
-        <td>Ajax.ActionLink("Agregar rango", "Create", "Ranges", new { questionId = Model.QuestionId, symbol = Model.Symbol }, new AjaxOptions { InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = $"range{Model.QuestionId},{Model.Symbol}" })</td>
+        <td>@Ajax.ActionLink("Agregar rango", "Create", "Ranges", new { questionId = Model.QuestionId, symbol = Model.Symbol }, new AjaxOptions { InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = $"range{Model.QuestionId}{Model.Symbol}" })</td>
         <td>@Ajax.ActionLink("Eliminar variable", "Delete", "Variables", new { questionId = Model.QuestionId, symbol = Model.Symbol }, new AjaxOptions { UpdateTargetId = $"variable{Model.QuestionId}{Model.Symbol}", HttpMethod = "Post", InsertionMode = InsertionMode.ReplaceWith })</td>
     </tr>
 
     @foreach (var range in Model.Ranges)
     {
-        <tr>
-            <td></td>
-            <td>@range.Minimum</td>
-            <td>@range.Maximum</td>
-            <td>Eliminar</td>
-            <td></td>
-        </tr>
+        Html.RenderAction("Details", "Ranges", new { range });
     }
     <tr id="range@(Model.QuestionId)@(Model.Symbol)"></tr>
 </tbody>

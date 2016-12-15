@@ -49,7 +49,7 @@ namespace DiagnosticoDeMatematicas.Controllers
             var variable = _db.Variables.Find(symbol,questionId);
             _db.Variables.Remove(variable);
             _db.SaveChanges();
-            return PartialView("_DeleteConfirmed"); ;
+            return null;
         }
     }
 }
