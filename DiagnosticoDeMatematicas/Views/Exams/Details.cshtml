@@ -16,6 +16,7 @@
 <div id="newQuestion"></div>
 @foreach (var question in Model.Questions)
 {
+    
     if (question is MultipleSelectionQuestion)
     {
         Html.RenderAction("Details", "MultipleSelectionQuestions", new { questionId = question.Id });

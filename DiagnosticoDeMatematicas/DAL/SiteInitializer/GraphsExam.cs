@@ -247,7 +247,7 @@ namespace DiagnosticoDeMatematicas.DAL
             _options.Add(new QuestionOption { Description = "&& Polynomial -9 9 -9 9 1 0 &&", IsCorrect = false, Feedback = "Interpretar que 'x' siempre valga lo mismo que 'y'.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _options.Add(new QuestionOption { Description = "&& Polynomial -9 9 -9 9 %n 0 &&", IsCorrect = false, Feedback = "Interpretar que en la recta hay algo constante, su inclinación.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _variables.Add(new Variable { QuestionId = _questionCounter, Symbol = "n" });
-            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 1, Maximum = 3 });
+            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 2, Maximum = 3 });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = -3, Maximum = -1 });
 
             _questions.Add(new SingleSelectionQuestion
@@ -261,7 +261,7 @@ namespace DiagnosticoDeMatematicas.DAL
             _options.Add(new QuestionOption { Description = "&& Polynomial -9 9 -9 9 1 0 &&", IsCorrect = false, Feedback = "Interpretar que el valor de 'y' se mantiene igual al de 'x'.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _options.Add(new QuestionOption { Description = "&& Polynomial -9 9 -9 9 %n 0 &&", IsCorrect = false, Feedback = "Interpretar que lo que no cambia es el valor de la pendiente.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _variables.Add(new Variable { QuestionId = _questionCounter, Symbol = "n" });
-            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 1, Maximum = 3 });
+            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 2, Maximum = 3 });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = -3, Maximum = -1 });
 
             _questions.Add(new SingleSelectionQuestion

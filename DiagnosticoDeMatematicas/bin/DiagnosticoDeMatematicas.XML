@@ -6,7 +6,7 @@
     <members>
         <member name="T:DiagnosticoDeMatematicas.DAL.Binders.AnswerBinder">
             <summary>
-            Binder in charge of creating different subclasses of AnswerAbstract
+            Binder in charge of creating different subclasses of Answer
             </summary>
         </member>
         <member name="M:DiagnosticoDeMatematicas.DAL.Binders.AnswerBinder.CreateModel(System.Web.Mvc.ControllerContext,System.Web.Mvc.ModelBindingContext,System.Type)">
@@ -437,13 +437,6 @@
             and ending in 100, in intervals of 5.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.QuestionResponses">
-            <summary>
-            Gets the dictionary containing the amount of times each option was chosen for a given question. The key is
-            the ID of the question, and the value is a tuple containing the amount of times optionA, optionB, optionC,
-            and OptionD were chosen, respectively.
-            </summary>
-        </member>
         <member name="M:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.PercentageBetweenGrades(System.Double,System.Double)">
             <summary>
             Gets the percentage of the responses analyzed that have a grade within the limits specified.
@@ -452,11 +445,12 @@
             <param name="upperLimit">Non-inclusive upper limit of the range of grades.</param>
             <returns>The percentage of responses meeting the criteria.</returns>
         </member>
-        <member name="M:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.CreateQuestionResponses">
+        <member name="M:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.PercentageWithValue(System.Double)">
             <summary>
-            Creates the QuestionResponses dictionary.
+            Gets the percentage of the responses analyzed that have an exact grade.
             </summary>
-            <returns>The created dictionary</returns>
+            <param name="value">The grade to be compared.</param>
+            <returns>The percentage of responses meeting the criteria.</returns>
         </member>
         <member name="M:DiagnosticoDeMatematicas.Helpers.ExamAnalyzer.CreateGradeRanges">
             <summary>
@@ -467,6 +461,11 @@
         <member name="T:DiagnosticoDeMatematicas.Helpers.ExtensionMethods">
             <summary>
             Class serving as a container for all extension methods.
+            </summary>
+        </member>
+        <member name="F:DiagnosticoDeMatematicas.Helpers.ExtensionMethods.Random">
+            <summary>
+            Random object used throughout all execution.
             </summary>
         </member>
         <member name="M:DiagnosticoDeMatematicas.Helpers.ExtensionMethods.DisplayWithBreaksFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
@@ -493,7 +492,7 @@
             </summary>
             <typeparam name="T">The type of IEnumerable.</typeparam>
             <param name="source">The IEnumerable that this method is extending.</param>
-            <param name="rng">The <see cref="T:System.Random"/> object to be used</param>
+            <param name="rng">The <see cref="F:DiagnosticoDeMatematicas.Helpers.ExtensionMethods.Random"/> object to be used</param>
             <returns>The shuffled IEnumerator.</returns>
         </member>
         <member name="M:DiagnosticoDeMatematicas.Helpers.ExtensionMethods.ShuffleIterator``1(System.Collections.Generic.IEnumerable{``0},System.Random)">
@@ -503,7 +502,7 @@
             </summary>
             <typeparam name="T">The type of IEnumerable.</typeparam>
             <param name="source">The IEnumerable that this method is extending.</param>
-            <param name="rng">The <see cref="T:System.Random"/> object to be used</param>
+            <param name="rng">The <see cref="F:DiagnosticoDeMatematicas.Helpers.ExtensionMethods.Random"/> object to be used</param>
             <returns>The shuffled IEnumerator.</returns>
         </member>
         <member name="T:DiagnosticoDeMatematicas.Helpers.Functions.Function">
@@ -592,7 +591,7 @@
             Interface for an object that can evaluate a question's variables.
             </summary>
         </member>
-        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.IEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.QuestionAbstract)">
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.IEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.Question)">
             <summary>
             Evaluates a question.
             </summary>
@@ -604,7 +603,7 @@
             Class responsible for removing all notation from a question.
             </summary>
         </member>
-        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.NotationlessEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.QuestionAbstract)">
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.NotationlessEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.Question)">
             <summary>
             Evaluates a question, removing all notation and leaving the variables' names.
             </summary>
@@ -616,7 +615,7 @@
             Class responsible for evaluating a question with valid random values.
             </summary>
         </member>
-        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.QuestionAbstract)">
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.RandomValueEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.Question)">
             <summary>
             Evaluates a question with a valid random value for each variable.
             </summary>
@@ -668,6 +667,87 @@
             </summary>
             <param name="expression">String to be modified.</param>
             <returns>Modified string.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Helpers.IEvaluator.SpecificEvaluator">
+            <summary>
+            Static class in charge of evaluating a specific variable with a specific value.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.SpecificEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.Question,System.String,System.Int32)">
+            <summary>
+            Evaluates a specific variable in a question with a specific value. Note that
+            this does not evaluate expressions.
+            </summary>
+            <param name="question">Question to be evaluated</param>
+            <param name="variable">Symbol of the variable to be evaluated</param>
+            <param name="value">Value to evaluate with.</param>
+            <returns>The evaluated question.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.SpecificEvaluator.EvaluateParts(DiagnosticoDeMatematicas.Models.Question)">
+            <summary>
+            Evaluates all expressions in the question.
+            </summary>
+            <param name="question">Question to be evaluated.</param>
+            <returns>The evaluated question.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.SpecificEvaluator.EvaluatePart(System.String)">
+            <summary>
+            Evaluates a single string.
+            </summary>
+            <param name="part">String to be evaluated.</param>
+            <returns>Evaluated string.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.SpecificEvaluator.Evaluate(System.String)">
+            <summary>
+            Evaluates a numeric expression
+            Gotten from:
+            http://stackoverflow.com/questions/333737/evaluating-string-342-yield-int-18
+            </summary>
+            <param name="expression">The expression to be evaluated.</param>
+            <returns>The resulting value.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.SpecificEvaluator.EliminateDoubleSigns(System.String)">
+            <summary>
+            Replaces double signs (+-) or (--) with their equivalent single sign.
+            </summary>
+            <param name="expression">String to be modified.</param>
+            <returns>Modified string.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.SpecificEvaluator.EliminateMultiplyingOnes(System.String)">
+            <summary>
+            Eliminates '1' when it precedes a letter as a multiplication.
+            </summary>
+            <param name="expression">String to be modified.</param>
+            <returns>Modified string.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.SpecificEvaluator.CancelNegativeDivNegative(System.String)">
+            <summary>
+            Simplifies a division where both the numerator and denominator are negative, and eliminates the negative 
+            signs.
+            </summary>
+            <param name="expression">String to be modified.</param>
+            <returns>Modified string.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.SpecificEvaluator.TakeSingleMinusOutOfDivision(System.String)">
+            <summary>
+            Modifies a string so that if a division is present in which either the numerator or the denominator are 
+            negative (but not both), the negative sign is put outside the division instead.
+            </summary>
+            <param name="expression">String to be modified.</param>
+            <returns>Modified string.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Helpers.IEvaluator.SpectrumEvaluator">
+            <summary>
+            Static class in charge of obtaining all possible evaluations of a question.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Helpers.IEvaluator.SpectrumEvaluator.Evaluate(DiagnosticoDeMatematicas.Models.Question,System.Collections.Generic.List{DiagnosticoDeMatematicas.Models.Variable})">
+            <summary>
+            Obtains a list with all possible evaluations of variables in a question.
+            </summary>
+            <param name="question">Question to be evaluated.</param>
+            <param name="variables">Variables to be evaluated.</param>
+            <returns>A list containing all possible combinations of variables.</returns>
         </member>
         <member name="T:DiagnosticoDeMatematicas.Helpers.SessionManager">
             <summary>
@@ -732,32 +812,32 @@
             Gets a value indicating whether an administrator is signed in.
             </summary>
         </member>
-        <member name="T:DiagnosticoDeMatematicas.Models.AnswerAbstract">
+        <member name="T:DiagnosticoDeMatematicas.Models.Answer">
             <summary>
             Class representing an abstract answer to a given question.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.AnswerAbstract.ResponseId">
+        <member name="P:DiagnosticoDeMatematicas.Models.Answer.ResponseId">
             <summary>
             Gets or sets the ID of the response it belongs to.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.AnswerAbstract.QuestionId">
+        <member name="P:DiagnosticoDeMatematicas.Models.Answer.QuestionId">
             <summary>
             Gets or sets the ID of the question it is answering.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.AnswerAbstract.Response">
+        <member name="P:DiagnosticoDeMatematicas.Models.Answer.Response">
             <summary>
             Gets or sets the response it belongs to.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.AnswerAbstract.Question">
+        <member name="P:DiagnosticoDeMatematicas.Models.Answer.Question">
             <summary>
             Gets or sets the question it is answering.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.AnswerAbstract.IsCorrect">
+        <member name="P:DiagnosticoDeMatematicas.Models.Answer.IsCorrect">
             <summary>
             Gets a value indicating whether the answer is correct.
             </summary>
@@ -772,22 +852,22 @@
             Model representing a question which can be answered with multiple selections.
             </summary>
         </member>
-        <member name="T:DiagnosticoDeMatematicas.Models.QuestionAbstract">
+        <member name="T:DiagnosticoDeMatematicas.Models.Question">
             <summary>
             Model representing a question.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.Id">
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.Id">
             <summary>
             Gets or sets the ID of the question.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.ExamId">
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.ExamId">
             <summary>
             Gets or sets the ID of the exam to which this question belongs.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.Description">
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.Description">
             <summary>
             Gets or sets the description of the question. This field can be interpreted as a Latex mathematical formula,
             and can contain both variables (Identified by a '%', e.g. "%x") and expressions that should be evaluated
@@ -796,17 +876,17 @@
             Helpers.Charts.ChartBuilder.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.Exam">
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.Exam">
             <summary>
             Gets or sets the exam to which the question belongs.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.Answers">
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.Answers">
             <summary>
             Gets or sets the answers that have been registered for this question.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.QuestionAbstract.Variables">
+        <member name="P:DiagnosticoDeMatematicas.Models.Question.Variables">
             <summary>
             Gets or sets the variables that the question contains.
             </summary>
@@ -854,6 +934,16 @@
         <member name="P:DiagnosticoDeMatematicas.Models.QuestionOption.Question">
             <summary>
             Gets or sets the question it belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.QuestionOption.SingleSelectionAnswers">
+            <summary>
+            Gets or sets the collection of all answers that have chosen this option.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.QuestionOption.BinaryOptionSelections">
+            <summary>
+            Gets or sets the collection of binary option selections that have been made of this option.
             </summary>
         </member>
         <member name="T:DiagnosticoDeMatematicas.Models.SingleSelectionAnswer">
@@ -1235,6 +1325,76 @@
             Gets the string containing the image of a multicolumn chart. This chart compares the amount of responses for each exam in which they have a certain grade.
             </summary>
         </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.MultipleSelectionQuestionWithOptionsViewModel">
+            <summary>
+            View Model of a <see cref="T:DiagnosticoDeMatematicas.Models.MultipleSelectionQuestion"/> with all its <see cref="T:DiagnosticoDeMatematicas.Models.QuestionOption"/>.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.MultipleSelectionQuestionWithOptionsViewModel.Id">
+            <summary>
+            Gets or sets the ID of the question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.MultipleSelectionQuestionWithOptionsViewModel.ExamId">
+            <summary>
+            Gets or sets the ID of the exam to which the question belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.MultipleSelectionQuestionWithOptionsViewModel.Description">
+            <summary>
+            Gets or sets the description of the question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.MultipleSelectionQuestionWithOptionsViewModel.Options">
+            <summary>
+            Gets or sets the list of options that the question has.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.OptionStatisticsViewModel">
+            <summary>
+            Represents the statistics of an option of a question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.OptionStatisticsViewModel.Percentage">
+            <summary>
+            Gets or sets the percentage of times it is selected.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.OptionStatisticsViewModel.Description">
+            <summary>
+            Gets or sets the description of the option.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.OptionStatisticsViewModel.IsCorrect">
+            <summary>
+            Gets or sets a value indicating whether the option is correct or not.
+            </summary>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.SingleSelectionQuestionWithOptionsViewModel">
+            <summary>
+            View Model of a <see cref="T:DiagnosticoDeMatematicas.Models.SingleSelectionQuestion"/> with all its <see cref="T:DiagnosticoDeMatematicas.Models.QuestionOption"/>.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.SingleSelectionQuestionWithOptionsViewModel.Id">
+            <summary>
+            Gets or sets the ID of the question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.SingleSelectionQuestionWithOptionsViewModel.ExamId">
+            <summary>
+            Gets or sets the ID of the exam to which the question belongs to.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.SingleSelectionQuestionWithOptionsViewModel.Description">
+            <summary>
+            Gets or sets the description of the question.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.SingleSelectionQuestionWithOptionsViewModel.Options">
+            <summary>
+            Gets or sets the list of options that the question has.
+            </summary>
+        </member>
         <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.StatisticDetailsViewModel">
             <summary>
             View Model for the view Responses/StatisticDetails
@@ -1270,6 +1430,33 @@
             Chart that displays the information on GradeRanges.
             </summary>
             <returns>String containing the image of a column chart.</returns>
+        </member>
+        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.UserWithExamsViewModel">
+            <summary>
+            View model representing a user with all the exams he has answered.
+            </summary>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Models.ViewModels.UserWithExamsViewModel.#ctor(DiagnosticoDeMatematicas.Models.User,System.Collections.Generic.IEnumerable{DiagnosticoDeMatematicas.Models.Exam})">
+            <summary>
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Models.ViewModels.UserWithExamsViewModel"/> class.
+            </summary>
+            <param name="user">The user that is being represented.</param>
+            <param name="exams">The list of exams that are being analyzed.</param>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.UserWithExamsViewModel.User">
+            <summary>
+            Gets the user that is being represented.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.UserWithExamsViewModel.RadarChart">
+            <summary>
+            Gets a string representing a radar chart of the user's latest attempts.
+            </summary>
+        </member>
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.UserWithExamsViewModel.Responses">
+            <summary>
+            Gets the list of responses that are going to be displayed at the radar chart.
+            </summary>
         </member>
         <member name="T:DiagnosticoDeMatematicas.Models.MultipleSelectionAnswer">
             <summary>

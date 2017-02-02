@@ -101,7 +101,8 @@ namespace DiagnosticoDeMatematicas.DAL
             _options.Add(new QuestionOption { Description = "\\(-\\dfrac{%n}{2}\\)", IsCorrect = false, Feedback = "Multiplica en vez de sumar.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _options.Add(new QuestionOption { Description = "\\(\\dfrac{|%n+1|}{2}\\)", IsCorrect = false, Feedback = "Suma numeradores y deja denominador.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _variables.Add(new Variable { QuestionId = _questionCounter, Symbol = "n" });
-            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 1, Maximum = 10 });
+            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 1, Maximum = 1 });
+            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 3, Maximum = 10 });
 
             _questions.Add(new SingleSelectionQuestion
             {
@@ -266,7 +267,7 @@ namespace DiagnosticoDeMatematicas.DAL
             _options.Add(new QuestionOption { Description = "\\(\\dfrac{|1-(2*%n)|}{%n}\\)", IsCorrect = false, Feedback = "Confusión elevar al cuadrado con multiplicar por 2.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _options.Add(new QuestionOption { Description = "\\(-\\dfrac{|%n*%n|}{%n}\\)", IsCorrect = false, Feedback = "Operación cruzada.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _variables.Add(new Variable { QuestionId = _questionCounter, Symbol = "n" });
-            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 2, Maximum = 9 });
+            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 3, Maximum = 9 });
 
             _questions.Add(new SingleSelectionQuestion
             {
@@ -303,13 +304,11 @@ namespace DiagnosticoDeMatematicas.DAL
             _options.Add(new QuestionOption { Description = "\\(\\dfrac{|1-%n|}{|%n-%m|}\\)", IsCorrect = false, Feedback = "Resta de numeradores y denominadores.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _options.Add(new QuestionOption { Description = "\\(\\dfrac{|1-%n|}{|%n*%m|}\\)", IsCorrect = false, Feedback = "Resta numeradores y común denominador.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _variables.Add(new Variable { QuestionId = _questionCounter, Symbol = "n" });
-            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 2, Maximum = 2 });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 4, Maximum = 4 });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 6, Maximum = 6 });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 8, Maximum = 8 });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 10, Maximum = 10 });
             _variables.Add(new Variable { QuestionId = _questionCounter, Symbol = "m" });
-            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "m", Id = ++_rangeCounter, Minimum = 1, Maximum = 1 });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "m", Id = ++_rangeCounter, Minimum = 3, Maximum = 3 });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "m", Id = ++_rangeCounter, Minimum = 5, Maximum = 5 });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "m", Id = ++_rangeCounter, Minimum = 7, Maximum = 7 });
@@ -333,7 +332,6 @@ namespace DiagnosticoDeMatematicas.DAL
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 8, Maximum = 8 });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 10, Maximum = 10 });
             _variables.Add(new Variable { QuestionId = _questionCounter, Symbol = "m" });
-            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "m", Id = ++_rangeCounter, Minimum = 1, Maximum = 1 });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "m", Id = ++_rangeCounter, Minimum = 3, Maximum = 3 });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "m", Id = ++_rangeCounter, Minimum = 5, Maximum = 5 });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "m", Id = ++_rangeCounter, Minimum = 7, Maximum = 7 });

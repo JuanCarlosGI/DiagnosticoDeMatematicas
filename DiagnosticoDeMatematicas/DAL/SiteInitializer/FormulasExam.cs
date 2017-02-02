@@ -57,7 +57,7 @@ namespace DiagnosticoDeMatematicas.DAL
             _options.Add(new QuestionOption { Description = "\\(\\dfrac{%nab}{1}\\)", IsCorrect = false, Feedback = "No opera el exponente negativo.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _options.Add(new QuestionOption { Description = "\\(\\dfrac{%n}{ab}\\)", IsCorrect = false, Feedback = "Opera el exponente negativo sólo a las letras y no a los números.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _variables.Add(new Variable { QuestionId = _questionCounter, Symbol = "n" });
-            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 1, Maximum = 10 });
+            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 2, Maximum = 10 });
 
             _questions.Add(new SingleSelectionQuestion
             {
@@ -85,7 +85,7 @@ namespace DiagnosticoDeMatematicas.DAL
             _options.Add(new QuestionOption { Description = "\\(|2*%m|a^2b^2+|2*%n|b^4-%na^2\\)", IsCorrect = false, Feedback = "Opera el primer binomio con el primer término del segundo binomio como si no hubiera un paréntesis.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _options.Add(new QuestionOption { Description = "\\(|%m + 2 - %n * %n|a^2b^2 + |2*%n|b^4 - |%m*%n|a^4\\)", IsCorrect = false, Feedback = "Opera suma en vez de multiplicación en el primer término.", Id = ++_optionCounter, QuestionId = _questionCounter });
             _variables.Add(new Variable { QuestionId = _questionCounter, Symbol = "m" });
-            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "m", Id = ++_rangeCounter, Minimum = 2, Maximum = 5 });
+            _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "m", Id = ++_rangeCounter, Minimum = 3, Maximum = 5 });
             _variables.Add(new Variable { QuestionId = _questionCounter, Symbol = "n" });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = -1, Maximum = -1 });
             _ranges.Add(new Range { QuestionId = _questionCounter, Symbol = "n", Id = ++_rangeCounter, Minimum = 1, Maximum = 1 });
@@ -218,7 +218,7 @@ namespace DiagnosticoDeMatematicas.DAL
             {
                 Id = ++_questionCounter,
                 ExamId = _examCounter,
-                Description = "Elige la expresión que resulta ser cierta cuando se trabajca alebraícamente la expresión: \\[" +
+                Description = "Elige la expresión que resulta ser cierta cuando se trabajca algebraícamente la expresión: \\[" +
                 "\\dfrac{1}{|2*%n|}x + \\dfrac{1}{|2*%n+1|} = 0\\]"
             });
             _options.Add(new QuestionOption { Description = "\\(|2*%n+1|x+2%n=0\\)", IsCorrect = true, Feedback = "Correcto", Id = ++_optionCounter, QuestionId = _questionCounter });
@@ -289,7 +289,7 @@ namespace DiagnosticoDeMatematicas.DAL
             {
                 Id = ++_questionCounter,
                 ExamId = _examCounter,
-                Description = "Entre las siguientes pxpresiones cuadráticas, elige la que toma valores positivos siempre, inteprrendientemente del valor designado a 'x'."
+                Description = "Entre las siguientes expresiones cuadráticas, elige la que toma valores positivos siempre, independientemente del valor designado a 'x'."
             });
             _options.Add(new QuestionOption { Description = "\\(%nx^2+%m\\)", IsCorrect = true, Feedback = "Correcto", Id = ++_optionCounter, QuestionId = _questionCounter });
             _options.Add(new QuestionOption { Description = "\\(|%n*%n|x^2-%m\\)", IsCorrect = false, Feedback = "Se prejuicia observando los números.", Id = ++_optionCounter, QuestionId = _questionCounter });

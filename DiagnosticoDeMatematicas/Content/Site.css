@@ -49,3 +49,19 @@ textarea {
   display: flex;
   align-items: center;
 }
+
+.panel-primary > .panel-heading {
+    background-color: #213c8c;
+}
+
+.panel-primary {
+    border-color: #213c8c;
+}
+
+a, .navbar-default .navbar-brand {
+    color : #213c8c;
+}
+
+.navbar-default {
+    background-color: #eeeeee;
+}

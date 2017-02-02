@@ -9,6 +9,7 @@
 <div id="@Model.Id" class="panel-group">
     <div class="panel panel-primary" style="margin-bottom: 2px;">
         <div class="panel-heading">
+            <div style="text-align: right">P@(Model.Id)</div>
             <h3 class="panel-title">
                 <a data-toggle="collapse" href="#collapse@(Model.Id)">
                     @Html.DisplayFor(description => Model.Description)
@@ -36,7 +37,7 @@
                 </table>
 
                 <h4>Variables:</h4>
-                @Ajax.ActionLink("Agregar variable", "Create", "Variables", new { questionId = Model.Id }, new AjaxOptions { InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = $"variable{Model.Id}" })
+                @Ajax.ActionLink("Agregar variable", "Create", "Variables", new { questionId = Model.Id }, new AjaxOptions { InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = $"newvariable{Model.Id}" })
                 <table class="table">
                     <tr>
                         <th>@Html.DisplayNameFor(description => variableDummy.Symbol)</th>
@@ -52,7 +53,7 @@
                         {
                             Html.RenderAction("Details", "Variables", new { variable });
                         }
-                        <tbody id="variable@(Model.Id)"></tbody>
+                        <tbody id="newvariable@(Model.Id)"></tbody>
                     }
                 </table>
                 
