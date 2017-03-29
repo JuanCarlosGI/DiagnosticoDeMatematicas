@@ -1,19 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
-using DiagnosticoDeMatematicas.DAL;
 using DiagnosticoDeMatematicas.Helpers;
-using DiagnosticoDeMatematicas.Helpers.IEvaluator;
 using DiagnosticoDeMatematicas.Models;
+using DiagnosticoDeMatematicas.Services.ResponsesService;
 
 namespace DiagnosticoDeMatematicas.Controllers
 {
     public class ResponsesController : Controller
     {
-        private readonly SiteContext _db = new SiteContext();
+        private readonly IResponsesService _service;
+
+        public ResponsesController()
+        {
+            _service = new ResponsesService(new DAL.SiteContext());
+        }
+
+        public ResponsesController(IResponsesService service)
+        {
+            _service = service;
+        }
 
         // GET: Responses
         public ActionResult Index()
@@ -28,19 +33,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            var responses = _db.Responses.Include(r => r.Exam).Include(r => r.User).ToList();
-            foreach(var response in responses)
-                foreach (var answer in response.Answers.ToArray())
-                {
-                    var multipleAnswer = answer as MultipleSelectionAnswer;
-                    if (multipleAnswer != null)
-                    {
-                        response.Answers.Remove(answer);
-                        response.Answers.Add(_db.MultipleSelectionAnswers
-                            .Include(a => a.Selections)
-                            .SingleOrDefault(e => e.QuestionId == answer.QuestionId && e.ResponseId == answer.ResponseId));
-                    }
-                }
+            var responses = _service.GetAllResponses();
             
             return View(responses);
         }
@@ -58,25 +51,13 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            Response response = _db.Responses.Find(id);
+            Response response = _service.FindResponse(id.Value);
             if (response == null)
             {
                 return HttpNotFound();
             }
 
-            foreach (var answer in response.Answers.ToArray())
-            {
-                var multipleAnswer = answer as MultipleSelectionAnswer;
-                if (multipleAnswer != null)
-                {
-                    response.Answers.Remove(answer);
-                    response.Answers.Add(_db.MultipleSelectionAnswers
-                        .Include(a => a.Selections)
-                        .Include(a => a.Question)
-                        .Include(a => a.Response)
-                        .SingleOrDefault(e => e.QuestionId == answer.QuestionId && e.ResponseId == answer.ResponseId));
-                }
-            }
+            _service.LoadMultipleSelectionAnswers(response.Answers);
 
             if (!SessionValidator.IsAdminSignedIn &&
                 response.User.Email != SessionService.User.Email)
@@ -95,34 +76,12 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            if (examId == null || _db.Exams.Find(examId.Value) == null)
+            if (examId == null || _service.FindExam(examId.Value) == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            Response response = new Response { ExamId = examId.Value, UserId = SessionService.User.Email, Exam = _db.Exams.Find(examId) };
-
-            var answers = new List<Answer>();
-            foreach (var question in response.Exam.Questions)
-            {
-                if (question is SingleSelectionQuestion)
-                    answers.Add(new SingleSelectionAnswer { Question = question as SingleSelectionQuestion, QuestionId = question.Id });
-                else if (question is MultipleSelectionQuestion)
-                    answers.Add(new MultipleSelectionAnswer(question as MultipleSelectionQuestion));
-            }
-
-            var evaluator = new RandomValueEvaluator();
-            foreach (var answer in answers)
-            {
-                if (answer is SelectionAnswer)
-                {
-                    var question = _db.SelectionQuestions.Find(answer.QuestionId);
-                    question.Options = question.Options.ToList().Shuffle().ToList();
-                    answer.Question = evaluator.Evaluate(question);
-                }
-            }
-
-            response.Answers = answers;
+            
+            var response = _service.PrepareNewResponse(examId.Value);
 
             return View(response);
         }
@@ -132,20 +91,11 @@ namespace DiagnosticoDeMatematicas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,UserId,ExamId,Answers")]Response response)
         {
-            response.Date = DateTime.Now;
-            response.Exam = _db.Exams.Find(response.ExamId);
-            response.User = _db.Users.Find(response.UserId);
-
-            foreach(var answer in response.Answers)
-            {
-                answer.Question = _db.Questions.Find(answer.QuestionId);
-            }
+            _service.PopulateResponseModel(response);
 
             if (ModelState.IsValid)
             {
-                _db.Responses.Add(response);
-                _db.Entry(response).State = EntityState.Added;
-                _db.SaveChanges();
+                _service.SaveResponse(response);
 
                 return RedirectToAction("ThankYou");
             }
@@ -171,7 +121,8 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            Response response = _db.Responses.Find(id);
+            var response = _service.FindResponse(id.Value);
+
             if (response == null)
             {
                 return HttpNotFound();
@@ -191,9 +142,7 @@ namespace DiagnosticoDeMatematicas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Response response = _db.Responses.Find(id);
-            _db.Responses.Remove(response);
-            _db.SaveChanges();
+            _service.DeleteResponse(id);
             return RedirectToAction("Index");
         }
 
@@ -201,7 +150,7 @@ namespace DiagnosticoDeMatematicas.Controllers
         {
             if (disposing)
             {
-                _db.Dispose();
+                _service.DisposeDb();
             }
 
             base.Dispose(disposing);

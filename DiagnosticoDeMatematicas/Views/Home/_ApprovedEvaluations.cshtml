@@ -1,0 +1,15 @@
+﻿@model List<List<DiagnosticoDeMatematicas.Models.User>>
+
+<h1>Usuarios aprobados</h1>
+@{
+    var modules = new[] { "Modelo lineal", "Modelo cuadrático", "Modelo cúbico", "Otros modelos" };
+    for (int module = 0; module < 4; module++)
+    {
+        <h2>@modules[module]:</h2>
+
+        foreach (var user in Model[module])
+        {
+            <li>@Html.ActionLink(user.FullName, "Details", "Users", new { id = user.Email }, new {})</li>
+        }
+    }
+}

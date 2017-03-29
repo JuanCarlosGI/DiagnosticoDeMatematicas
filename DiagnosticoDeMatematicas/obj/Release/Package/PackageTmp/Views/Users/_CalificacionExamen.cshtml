@@ -1,0 +1,18 @@
+﻿@model int
+    
+@if (Model == 2 || Model == 3)
+{
+    <td style="background-color: green; text-align: center;"><h2>@Model</h2></td>
+}
+@if (Model == 1)
+{
+    <td style="background-color: yellow; text-align: center;"><h2>@Model</h2></td>
+}
+@if (Model == 0)
+{
+    <td style="background-color: red; text-align: center;"><h2>@Model</h2></td>
+}
+@if (Model == -1)
+{
+    <td style="background-color: white; text-align: center;"><h2>NA</h2></td>
+}

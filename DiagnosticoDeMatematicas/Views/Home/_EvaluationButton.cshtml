@@ -1,0 +1,10 @@
+﻿@model string
+
+@if (Model == "")
+{
+    <a class="btn btn-primary btn-outline btn-block" href="#">Entrar</a>
+}
+else
+{
+    @Html.ActionLink("Entrar", "Create", "Responses", new { examId = int.Parse(Model) }, new {@class = "btn btn-primary btn-outline btn-block"})
+}

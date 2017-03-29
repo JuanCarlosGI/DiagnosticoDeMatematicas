@@ -1,0 +1,67 @@
+﻿@model DiagnosticoDeMatematicas.Models.ViewModels.GlobalStatisticsViewModel
+@{
+    ViewBag.Title = "Estadísticas globales";
+}
+
+<h2 style="text-align:center">Estadísticas</h2>
+
+<dl class="dl-horizontal">
+    @if (Model.StartDate.HasValue)
+    {
+        <dt>
+            @Html.DisplayNameFor(m => m.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(m => m.StartDate)
+        </dd>
+    }
+    @if (Model.EndDate.HasValue)
+    {
+        <dt>
+            @Html.DisplayNameFor(m => m.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(m => m.EndDate)
+        </dd>
+    }
+</dl>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    Diagnósticos aplicados
+                </th>
+                <th>
+                    Cantidad
+                </th>
+            </tr>
+
+            @foreach (var analyzer in Model.ExamAnalyzers)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => analyzer.Exam.Name)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(m => analyzer.AmountOfResponses)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6 col">
+        <img style="width:100%; max-width:500px; align-content:center;" src="data:image/png;base64,@Model.RadarChart" />
+    </div>
+    <div class="col-lg-12">
+        <img style="width:100%" src="data:image/png;base64,@Model.MulticolumnChart" />
+    </div>
+</div>

@@ -1,0 +1,30 @@
+﻿@model DiagnosticoDeMatematicas.Models.ViewModels.ChangeEvaluationViewModel
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>Cambiar evaluación</h2>
+<p>Selecciona el diagnóstico que funcionará como la nueva evaluación.</p>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(m => Model.Evaluation)
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => Model.ExamId, Html.DisplayNameFor(field => Model.ExamId).ToString(), new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ExamID", null, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ExamId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

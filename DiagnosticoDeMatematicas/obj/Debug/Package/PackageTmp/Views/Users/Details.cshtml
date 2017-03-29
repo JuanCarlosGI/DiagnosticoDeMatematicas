@@ -1,0 +1,95 @@
+﻿@using DiagnosticoDeMatematicas.Helpers
+@model DiagnosticoDeMatematicas.Models.ViewModels.UserWithExamsViewModel
+
+@{
+    ViewBag.Title = "Detalles de cuenta";
+}
+
+<h2 style="text-align:center">@Model.User.FullName</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>@Html.DisplayNameFor(model => model.User.Role)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Role)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.User.Email)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Email)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.User.FirstName)</dt>
+                <dd>@Html.DisplayFor(model => model.User.FirstName)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.User.LastName)</dt>
+                <dd>@Html.DisplayFor(model => model.User.LastName)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.User.DateOfBirth)</dt>
+                <dd>@Html.DisplayFor(model => model.User.DateOfBirth)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.User.Gender)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Gender)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.User.Interest)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Interest)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.User.Facility)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Facility)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.User.Liking)</dt>
+                <dd>@Html.DisplayFor(model => model.User.Liking)</dd>
+            </dl>
+        </div>
+        @if (SessionValidator.IsAdminSignedIn)
+        {
+            <p>
+                @Html.ActionLink("Editar", "Edit", new { id = Model.User.Email + "/" }) |
+                @Html.ActionLink("Borrar", "Delete", new { id = Model.User.Email + "/" }) |
+                @Html.ActionLink("Regresar a lista de usuarios", "Index")
+            </p>
+        }
+    </div>
+
+    <div class="col-md-6">
+        <img style="width:100%; max-width:500px; align-content:center;" src="data:image/png;base64,@Model.RadarChart" />
+    </div>
+</div>
+
+<h2 style="text-align:center;">HISTORIAL</h2>
+
+<div class="row">
+    @foreach (var exam in Model.User.Responses.Select(r => r.Exam).Distinct())
+    {
+        <div class="col-md-4">
+            <h4 style="text-align:center;">Diagnóstico @exam.Name</h4>
+            <table class="table table-hover table-striped">
+                <tr>
+                    <th>
+                        Intento
+                    </th>
+                    <th>
+                        Reactivos correctos
+                    </th>
+                </tr>
+
+                @{
+                    var responses = Model.User.Responses.Where(r => r.ExamId == exam.Id).OrderByDescending(r => r.Date);
+                    var counter = responses.Count();
+                }
+                @foreach (var item in responses)
+                {
+                    <tr>
+                        <td>
+                            @counter (@item.Date.ToShortDateString())
+                        </td>
+                        <td>
+                            @((int)(item.Grade / 100.0 * 20.0)) de 20
+                        </td>
+                    </tr>
+
+                    counter--;
+                }
+            </table>
+        </div>    
+    }
+</div>

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="SiteContext-Web.config Connection String" description="SiteContext Connection String used in web.config by the application to access the database." defaultValue="Data Source=.\SQLEXPRESS01;Initial Catalog=DiagnosticoDeMatematicas;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\DiagnosticoDeMatematicas.mdf; MultipleActiveResultSets=true" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Patysalinas\\documents\\visual\ studio\ 2015\\Projects\\DiagnosticoDeMatematicas\\DiagnosticoDeMatematicas\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SiteContext']/@connectionString" />
+  </parameter>
+</parameters>

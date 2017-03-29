@@ -1,0 +1,166 @@
+﻿@using DiagnosticoDeMatematicas.Helpers
+@model List<string>
+
+<h1>Examen de ubicación</h1>
+<table class="table table-condensed">
+    <tr>
+        <th></th>
+        <th>Representación numérica</th>
+        <th>Representación algebraica</th>
+        <th>Representación gráfica</th>
+        <th>Flexibilidad de representación</th>
+        <th>Aplicación con significado real</th>
+    </tr>
+    <tr>
+        <th>Modelo lineal</th>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[0])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 0})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[1])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 1})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[2])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 2})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[3])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 3})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[4])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 4})
+            }
+        </td>
+    </tr>
+    <tr>
+        <th>Modelo cuadrático</th>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[5])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 5})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[6])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 6})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[7])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 7})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[8])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 8})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[9])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 9})
+            }
+        </td>
+    </tr>
+    <tr>
+        <th>Modelo cúbico</th>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[10])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 10})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[11])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 11})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[12])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 12})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[13])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 13})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[14])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 14})
+            }
+        </td>
+    </tr>
+    <tr>
+        <th>Otros modelos</th>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[15])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 15})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[16])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 16})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[17])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 17})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[18])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 18})
+            }
+        </td>
+        <td>
+            @Html.Partial("_EvaluationButton", Model[19])
+            @if (SessionValidator.IsAdminSignedIn)
+            {
+                @Html.ActionLink("Cambiar evaluacion", "ChangeEvaluation", new {evaluation = 19})
+            }
+        </td>
+    </tr>
+</table>

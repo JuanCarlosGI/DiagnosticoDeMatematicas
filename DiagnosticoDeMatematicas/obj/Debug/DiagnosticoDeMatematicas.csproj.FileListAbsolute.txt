@@ -116,3 +116,6 @@ C:\Users\JuanCarlos\Programs\Visual Studio\Projects\DiagnosticoDeMatematicas\Dia
 C:\Users\JuanCarlos\Programs\Visual Studio\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\obj\Debug\DiagnosticoDeMatematicas.csprojResolveAssemblyReference.cache
 C:\Users\JuanCarlos\Programs\Visual Studio\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\obj\Debug\DiagnosticoDeMatematicas.dll
 C:\Users\JuanCarlos\Programs\Visual Studio\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\obj\Debug\DiagnosticoDeMatematicas.pdb
+C:\Users\Patysalinas\Documents\Visual Studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\obj\Debug\DiagnosticoDeMatematicas.Migrations.InitialCreate.resources
+C:\Users\Patysalinas\Documents\Visual Studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\obj\Debug\DiagnosticoDeMatematicas.csproj.GenerateResource.Cache
+C:\Users\Patysalinas\Documents\Visual Studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\obj\Debug\DiagnosticoDeMatematicas.Migrations.AddSettings.resources

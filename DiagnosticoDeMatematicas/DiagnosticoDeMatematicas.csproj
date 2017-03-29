@@ -193,6 +193,7 @@
     <Compile Include="Helpers\Charts\ChartBuilder.cs" />
     <Compile Include="Helpers\Charts\ChartTypes\MultiPolynomialChart.cs" />
     <Compile Include="Helpers\Charts\ChartTypes\PolynomialChart.cs" />
+    <Compile Include="Helpers\Charts\ChartTypes\PolynomialNoGridChart.cs" />
     <Compile Include="Helpers\Charts\ChartTypes\PolynomialWithDerivateChart.cs" />
     <Compile Include="Helpers\Charts\ChartTypes\PolynomialWithDoubleDerivateChart.cs" />
     <Compile Include="Helpers\Charts\CartesianPlane.cs" />
@@ -240,12 +241,22 @@
     <Compile Include="Helpers\Session\SessionService.cs" />
     <Compile Include="Helpers\Session\SessionValidator.cs" />
     <Compile Include="Helpers\IEncoder\StringEncoder.cs" />
+    <Compile Include="Migrations\201612091804076_InitialCreate.cs" />
+    <Compile Include="Migrations\201612091804076_InitialCreate.Designer.cs">
+      <DependentUpon>201612091804076_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703071535050_AddSettings.cs" />
+    <Compile Include="Migrations\201703071535050_AddSettings.Designer.cs">
+      <DependentUpon>201703071535050_AddSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\SelectionAnswer.cs" />
     <Compile Include="Models\MultipleSelectionQuestion.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\SelectionQuestion.cs" />
     <Compile Include="Models\QuestionOption.cs" />
+    <Compile Include="Models\Setting.cs" />
     <Compile Include="Models\SingleSelectionAnswer.cs" />
     <Compile Include="Models\Exam.cs" />
     <Compile Include="Models\SingleSelectionQuestion.cs" />
@@ -253,6 +264,7 @@
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Variable.cs" />
+    <Compile Include="Models\ViewModels\ChangeEvaluationViewModel.cs" />
     <Compile Include="Models\ViewModels\GlobalStatisticsViewModel.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
@@ -261,10 +273,17 @@
     <Compile Include="Models\ViewModels\SingleSelectionQuestionWithOptionsViewModel.cs" />
     <Compile Include="Models\ViewModels\StatisticDetailsViewModel.cs" />
     <Compile Include="Models\ViewModels\StatisticsViewModel.cs" />
-    <Compile Include="Models\ViewModels\UserWithExamsViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserDetailsViewModel.cs" />
     <Compile Include="Models\MultipleSelectionAnswer.cs" />
     <Compile Include="Models\BinaryOptionSelection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ExamsService\ExamsService.cs" />
+    <Compile Include="Services\ExamsService\IExamsService.cs" />
+    <Compile Include="Services\HomeService.cs" />
+    <Compile Include="Services\ResponsesService\IResponsesService.cs" />
+    <Compile Include="Services\ResponsesService\ResponsesService.cs" />
+    <Compile Include="Services\Settings.cs" />
+    <Compile Include="Services\UsersService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Client Scripts\mvcfoolproof.unobtrusive.js" />
@@ -281,14 +300,14 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Models\ZZ - ModelClassDiagram.cd" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -351,6 +370,12 @@
     <Content Include="Views\Ranges\_Details.cshtml" />
     <Content Include="Views\Ranges\_DetailsNew.cshtml" />
     <Content Include="Views\Ranges\_Create.cshtml" />
+    <Content Include="Views\Home\_Evaluations.cshtml" />
+    <Content Include="Views\Home\_EvaluationButton.cshtml" />
+    <Content Include="Views\Home\ChangeEvaluation.cshtml" />
+    <Content Include="Views\Users\_ExamsDetails.cshtml" />
+    <Content Include="Views\Home\Exam.cshtml" />
+    <Content Include="Views\Home\_ApprovedEvaluations.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -367,6 +392,14 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612091804076_InitialCreate.resx">
+      <DependentUpon>201612091804076_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703071535050_AddSettings.resx">
+      <DependentUpon>201703071535050_AddSettings.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

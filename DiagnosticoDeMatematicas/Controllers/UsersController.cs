@@ -9,12 +9,19 @@ using DiagnosticoDeMatematicas.DAL;
 using DiagnosticoDeMatematicas.Helpers;
 using DiagnosticoDeMatematicas.Models;
 using DiagnosticoDeMatematicas.Models.ViewModels;
+using DiagnosticoDeMatematicas.Services;
 
 namespace DiagnosticoDeMatematicas.Controllers
 {
     public class UsersController : Controller
     {
         private readonly SiteContext _db = new SiteContext();
+        private readonly UsersService _service;
+
+        public UsersController()
+        {
+            _service = new UsersService(_db);
+        }
 
         // GET: Users
         public ActionResult Index()
@@ -72,7 +79,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                 }
             user.Responses = responses;
 
-            return View(new UserWithExamsViewModel(user, _db.Exams.Where(e => e.Active)));
+            return View(new UserDetailsViewModel(user, _db.Exams.Where(e => e.Active)) {ExamGrades = _service.ExamGrades(user.Email) });
         }
 
         // GET: Users/Create

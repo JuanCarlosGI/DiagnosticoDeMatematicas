@@ -1,0 +1,45 @@
+﻿@model List<int>
+
+<table class="table table-condensed">
+    <tr>
+        <th></th>
+        <th>Representación numérica</th>
+        <th>Representación algebraica</th>
+        <th>Representación gráfica</th>
+        <th>Flexibilidad de representación</th>
+        <th>Aplicación con significado real</th>
+    </tr>
+    @{ int counter = 0;}
+    <tr>
+        <th>Modelo lineal</th>
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+    </tr>
+    <tr>
+        <th>Modelo cuadrático</th>
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+    </tr>
+    <tr>
+        <th>Modelo cúbico</th>
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+    </tr>
+    <tr>
+        <th>Otros modelos</th>
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter++])
+        @Html.Partial("_CalificacionExamen", Model[counter])
+    </tr>
+</table>

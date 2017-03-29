@@ -1,16 +1,25 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
 using DiagnosticoDeMatematicas.DAL;
 using DiagnosticoDeMatematicas.Helpers;
 using DiagnosticoDeMatematicas.Models;
+using DiagnosticoDeMatematicas.Services.ExamsService;
 
 namespace DiagnosticoDeMatematicas.Controllers
 {
     public class ExamsController : Controller
     {
-        private readonly SiteContext _db = new SiteContext();
+        private readonly IExamsService _service;
+
+        public ExamsController()
+        {
+            _service = new ExamsService(new SiteContext());
+        }
+
+        public ExamsController(IExamsService service)
+        {
+            _service = service;
+        }
 
         // GET: Exams
         public ActionResult Index()
@@ -25,7 +34,8 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            return View(_db.Exams.ToList());
+            var model = _service.GetExamList();
+            return View(model);
         }
 
         // GET: Exams/Details/5
@@ -46,23 +56,24 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            Exam exam = _db.Exams.Find(id);
+            Exam exam = _service.FindExam(id.Value);
             if (exam == null)
             {
                 return HttpNotFound();
             }
+
             return View(exam);
         }
 
         public PartialViewResult DetailsPartial(int examId)
         {
-            Exam exam = _db.Exams.Find(examId);
+            Exam exam = _service.FindExam(examId);
             return PartialView("_Details", exam);
         }
 
         public PartialViewResult EditPartial(int examId)
         {
-            Exam exam = _db.Exams.Find(examId);
+            Exam exam = _service.FindExam(examId);
             return PartialView("_Edit", exam);
         }
 
@@ -71,8 +82,7 @@ namespace DiagnosticoDeMatematicas.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(exam).State = EntityState.Modified;
-                _db.SaveChanges();
+                _service.SaveExam(exam);
                 return PartialView("_Details", exam);
             }
             return PartialView("_Edit", exam);
@@ -91,7 +101,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            return View();
+            return View(new Exam());
         }
 
         // POST: Exams/Create
@@ -101,8 +111,7 @@ namespace DiagnosticoDeMatematicas.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Exams.Add(exam);
-                _db.SaveChanges();
+                _service.AddExam(exam);
                 return RedirectToAction("Index");
             }
 
@@ -112,7 +121,7 @@ namespace DiagnosticoDeMatematicas.Controllers
         // GET: Exams/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (!id.HasValue)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -127,7 +136,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            Exam exam = _db.Exams.Find(id);
+            Exam exam = _service.FindExam(id.Value);
             if (exam == null)
             {
                 return HttpNotFound();
@@ -150,9 +159,8 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            Exam exam = _db.Exams.Find(id);
-            _db.Exams.Remove(exam);
-            _db.SaveChanges();
+            _service.DeleteExam(id);
+            
             return RedirectToAction("Index");
         }
 
@@ -160,7 +168,7 @@ namespace DiagnosticoDeMatematicas.Controllers
         {
             if (disposing)
             {
-                _db.Dispose();
+                _service.DisposeDb();
             }
 
             base.Dispose(disposing);

@@ -1,0 +1,12 @@
+﻿@using DiagnosticoDeMatematicas.Helpers
+
+@{
+    ViewBag.Title = "Exams";
+}
+
+@Html.Action("Evaluations")
+
+@if (SessionValidator.IsAdminSignedIn)
+{
+    @Html.Action("ApprovedEvaluations")
+}

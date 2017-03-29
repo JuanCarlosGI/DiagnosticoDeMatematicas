@@ -20,7 +20,7 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 100%;
 }
 
 .row {
@@ -29,6 +29,7 @@ textarea {
 
 .chart-img{
     width:90%;
+    max-width: 500px;
 }
 
 @media only screen and (min-width : 768px) {
@@ -48,4 +49,9 @@ textarea {
 
   display: flex;
   align-items: center;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #213c8c;
 }

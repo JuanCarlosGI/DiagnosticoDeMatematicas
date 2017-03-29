@@ -53,9 +53,9 @@ C:\Users\Patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatemati
 C:\Users\Patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\bin\System.Web.WebPages.Razor.xml
 C:\Users\Patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\bin\Antlr3.Runtime.pdb
 C:\Users\Patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\bin\Newtonsoft.Json.xml
-C:\Users\Patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\obj\Release\DiagnosticoDeMatematicas.Migrations.InitialCreate.resources
-C:\Users\Patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\obj\Release\DiagnosticoDeMatematicas.csproj.GenerateResource.Cache
 C:\Users\Patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\obj\Release\DiagnosticoDeMatematicas.dll
 C:\Users\Patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\obj\Release\DiagnosticoDeMatematicas.pdb
 C:\Users\Patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\obj\Release\DiagnosticoDeMatematicas.csprojResolveAssemblyReference.cache
-C:\Users\Patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\obj\Release\DiagnosticoDeMatematicas.Migrations.AddCommentToExam.resources
+C:\Users\Patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\obj\Release\DiagnosticoDeMatematicas.Migrations.InitialCreate.resources
+C:\Users\Patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\obj\Release\DiagnosticoDeMatematicas.Migrations.AddSettings.resources
+C:\Users\Patysalinas\documents\visual studio 2015\Projects\DiagnosticoDeMatematicas\DiagnosticoDeMatematicas\obj\Release\DiagnosticoDeMatematicas.csproj.GenerateResource.Cache

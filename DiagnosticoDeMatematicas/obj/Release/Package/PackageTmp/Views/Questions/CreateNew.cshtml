@@ -1,0 +1,13 @@
+﻿@model int
+<div id="newQuestion"></div>
+<div id="thisQuestion">
+    <p>¿Qué tipo de pregunta quieres agregar?</p>
+    <p>
+        @Ajax.ActionLink("Una selección", "Create", "SingleSelectionQuestions", new { examId = Model },
+        new AjaxOptions { UpdateTargetId = "thisQuestion", InsertionMode = InsertionMode.ReplaceWith, HttpMethod = "POST" })
+    </p>
+    <p>
+        @Ajax.ActionLink("Selección multiple", "Create", "MultipleSelectionQuestions", new { examId = Model },
+        new AjaxOptions { UpdateTargetId = "thisQuestion", InsertionMode = InsertionMode.ReplaceWith, HttpMethod = "POST" })
+    </p>
+</div>

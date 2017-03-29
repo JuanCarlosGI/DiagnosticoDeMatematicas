@@ -29,6 +29,8 @@
                         <li>@Html.ActionLink("Estadisticas", "StatisticDetails", "Statistics")</li>
                         <li>@Html.ActionLink("Historial", "Index", "Responses")</li>
                     }
+                    
+                    <li>@Html.ActionLink("Examen de ubicación", "Exam", "Home")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (!SessionValidator.IsSignedIn)

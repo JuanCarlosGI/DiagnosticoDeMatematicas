@@ -12,21 +12,22 @@
 <p>
     @Ajax.ActionLink("Agregar pregunta", "CreateNew", "Questions", new { examId = Model.Id }, new AjaxOptions {UpdateTargetId = "newQuestion", InsertionMode = InsertionMode.ReplaceWith})
 </p>
+<div class="panel-group">
+    <div id="newQuestion"></div>
+    @foreach (var question in Model.Questions)
+    {
 
-<div id="newQuestion"></div>
-@foreach (var question in Model.Questions)
-{
-    
-    if (question is MultipleSelectionQuestion)
-    {
-        Html.RenderAction("Details", "MultipleSelectionQuestions", new { questionId = question.Id });
+        if (question is MultipleSelectionQuestion)
+        {
+            Html.RenderAction("Details", "MultipleSelectionQuestions", new { questionId = question.Id });
+        }
+        else if (question is SingleSelectionQuestion)
+        {
+            Html.RenderAction("Details", "SingleSelectionQuestions", new { questionId = question.Id });
+        }
+        else
+        {
+            <p>ERROR</p>
+        }
     }
-    else if (question is SingleSelectionQuestion)
-    {
-        Html.RenderAction("Details", "SingleSelectionQuestions", new { questionId = question.Id});
-    }
-    else
-    {
-        <p>ERROR</p>
-    }
-}
+</div>

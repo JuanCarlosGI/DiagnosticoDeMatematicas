@@ -1,0 +1,10 @@
+﻿@model DiagnosticoDeMatematicas.Models.Range
+
+<tr id="range@(Model.Id)">
+    <td></td>
+    <td>@Model.Minimum</td>
+    <td>@Model.Maximum</td>
+    <td>@Ajax.ActionLink("Eliminar", "Delete", new { id = Model.Id }, new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = $"range{Model.Id}" })</td>
+    <td></td>
+</tr>
+<tr id="range@(Model.QuestionId)@(Model.Symbol)"></tr>

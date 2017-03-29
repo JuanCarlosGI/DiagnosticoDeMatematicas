@@ -1,0 +1,33 @@
+﻿@using DiagnosticoDeMatematicas.Helpers
+@model List<DiagnosticoDeMatematicas.Models.Exam>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Diagnóstico de Matemáticas</h1>
+    <p class="lead">La Matemática trata con números, fórmulas y gráficas.<br />
+Su buen manejo es importante al estudiar una carrera profesional.<br />
+Al realizar los diagnósticos obtendrás un indicador de tu nivel de dominio de cada tipo de representación.<br />
+Puedes realizar los diagnósticos las veces que lo requieras.<br />
+El reto es lograr un dominio perfecto.<br />
+    </p>
+</div>
+
+@for (int i = 0; i < Model.Count / 3.0; i++)
+{
+    var submodel = Model.Skip(3 * i).Take(3);
+    <div class="row">
+        @foreach (var exam in submodel)
+        {
+            <div class="col-sm-4 col-xs-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><h2>@Html.DisplayFor(m => exam.Name)</h2></div>
+                    <div class="panel-body"> @Html.DisplayWithBreaksFor(m => exam.Description) </div>
+                    <div class="panel-footer">@Html.ActionLink("Entrar", "Create", "Responses", new { examId = exam.Id }, new { @class = "btn btn-default" })</div>
+                </div>
+            </div>
+        }
+    </div>
+}

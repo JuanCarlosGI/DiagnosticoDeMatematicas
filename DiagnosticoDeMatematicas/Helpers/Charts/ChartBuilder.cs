@@ -1,4 +1,6 @@
-﻿namespace DiagnosticoDeMatematicas.Charts
+﻿using Microsoft.Ajax.Utilities;
+
+namespace DiagnosticoDeMatematicas.Charts
 {
     using System;
     using System.Linq;
@@ -18,7 +20,8 @@
             new Tuple<string, CustomChartTypes>("PolynomialWithDerivate", CustomChartTypes.PolynomialWithDerivate),
             new Tuple<string, CustomChartTypes>("PolynomialWithDoubleDerivate", CustomChartTypes.PolynomialWithDoubleDerivate),
             new Tuple<string, CustomChartTypes>("MultiPolynomial", CustomChartTypes.MultiPolynomial),
-            new Tuple<string, CustomChartTypes>("VerticalLine", CustomChartTypes.VerticalLine)
+            new Tuple<string, CustomChartTypes>("VerticalLine", CustomChartTypes.VerticalLine),
+            new Tuple<string, CustomChartTypes>("PolynomialNoGrid", CustomChartTypes.PolynomialNoGrid)
         };
 
         /// <summary>
@@ -49,7 +52,12 @@
             /// <summary>
             /// Graph with a single vertical line.
             /// </summary>
-            VerticalLine
+            VerticalLine,
+
+            /// <summary>
+            /// Same as Polynomial, except with no grid lines or numbers.
+            /// </summary>
+            PolynomialNoGrid
         }
 
         /// <summary>
@@ -152,6 +160,9 @@
                     break;
                 case CustomChartTypes.VerticalLine:
                     chart = new VerticalLineChart(options, minX, maxX, minY, maxY);
+                    break;
+                case CustomChartTypes.PolynomialNoGrid:
+                    chart = new PolynomialNoGridChart(options, minX, maxX, minY, maxY);
                     break;
             }
 

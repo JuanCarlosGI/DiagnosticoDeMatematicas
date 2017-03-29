@@ -49,7 +49,7 @@ namespace DiagnosticoDeMatematicas.Controllers
         public PartialViewResult Edit(int questionId)
         {
             var question = _db.SingleSelectionQuestions.Find(questionId);
-            SingleSelectionQuestionWithOptionsViewModel model = new SingleSelectionQuestionWithOptionsViewModel
+            var model = new SingleSelectionQuestionWithOptionsViewModel
             {
                 Id = questionId,
                 ExamId = question.ExamId,

@@ -25,7 +25,7 @@ El reto es lograr un dominio perfecto.<br />
                 <div class="panel panel-primary">
                     <div class="panel-heading"><h2>@Html.DisplayFor(m => exam.Name)</h2></div>
                     <div class="panel-body"> @Html.DisplayWithBreaksFor(m => exam.Description) </div>
-                    <div class="panel-footer">@Html.ActionLink("Entrar", "Create", "Responses", new { examId = exam.Id }, new { @class = "btn btn-default" })</div>
+                    <div class="panel-footer">@Html.ActionLink("Entrar", "Create", "Responses", new { examId = exam.Id }, new { @class = "btn btn-primary btn-outline btn-block", role = "button" })</div>
                 </div>
             </div>
         }

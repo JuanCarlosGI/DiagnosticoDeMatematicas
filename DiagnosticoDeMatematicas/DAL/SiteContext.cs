@@ -63,6 +63,10 @@ namespace DiagnosticoDeMatematicas.DAL
 
         public DbSet<BinaryOptionSelection> BinaryOptionSelections { get; set; }
 
+        public DbSet<Setting> Settings { get; set; }
+
+        public DbSet<Answer> Answers { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

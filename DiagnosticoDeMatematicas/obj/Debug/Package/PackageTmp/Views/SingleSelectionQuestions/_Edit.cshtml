@@ -1,0 +1,82 @@
+﻿@using DiagnosticoDeMatematicas.Models
+@using DiagnosticoDeMatematicas.Models.ViewModels
+@model SingleSelectionQuestionWithOptionsViewModel
+
+@{
+    var dummy = new QuestionOption();
+}
+<div id="@Model.Id">
+    @using (Ajax.BeginForm("Edit", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = $"{Model.Id}", HttpMethod = "Post" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(id => Model.Id)
+        @Html.HiddenFor(examId => Model.ExamId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <h4>Opciones:</h4>
+
+        <table class="table">
+            <tr>
+                <th>@Html.DisplayNameFor(m => dummy.Description)</th>
+                <th>@Html.DisplayNameFor(m => dummy.IsCorrect)</th>
+                <th>@Html.DisplayNameFor(m => dummy.Feedback)</th>
+            </tr>
+            <tbody id="optionsForQuestion">
+
+                @{
+                    var optionNumber = 0;
+                }
+
+                @foreach (var _ in Model.Options)
+            {
+                    <tr>
+                        @Html.HiddenFor(model => Model.Options[optionNumber].Id)
+                        @Html.HiddenFor(model => Model.Options[optionNumber].QuestionId)
+
+                        <td>
+                            @Html.EditorFor(model => Model.Options[optionNumber].Description, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Options[optionNumber].Description, "", new { @class = "text-danger" })
+                        </td>
+
+                        <td>
+                            @Html.EditorFor(model => Model.Options[optionNumber].IsCorrect, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Options[optionNumber].IsCorrect, "", new { @class = "text-danger" })
+                        </td>
+
+                        <td>
+                            @Html.EditorFor(model => Model.Options[optionNumber].Feedback, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Options[optionNumber].Feedback, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+
+                    optionNumber++;
+                }
+            </tbody>
+        </table>
+
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Guardar cambios" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    @using (Ajax.BeginForm("Details", new { questionId = Model.Id }, new AjaxOptions { UpdateTargetId = $"{Model.Id}", InsertionMode = InsertionMode.ReplaceWith }))
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Regresar sin guardar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>

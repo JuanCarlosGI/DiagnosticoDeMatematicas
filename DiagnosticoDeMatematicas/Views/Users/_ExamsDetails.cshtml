@@ -1,0 +1,70 @@
+﻿@model List<int>
+
+<h3>Módulos aprobados:</h3>
+
+@if (Model.GetRange(0, 5).Count(g => g >= 2) >= 4)
+{ <h4>Modelo lineal</h4> }
+
+@if (Model.GetRange(5, 5).Count(g => g >= 2) >= 4)
+{ <h4>Modelo cuadrático</h4> }
+
+@if (Model.GetRange(10, 5).Count(g => g >= 2) >= 4)
+{ <h4>Modelo cúbico</h4> }
+
+@if (Model.GetRange(15, 5).Count(g => g >= 2) >= 4)
+{ <h4>Otros modelos</h4> }
+
+
+
+<table class="table table-condensed">
+    <tr>
+        <th></th>
+        <th>Representación numérica</th>
+        <th>Representación algebraica</th>
+        <th>Representación gráfica</th>
+        <th>Flexibilidad de representación</th>
+        <th>Aplicación con significado real</th>
+    </tr>
+
+    @{
+        var modules = new[] {"Modelo lineal", "Modelo cuadrático", "Modelo cúbico", "Otros modelos"};
+        int counterB = 0;
+    }
+    
+    @foreach (var module in modules)
+    {
+        <tr>
+            <th>@module</th>
+
+            @for (int q = 0; q < 5; q++)
+            {
+                if (Model[counterB] == 2 || Model[counterB] == 3)
+                {
+                    <td style="background-color: green; text-align: center;">
+                        <h2>@Model[counterB]</h2>
+                    </td>
+                }
+                else if (Model[counterB] == 1)
+                {
+                    <td style="background-color: yellow; text-align: center;">
+                        <h2>@Model[counterB]</h2>
+                    </td>
+                }
+                else if (Model[counterB] == 0)
+                {
+                    <td style="background-color: red; text-align: center;">
+                        <h2>@Model[counterB]</h2>
+                    </td>
+                }
+                else if (Model[counterB] == -1)
+                {
+                    <td style="background-color: white; text-align: center;">
+                        <h2>NA</h2>
+                    </td>
+                }
+
+                counterB++;
+            }
+        </tr>
+    }
+</table>

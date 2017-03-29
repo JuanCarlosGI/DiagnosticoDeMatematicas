@@ -1,0 +1,23 @@
+﻿@model DiagnosticoDeMatematicas.Models.Exam
+
+<div id="details">
+    <h1>@Model.Name</h1>
+    <hr />
+    <h2>Detalles</h2>
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.Description)</dt>
+        <dd>@Html.DisplayFor(model => model.Description)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Comments)</dt>
+        <dd>@Html.DisplayFor(model => model.Comments)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Active)</dt>
+        <dd>@Html.DisplayFor(model => model.Active)</dd>
+    </dl>
+
+    <p>
+        @Ajax.ActionLink("Editar diagnóstico", "EditPartial", new {examId = Model.Id},
+                 new AjaxOptions {InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "details"})
+    </p>
+    <p>@Html.ActionLink("Regresar a lista de diagnósticos", "Index")</p>
+</div>

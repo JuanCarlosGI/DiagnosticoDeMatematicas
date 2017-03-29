@@ -96,6 +96,8 @@
             aux = TakeSingleMinusOutOfDivision(aux);
             aux = EliminateDoubleSigns(aux);
             aux = EliminateMultiplyingOnes(aux);
+            aux = SimplifyFraction(aux);
+            aux = EliminateDivisionByOne(aux);
 
             return aux;
         }
@@ -179,6 +181,47 @@
             string s = "(\\s|\\\\,)*";
             string pattern = $"\\\\dfrac{s}({{{s}-{s}([0-9a-zA-Z]+){s}}}{s}{{{s}([0-9a-zA-Z]+){s}}}|{{{s}([0-9a-zA-Z]+){s}}}{s}{{{s}-{s}([0-9a-zA-Z]+){s}}})";
             string replacement = "-\\dfrac{$5$12}{$9$17}";
+            Regex rgx = new Regex(pattern);
+            string result = rgx.Replace(expression, replacement);
+
+            return result;
+        }
+
+        private static string SimplifyFraction(string expression)
+        {
+            string pattern = "\\\\dfrac\\{(\\d*)\\}\\{(\\d*)\\}";
+
+            MatchCollection matches = Regex.Matches(expression, pattern);
+
+            var result = expression;
+            foreach (Match match in matches)
+            {
+                var nominator = int.Parse(match.Groups[1].Value);
+                var denominator = int.Parse(match.Groups[2].Value);
+                Regex aux = new Regex($"\\\\dfrac\\{{({nominator})\\}}\\{{({denominator})\\}}");
+
+                var lowest = nominator > denominator ? denominator : nominator;
+                for (int factor = lowest; factor > 1; factor--)
+                {
+                    if (nominator%factor == 0 && denominator%factor == 0)
+                    {
+                        nominator = nominator/factor;
+                        denominator = denominator/factor;
+                        break;
+                    }
+                }
+
+                var replacement = $"\\dfrac{{{nominator}}}{{{denominator}}}";
+                result = aux.Replace(result, replacement);
+
+            }
+
+            return result;
+        }
+        private static string EliminateDivisionByOne(string expression)
+        {
+            string pattern = "\\\\dfrac\\{([^}\\n]*)\\}\\{1\\}";
+            string replacement = "$1";
             Regex rgx = new Regex(pattern);
             string result = rgx.Replace(expression, replacement);
 

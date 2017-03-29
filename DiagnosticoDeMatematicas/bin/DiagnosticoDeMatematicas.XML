@@ -103,6 +103,11 @@
             Graph with a single vertical line.
             </summary>
         </member>
+        <member name="F:DiagnosticoDeMatematicas.Charts.ChartBuilder.CustomChartTypes.PolynomialNoGrid">
+            <summary>
+            Same as Polynomial, except with no grid lines or numbers.
+            </summary>
+        </member>
         <member name="M:DiagnosticoDeMatematicas.Charts.ChartBuilder.QuestionWithChart(System.String)">
             <summary>
             Makes a new copy of a string, but changing all the strings that could be translated to a chart.
@@ -1431,29 +1436,29 @@
             </summary>
             <returns>String containing the image of a column chart.</returns>
         </member>
-        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.UserWithExamsViewModel">
+        <member name="T:DiagnosticoDeMatematicas.Models.ViewModels.UserDetailsViewModel">
             <summary>
             View model representing a user with all the exams he has answered.
             </summary>
         </member>
-        <member name="M:DiagnosticoDeMatematicas.Models.ViewModels.UserWithExamsViewModel.#ctor(DiagnosticoDeMatematicas.Models.User,System.Collections.Generic.IEnumerable{DiagnosticoDeMatematicas.Models.Exam})">
+        <member name="M:DiagnosticoDeMatematicas.Models.ViewModels.UserDetailsViewModel.#ctor(DiagnosticoDeMatematicas.Models.User,System.Collections.Generic.IEnumerable{DiagnosticoDeMatematicas.Models.Exam})">
             <summary>
-            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Models.ViewModels.UserWithExamsViewModel"/> class.
+            Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.Models.ViewModels.UserDetailsViewModel"/> class.
             </summary>
             <param name="user">The user that is being represented.</param>
             <param name="exams">The list of exams that are being analyzed.</param>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.UserWithExamsViewModel.User">
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.UserDetailsViewModel.User">
             <summary>
             Gets the user that is being represented.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.UserWithExamsViewModel.RadarChart">
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.UserDetailsViewModel.RadarChart">
             <summary>
             Gets a string representing a radar chart of the user's latest attempts.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.UserWithExamsViewModel.Responses">
+        <member name="P:DiagnosticoDeMatematicas.Models.ViewModels.UserDetailsViewModel.Responses">
             <summary>
             Gets the list of responses that are going to be displayed at the radar chart.
             </summary>
@@ -1534,6 +1539,58 @@
             Determines if the option is answered correctly.
             </summary>
             <returns>A value indicating whether the option was answered correctly.</returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Services.ResponsesService.IResponsesService.FindResponse(System.Int32)">
+            <summary>
+            Gets a response
+            </summary>
+            <param name="id">ID of the response</param>
+            <returns></returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Services.ResponsesService.IResponsesService.LoadMultipleSelectionAnswers(System.Collections.Generic.ICollection{DiagnosticoDeMatematicas.Models.Answer})">
+            <summary>
+            Lazy loading was a problem, so load them eagerly
+            </summary>
+            <param name="responseAnswers">Collectio of responses to load.</param>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Services.ResponsesService.IResponsesService.PrepareNewResponse(System.Int32)">
+            <summary>
+            Generates new response, with current User in session and Exam loaded,
+            and creates shuffled answers with evaluated variables.
+            </summary>
+            <param name="examId">Exam to which the response belongs.</param>
+            <returns></returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Services.ResponsesService.IResponsesService.FindExam(System.Int32)">
+            <summary>
+            Finds an exam
+            </summary>
+            <param name="examIdValue">Exam to evaluate</param>
+            <returns></returns>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Services.ResponsesService.IResponsesService.PopulateResponseModel(DiagnosticoDeMatematicas.Models.Response)">
+            <summary>
+            Populates every object in the model and fills creation date.
+            </summary>
+            <param name="response">Response to be populated.</param>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Services.ResponsesService.IResponsesService.SaveResponse(DiagnosticoDeMatematicas.Models.Response)">
+            <summary>
+            Saves the response.
+            </summary>
+            <param name="response"></param>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Services.ResponsesService.IResponsesService.DeleteResponse(System.Int32)">
+            <summary>
+            Deletes a response.
+            </summary>
+            <param name="id">ID of the response to delete.</param>
+        </member>
+        <member name="M:DiagnosticoDeMatematicas.Services.ResponsesService.IResponsesService.GetAllResponses">
+            <summary>
+            Gets a list with all responses.
+            </summary>
+            <returns></returns>
         </member>
     </members>
 </doc>

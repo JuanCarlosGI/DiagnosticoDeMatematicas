@@ -1,0 +1,20 @@
+﻿@model DiagnosticoDeMatematicas.Models.Range
+
+<div id="range@(Model.QuestionId)@(Model.Symbol)">
+    @using (Ajax.BeginForm("Create", new {}, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = $"range{Model.QuestionId}{Model.Symbol}", InsertionMode = InsertionMode.ReplaceWith }, new { @class = "form-inline" }))
+    {
+        @Html.HiddenFor(m => m.QuestionId)
+        @Html.HiddenFor(m => m.Symbol)
+        <div class="form-group">
+            @Html.LabelFor(m => m.Minimum)
+            @Html.EditorFor(m => m.Minimum, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Minimum, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Maximum)
+            @Html.EditorFor(m => m.Maximum, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Maximum, "", new { @class = "text-danger" })
+        </div>
+        <button type="submit" class="btn btn-primary">Crear</button>
+    }
+</div>

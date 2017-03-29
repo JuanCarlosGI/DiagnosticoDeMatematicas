@@ -1,5 +1,6 @@
 ﻿@using DiagnosticoDeMatematicas.Helpers
-@model DiagnosticoDeMatematicas.Models.ViewModels.UserWithExamsViewModel
+@using DiagnosticoDeMatematicas.Models
+@model DiagnosticoDeMatematicas.Models.ViewModels.UserDetailsViewModel
 
 @{
     ViewBag.Title = "Detalles de cuenta";
@@ -93,3 +94,5 @@
         </div>    
     }
 </div>
+
+@Html.Partial("_ExamsDetails", Model.ExamGrades)
