@@ -1,11 +1,11 @@
-﻿namespace DiagnosticoDeMatematicas.Models.ViewModels
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace DiagnosticoDeMatematicas.Models.ViewModels.MultipleSelectionQuestion
+{
     /// <summary>
     /// View Model of a <see cref="MultipleSelectionQuestion"/> with all its <see cref="QuestionOption"/>.
     /// </summary>
-    public class MultipleSelectionQuestionWithOptionsViewModel
+    public class QuestionWithOptionsViewModel
     {
         /// <summary>
         /// Gets or sets the ID of the question.

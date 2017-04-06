@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using DiagnosticoDeMatematicas.DAL;
 using DiagnosticoDeMatematicas.Helpers.IEvaluator;
 using DiagnosticoDeMatematicas.Models;
+using DiagnosticoDeMatematicas.Models.ViewModels.MultipleSelectionQuestion;
 
 namespace DiagnosticoDeMatematicas.Services.MultipleSelectionQuestionService
 {
@@ -30,7 +30,6 @@ namespace DiagnosticoDeMatematicas.Services.MultipleSelectionQuestionService
                 new QuestionOption {Description = "Opción 5", Feedback = "Feedback de opción 5", IsCorrect = false}
             };
 
-
             question.Options = list;
 
             _db.MultipleSelectionQuestions.Add(question);
@@ -45,9 +44,59 @@ namespace DiagnosticoDeMatematicas.Services.MultipleSelectionQuestionService
             return evaluator.Evaluate(question) as MultipleSelectionQuestion;
         }
 
+        public QuestionWithOptionsViewModel GetQuestionWithOptions(int questionId)
+        {
+            var question = FindQuestion(questionId);
+            var model = new QuestionWithOptionsViewModel
+            {
+                Id = questionId,
+                ExamId = question.ExamId,
+                Description = question.Description,
+                Options = question.Options.ToList()
+            };
+
+            return model;
+        }
+
+        public void SaveQuestion(QuestionWithOptionsViewModel model)
+        {
+            MultipleSelectionQuestion question = new MultipleSelectionQuestion
+            {
+                Id = model.Id,
+                ExamId = model.ExamId,
+                Description = model.Description,
+                Options = model.Options
+            };
+
+            _db.Entry(question).State = EntityState.Modified;
+            foreach (var option in question.Options)
+            {
+                _db.Entry(option).State = EntityState.Modified;
+            }
+
+            _db.SaveChanges();
+        }
+
         public MultipleSelectionQuestion FindQuestion(int questionId)
         {
-            return _db.MultipleSelectionQuestions.Find(questionId);
+            return _db.MultipleSelectionQuestions.Include(q => q.Variables).Single(q => q.Id == questionId);
+        }
+
+        public void DeleteQuestion(int questionId)
+        {
+            var question = _db.MultipleSelectionQuestions.Find(questionId);
+
+            foreach (var answer in question.Answers.ToArray())
+                _db.MultipleSelectionAnswers.Remove(answer as MultipleSelectionAnswer);
+            _db.SaveChanges();
+
+            _db.Questions.Remove(question);
+            _db.SaveChanges();
+        }
+
+        public void DisposeDb()
+        {
+            _db.Dispose();
         }
     }
 }

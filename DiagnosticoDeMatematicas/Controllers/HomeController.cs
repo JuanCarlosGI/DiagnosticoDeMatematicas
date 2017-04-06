@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using DiagnosticoDeMatematicas.DAL;
 using DiagnosticoDeMatematicas.Models.ViewModels.Home;
 using DiagnosticoDeMatematicas.Services.HomeService;
 
@@ -11,7 +10,7 @@ namespace DiagnosticoDeMatematicas.Controllers
 
         public HomeController()
         {
-            _service = new HomeService(new SiteContext());
+            _service = new HomeService(new DAL.SiteContext());
         }
 
         public HomeController(IHomeService service)
