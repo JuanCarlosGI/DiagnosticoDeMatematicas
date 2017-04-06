@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Web;
 using DiagnosticoDeMatematicas.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace DiagnosticoDeMatematicas.DAL
 {
@@ -20,22 +24,29 @@ namespace DiagnosticoDeMatematicas.DAL
 
         protected override void Seed(SiteContext context)
         {
+            
             var admin = new User
             {
-                Role = Role.Administrador,
                 FirstName = "Juan Carlos",
                 LastName = "Guzman",
-                Password = "⍵⫆랽豢鵚辭�엘䃀㕥㇥ꎨ譴깬~",
                 DateOfBirth = DateTime.Now,
                 Email = "jcgi@admin.com",
                 Gender = Gender.Masculino,
                 Interest = Scale.Extremadamente,
                 Facility = Scale.Extremadamente,
-                Liking = Scale.Extremadamente
-            };
+                Liking = Scale.Extremadamente,
+                UserName = "JuanCarlosGI"
+            }; 
 
-            context.Users.Add(admin);
-            context.SaveChanges();
+            var roleManager = new RoleManager<IdentityRole>(
+                new RoleStore<IdentityRole>(context));
+            roleManager.Create(new IdentityRole("Administrator"));
+            roleManager.Create(new IdentityRole("User"));
+
+            var userManager = new AppUserManager(new UserStore<User>(context));
+            userManager.Create(admin, "@Admin1234");
+
+            userManager.AddToRole(admin.Id, "Administrator");
 
             NumbersExam();
             FormulasExam();

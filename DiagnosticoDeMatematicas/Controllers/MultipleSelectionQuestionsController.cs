@@ -10,6 +10,7 @@ using DiagnosticoDeMatematicas.Services.MultipleSelectionQuestionService;
 
 namespace DiagnosticoDeMatematicas.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class MultipleSelectionQuestionsController : Controller
     {
         private readonly SiteContext _db = new SiteContext();

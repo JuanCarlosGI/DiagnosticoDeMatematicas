@@ -1,13 +1,15 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using DiagnosticoDeMatematicas.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DiagnosticoDeMatematicas.DAL
 {
     /// <summary>
     /// Class with access to the site database.
     /// </summary>
-    public class SiteContext : DbContext
+    public class SiteContext : IdentityDbContext<User>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SiteContext"/> class.
@@ -15,11 +17,6 @@ namespace DiagnosticoDeMatematicas.DAL
         public SiteContext() : base("SiteContext")
         {
         }
-        
-        /// <summary>
-        /// Gets or sets all the users in the database.
-        /// </summary>
-        public DbSet<User> Users { get; set; }
 
         /// <summary>
         /// Gets or sets all the responses in the database.
@@ -88,6 +85,9 @@ namespace DiagnosticoDeMatematicas.DAL
                 .WithMany(s => s.SingleSelectionAnswers)
                 .HasForeignKey(a => a.SelectionId)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<IdentityUserLogin>().HasKey(l => l.UserId);
+            modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
         }
     }
 }

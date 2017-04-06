@@ -1,4 +1,7 @@
-﻿namespace DiagnosticoDeMatematicas.Models
+﻿using DiagnosticoDeMatematicas.Helpers.CustomAnnotations;
+using Microsoft.AspNet.Identity.EntityFramework;
+
+namespace DiagnosticoDeMatematicas.Models
 {
     using System;
     using System.Collections.Generic;
@@ -79,43 +82,10 @@
     }
 
     /// <summary>
-    /// Possible user roles
-    /// </summary>
-    public enum Role
-    {
-        /// <summary>
-        /// Administrator
-        /// </summary>
-        Administrador,
-
-        /// <summary>
-        /// Normal user
-        /// </summary>
-        Usuario
-    }
-
-    /// <summary>
     /// Model representing a user.
     /// </summary>
-    public class User
+    public class User : IdentityUser
     {
-        /// <summary>
-        /// Gets or sets the email of the user.
-        /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Display(Name = "Correo electronico")]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-
-        /// <summary>
-        /// Gets or sets the role of the user.
-        /// </summary>
-        [Display(Name = "Rol")]
-        [EnumDataType(typeof(Role))]
-        [Required]
-        public Role Role { get; set; }
-
         /// <summary>
         /// Gets or sets the first name of the user.
         /// </summary>
@@ -131,20 +101,13 @@
         public string LastName { get; set; }
 
         /// <summary>
-        /// Gets or sets the password of the user.
-        /// </summary>
-        [Required]
-        [Display(Name = "Contraseña")]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        /// <summary>
         /// Gets or sets the date of birth of the user.
         /// </summary>
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha de nacimiento")]
+        [ValidSqlDate(ErrorMessage = "La fecha tiene que ser mayor a 1/1/1753")]
         public DateTime DateOfBirth { get; set; }
 
         /// <summary>
@@ -196,12 +159,6 @@
                 return years;
             }
         }
-
-        /// <summary>
-        /// Gets the full name of the user.
-        /// </summary>
-        [Display(Name = "Nombre completo")]
-        public string FullName => $"{FirstName} {LastName}";
 
         /// <summary>
         /// Gets or sets the responses belonging to the user.

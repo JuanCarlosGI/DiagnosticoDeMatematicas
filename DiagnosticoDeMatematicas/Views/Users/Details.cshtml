@@ -6,16 +6,13 @@
     ViewBag.Title = "Detalles de cuenta";
 }
 
-<h2 style="text-align:center">@Model.User.FullName</h2>
+<h2 style="text-align:center">@Model.User.UserName</h2>
 
 <div class="row">
     <div class="col-md-6">
         <div>
             <hr />
             <dl class="dl-horizontal">
-                <dt>@Html.DisplayNameFor(model => model.User.Role)</dt>
-                <dd>@Html.DisplayFor(model => model.User.Role)</dd>
-
                 <dt>@Html.DisplayNameFor(model => model.User.Email)</dt>
                 <dd>@Html.DisplayFor(model => model.User.Email)</dd>
 
@@ -41,7 +38,7 @@
                 <dd>@Html.DisplayFor(model => model.User.Liking)</dd>
             </dl>
         </div>
-        @if (SessionValidator.IsAdminSignedIn)
+        @if (User.IsInRole("Administrator"))
         {
             <p>
                 @Html.ActionLink("Editar", "Edit", new { id = Model.User.Email + "/" }) |

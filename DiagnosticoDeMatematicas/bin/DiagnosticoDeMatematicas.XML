@@ -28,11 +28,6 @@
             Initializes a new instance of the <see cref="T:DiagnosticoDeMatematicas.DAL.SiteContext"/> class.
             </summary>
         </member>
-        <member name="P:DiagnosticoDeMatematicas.DAL.SiteContext.Users">
-            <summary>
-            Gets or sets all the users in the database.
-            </summary>
-        </member>
         <member name="P:DiagnosticoDeMatematicas.DAL.SiteContext.Responses">
             <summary>
             Gets or sets all the responses in the database.
@@ -754,69 +749,6 @@
             <param name="variables">Variables to be evaluated.</param>
             <returns>A list containing all possible combinations of variables.</returns>
         </member>
-        <member name="T:DiagnosticoDeMatematicas.Helpers.SessionManager">
-            <summary>
-            Class in charge of signing in and out of the site.
-            </summary>
-        </member>
-        <member name="F:DiagnosticoDeMatematicas.Helpers.SessionManager.Timeout">
-            <summary>
-            Default timeout.
-            </summary>
-        </member>
-        <member name="M:DiagnosticoDeMatematicas.Helpers.SessionManager.TrySignIn(System.String,System.String)">
-            <summary>
-            Tries to sign in to the site.
-            </summary>
-            <param name="email">Email of the user to be signed in.</param>
-            <param name="password">Password for the user.</param>
-            <returns>Value indicating whether the user was successfully signed in.</returns>
-        </member>
-        <member name="M:DiagnosticoDeMatematicas.Helpers.SessionManager.SignOut">
-            <summary>
-            Signs out of the site. Clears all the session object.
-            </summary>
-        </member>
-        <member name="T:DiagnosticoDeMatematicas.Helpers.SessionService">
-            <summary>
-            Class representing a session object.
-            </summary>
-        </member>
-        <member name="F:DiagnosticoDeMatematicas.Helpers.SessionService.UserIdentifier">
-            <summary>
-            Identifier for the User field in the session object.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Helpers.SessionService.User">
-            <summary>
-            Gets or sets the current user in the session.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Helpers.SessionService.Timeout">
-            <summary>
-            Sets the timeout for the current session.
-            </summary>
-        </member>
-        <member name="M:DiagnosticoDeMatematicas.Helpers.SessionService.Clear">
-            <summary>
-            Clears all values from the current session.
-            </summary>
-        </member>
-        <member name="T:DiagnosticoDeMatematicas.Helpers.SessionValidator">
-            <summary>
-            Class in charge of determining certain states of the current session.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Helpers.SessionValidator.IsSignedIn">
-            <summary>
-            Gets a value indicating whether a user is currently signed in.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Helpers.SessionValidator.IsAdminSignedIn">
-            <summary>
-            Gets a value indicating whether an administrator is signed in.
-            </summary>
-        </member>
         <member name="T:DiagnosticoDeMatematicas.Models.Answer">
             <summary>
             Class representing an abstract answer to a given question.
@@ -1171,34 +1103,9 @@
             Not at all.
             </summary>
         </member>
-        <member name="T:DiagnosticoDeMatematicas.Models.Role">
-            <summary>
-            Possible user roles
-            </summary>
-        </member>
-        <member name="F:DiagnosticoDeMatematicas.Models.Role.Administrador">
-            <summary>
-            Administrator
-            </summary>
-        </member>
-        <member name="F:DiagnosticoDeMatematicas.Models.Role.Usuario">
-            <summary>
-            Normal user
-            </summary>
-        </member>
         <member name="T:DiagnosticoDeMatematicas.Models.User">
             <summary>
             Model representing a user.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.User.Email">
-            <summary>
-            Gets or sets the email of the user.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.User.Role">
-            <summary>
-            Gets or sets the role of the user.
             </summary>
         </member>
         <member name="P:DiagnosticoDeMatematicas.Models.User.FirstName">
@@ -1209,11 +1116,6 @@
         <member name="P:DiagnosticoDeMatematicas.Models.User.LastName">
             <summary>
             Gets or sets the last name of the user.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.User.Password">
-            <summary>
-            Gets or sets the password of the user.
             </summary>
         </member>
         <member name="P:DiagnosticoDeMatematicas.Models.User.DateOfBirth">
@@ -1244,11 +1146,6 @@
         <member name="P:DiagnosticoDeMatematicas.Models.User.Age">
             <summary>
             Gets the age of the user.
-            </summary>
-        </member>
-        <member name="P:DiagnosticoDeMatematicas.Models.User.FullName">
-            <summary>
-            Gets the full name of the user.
             </summary>
         </member>
         <member name="P:DiagnosticoDeMatematicas.Models.User.Responses">

@@ -42,7 +42,8 @@ namespace DiagnosticoDeMatematicas.Services.ResponsesService
 
         public Response PrepareNewResponse(int examId)
         {
-            var response = new Response { ExamId = examId, UserId = SessionService.User.Email, Exam = FindExam(examId) };
+            // TODO: Use IF
+            var response = new Response { ExamId = examId, UserId = "a@a.a", Exam = FindExam(examId) };
             response.Answers = CreateAndEvaluateAnswers(response.Exam.Questions);
 
             return response;

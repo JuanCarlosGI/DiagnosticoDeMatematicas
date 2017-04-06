@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DiagnosticoDeMatematicas.Models.User>
+﻿@model IEnumerable<DiagnosticoDeMatematicas.Models.ViewModels.Users.UserWithRoleStringViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -12,19 +12,19 @@
 <table class="table table-hover table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Role)
+            @Html.DisplayNameFor(model => model.User.UserName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.User.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FullName)
+            @Html.DisplayNameFor(model => model.Roles)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Age)
+            @Html.DisplayNameFor(model => model.User.Age)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Gender)
+            @Html.DisplayNameFor(model => model.User.Gender)
         </th>
         <th></th>
     </tr>
@@ -32,24 +32,24 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Role)
+            @Html.DisplayFor(modelItem => item.User.UserName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Email)
+            @Html.DisplayFor(modelItem => item.User.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FullName)
+            @Html.DisplayFor(roles => item.Roles)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Age)
+            @Html.DisplayFor(modelItem => item.User.Age)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Gender)
+            @Html.DisplayFor(modelItem => item.User.Gender)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Email + "/" }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Email + "/" }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Email + "/" })
+            @Html.ActionLink("Edit", "Edit", new { id = item.User.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.User.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.User.Id })
         </td>
     </tr>
 }

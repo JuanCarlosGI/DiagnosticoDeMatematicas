@@ -1,4 +1,5 @@
 ﻿@using DiagnosticoDeMatematicas.Helpers
+@using Microsoft.AspNet.Identity
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,25 +23,27 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (SessionValidator.IsAdminSignedIn)
-                    {
-                        <li>@Html.ActionLink("Diagnósticos", "Index", "Exams")</li>
-                        <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
-                        <li>@Html.ActionLink("Estadisticas", "StatisticDetails", "Statistics")</li>
-                        <li>@Html.ActionLink("Historial", "Index", "Responses")</li>
+                   @if (Request.IsAuthenticated)
+                   {
+                        if (User.IsInRole("Administrator"))
+                        {
+                            <li>@Html.ActionLink("Diagnósticos", "Index", "Exams")</li>
+                            <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
+                            <li>@Html.ActionLink("Estadisticas", "StatisticDetails", "Statistics")</li>
+                            <li>@Html.ActionLink("Historial", "Index", "Responses")</li>
+                        }
+                        <li>@Html.ActionLink("Examen de ubicación", "Exam", "Home")</li>
                     }
-                    
-                    <li>@Html.ActionLink("Examen de ubicación", "Exam", "Home")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    @if (!SessionValidator.IsSignedIn)
+                    @if (!Request.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Iniciar sesion", "SignIn", "Home")</li>
                         <li>@Html.ActionLink("Crear cuenta", "Create", "Users")</li>
                     }
                     else
                     {
-                        <li>@Html.ActionLink(SessionService.User.FullName, "Details", "Users", new { ID = SessionService.User.Email + "/" }, null)</li>
+                        <li>@Html.ActionLink(User.Identity.GetUserName(), "Details", "Users", new { ID = User.Identity.GetUserId() + "/" }, null)</li>
                         <li>@Html.ActionLink("Cerrar sesión", "SignOut", "Home")</li>
                     }
                 </ul>

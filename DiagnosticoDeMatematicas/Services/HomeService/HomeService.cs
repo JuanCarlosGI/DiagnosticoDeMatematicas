@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using DiagnosticoDeMatematicas.DAL;
 using DiagnosticoDeMatematicas.Models;
+using DiagnosticoDeMatematicas.Services.ExamsService;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
+using Microsoft.AspNet.Identity.Owin;
 
-namespace DiagnosticoDeMatematicas.Services
+namespace DiagnosticoDeMatematicas.Services.HomeService
 {
-    public class HomeService
+    public class HomeService : IHomeService
     {
         private readonly SiteContext _context;
         private readonly Settings _settings;
+        private IExamsService _examService;
 
         public HomeService(SiteContext context)
         {
@@ -19,7 +25,8 @@ namespace DiagnosticoDeMatematicas.Services
 
         public List<string> Evaluations()
         {
-            var evaluationsString = _settings["Evaluations"];
+            var evaluationsString = _settings["Evaluations"] ?? (_settings["Evaluations"] = "-1");
+
             var evaluations = evaluationsString.Split(',').ToList();
 
             for (var e = 0; e < evaluations.Count; e++)
@@ -102,6 +109,40 @@ namespace DiagnosticoDeMatematicas.Services
                 examGrades.Add(-1);
 
             return examGrades;
+        }
+
+        public void LoginUser(User user)
+        {
+            var userManager = HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
+            var authManager = HttpContext.Current.GetOwinContext().Authentication;
+            var ident = userManager.CreateIdentity(user,
+                DefaultAuthenticationTypes.ApplicationCookie);
+            authManager.SignIn(
+                new AuthenticationProperties { IsPersistent = false }, ident);
+        }
+
+        public User GetUser(string userName, string password)
+        {
+            var userManager = HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
+            return userManager.Find(userName, password);
+        }
+
+        public void SignOut()
+        {
+            var authManager = HttpContext.Current.GetOwinContext().Authentication;
+            authManager.SignOut();
+        }
+
+        public ICollection<Exam> GetExams()
+        {
+            _examService = _examService ?? new ExamsService.ExamsService(_context);
+            return _examService.GetExamList();
+        }
+
+        public ICollection<Exam> GetActiveExams()
+        {
+            _examService = _examService ?? new ExamsService.ExamsService(_context);
+            return _examService.GetExamList().Where(e => e.Active).ToList();
         }
     }
 }

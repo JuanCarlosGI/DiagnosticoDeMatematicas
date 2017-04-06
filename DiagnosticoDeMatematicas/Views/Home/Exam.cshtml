@@ -6,7 +6,10 @@
 
 @Html.Action("Evaluations")
 
-@if (SessionValidator.IsAdminSignedIn)
+@if (Request.IsAuthenticated)
 {
-    @Html.Action("ApprovedEvaluations")
+    if (User.IsInRole("Admininstrator"))
+    {
+        @Html.Action("ApprovedEvaluations")
+    }
 }

@@ -86,11 +86,47 @@
       <HintPath>..\packages\Microsoft.ApplicationInsights.1.2.3\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -166,6 +202,7 @@
     <Compile Include="App_Start\FilterConfig.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -180,6 +217,7 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Controllers\VariablesController.cs" />
+    <Compile Include="DAL\AppUserManager.cs" />
     <Compile Include="DAL\Binders\AnswerBinder.cs" />
     <Compile Include="DAL\SiteInitializer\GraphsExam.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
@@ -225,6 +263,7 @@
       <DependentUpon>Global.asax</DependentUpon>
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Helpers\CustomAnnotations\ValidSQLDateAttribute.cs" />
     <Compile Include="Helpers\ExamAnalyzer.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
@@ -237,9 +276,6 @@
     <Compile Include="Helpers\IEvaluator\Evaluators\RandomValueEvaluator.cs" />
     <Compile Include="Helpers\IEvaluator\SpecificEvaluator.cs" />
     <Compile Include="Helpers\IEvaluator\SpectrumEvaluator.cs" />
-    <Compile Include="Helpers\Session\SessionManager.cs" />
-    <Compile Include="Helpers\Session\SessionService.cs" />
-    <Compile Include="Helpers\Session\SessionValidator.cs" />
     <Compile Include="Helpers\IEncoder\StringEncoder.cs" />
     <Compile Include="Migrations\201612091804076_InitialCreate.cs" />
     <Compile Include="Migrations\201612091804076_InitialCreate.Designer.cs">
@@ -248,6 +284,14 @@
     <Compile Include="Migrations\201703071535050_AddSettings.cs" />
     <Compile Include="Migrations\201703071535050_AddSettings.Designer.cs">
       <DependentUpon>201703071535050_AddSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703301604180_IncludeIdentity.cs" />
+    <Compile Include="Migrations\201703301604180_IncludeIdentity.Designer.cs">
+      <DependentUpon>201703301604180_IncludeIdentity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703311610510_UnoverrideUserName.cs" />
+    <Compile Include="Migrations\201703311610510_UnoverrideUserName.Designer.cs">
+      <DependentUpon>201703311610510_UnoverrideUserName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Answer.cs" />
@@ -268,6 +312,7 @@
     <Compile Include="Models\ViewModels\GlobalStatisticsViewModel.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Models\ViewModels\Home\SignInViewModel.cs" />
     <Compile Include="Models\ViewModels\MultipleSelectionQuestionWithOptionsViewModel.cs" />
     <Compile Include="Models\ViewModels\OptionStatisticsViewModel.cs" />
     <Compile Include="Models\ViewModels\SingleSelectionQuestionWithOptionsViewModel.cs" />
@@ -276,10 +321,14 @@
     <Compile Include="Models\ViewModels\UserDetailsViewModel.cs" />
     <Compile Include="Models\MultipleSelectionAnswer.cs" />
     <Compile Include="Models\BinaryOptionSelection.cs" />
+    <Compile Include="Models\ViewModels\Users\CreateUserViewModel.cs" />
+    <Compile Include="Models\ViewModels\Users\UserWithRoleStringViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ExamsService\ExamsService.cs" />
     <Compile Include="Services\ExamsService\IExamsService.cs" />
     <Compile Include="Services\HomeService.cs" />
+    <Compile Include="Services\MultipleSelectionQuestionService\IMultipleSelectionQuestionService.cs" />
+    <Compile Include="Services\MultipleSelectionQuestionService\MultipleSelectionQuestionService.cs" />
     <Compile Include="Services\ResponsesService\IResponsesService.cs" />
     <Compile Include="Services\ResponsesService\ResponsesService.cs" />
     <Compile Include="Services\Settings.cs" />
@@ -399,6 +448,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703071535050_AddSettings.resx">
       <DependentUpon>201703071535050_AddSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703301604180_IncludeIdentity.resx">
+      <DependentUpon>201703301604180_IncludeIdentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703311610510_UnoverrideUserName.resx">
+      <DependentUpon>201703311610510_UnoverrideUserName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -21,15 +21,6 @@
 
         public ActionResult StatisticDetails()
         {
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
-            }
 
             ViewBag.ExamID = new SelectList(_db.Exams, "ID", "Name", string.Empty);
             return View();
@@ -39,15 +30,6 @@
         [ValidateAntiForgeryToken]
         public ActionResult StatisticDetails([Bind(Include = "ExamID,StartDate,EndDate")]StatisticDetailsViewModel details)
         {
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
-            }
 
             if (details.EndDate == null && details.StartDate != null)
             {
@@ -74,15 +56,6 @@
 
         public ActionResult Statistics(StatisticDetailsViewModel details)
         {
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
-            }
 
             var exam = _db.Exams.Find(details.ExamId);
             var responses = exam.Responses.ToList();
@@ -149,15 +122,6 @@
 
         public ActionResult GlobalStatistics(StatisticDetailsViewModel details)
         {
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
-            }
 
             var exams = _db.Exams.Where(e => e.Active).ToList();
             foreach (var exam in exams)

@@ -23,16 +23,6 @@ namespace DiagnosticoDeMatematicas.Controllers
         // GET: Responses
         public ActionResult Index()
         {
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
-            }
-
             var responses = _service.GetAllResponses();
             
             return View(responses);
@@ -46,11 +36,6 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (!SessionValidator.IsSignedIn)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
-
             Response response = _service.FindResponse(id.Value);
             if (response == null)
             {
@@ -59,22 +44,12 @@ namespace DiagnosticoDeMatematicas.Controllers
 
             _service.LoadMultipleSelectionAnswers(response.Answers);
 
-            if (!SessionValidator.IsAdminSignedIn &&
-                response.User.Email != SessionService.User.Email)
-            {
-                return RedirectToAction("AccessDenied", "Home");
-            }
-
             return View(response);
         }
         
         // GET: Responses/Create
         public ActionResult Create(int? examId)
         {
-            if (!SessionValidator.IsSignedIn)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
 
             if (examId == null || _service.FindExam(examId.Value) == null)
             {
@@ -116,22 +91,11 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (!SessionValidator.IsSignedIn)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
-
             var response = _service.FindResponse(id.Value);
 
             if (response == null)
             {
                 return HttpNotFound();
-            }
-
-            if (!SessionValidator.IsAdminSignedIn &&
-                response.User.Email != SessionService.User.Email)
-            {
-                return RedirectToAction("AccessDenied", "Home");
             }
 
             return View(response);

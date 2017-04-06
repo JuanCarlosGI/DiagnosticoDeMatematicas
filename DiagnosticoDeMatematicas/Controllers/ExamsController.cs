@@ -1,19 +1,18 @@
 ﻿using System.Net;
 using System.Web.Mvc;
-using DiagnosticoDeMatematicas.DAL;
-using DiagnosticoDeMatematicas.Helpers;
 using DiagnosticoDeMatematicas.Models;
 using DiagnosticoDeMatematicas.Services.ExamsService;
 
 namespace DiagnosticoDeMatematicas.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class ExamsController : Controller
     {
         private readonly IExamsService _service;
 
         public ExamsController()
         {
-            _service = new ExamsService(new SiteContext());
+            _service = new ExamsService(new DAL.SiteContext());
         }
 
         public ExamsController(IExamsService service)
@@ -24,16 +23,6 @@ namespace DiagnosticoDeMatematicas.Controllers
         // GET: Exams
         public ActionResult Index()
         {
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
-            }
-
             var model = _service.GetExamList();
             return View(model);
         }
@@ -44,16 +33,6 @@ namespace DiagnosticoDeMatematicas.Controllers
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
             }
 
             Exam exam = _service.FindExam(id.Value);
@@ -91,15 +70,6 @@ namespace DiagnosticoDeMatematicas.Controllers
         // GET: Exams/Create
         public ActionResult Create()
         {
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
-            }
 
             return View(new Exam());
         }
@@ -125,16 +95,7 @@ namespace DiagnosticoDeMatematicas.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
-            }
+         
 
             Exam exam = _service.FindExam(id.Value);
             if (exam == null)
@@ -149,15 +110,6 @@ namespace DiagnosticoDeMatematicas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
-            }
 
             _service.DeleteExam(id);
             

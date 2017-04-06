@@ -155,7 +155,6 @@ namespace DiagnosticoDeMatematicas.Migrations
                 .ForeignKey("dbo.QuestionOption", t => t.SelectionId)
                 .Index(t => new { t.ResponseId, t.QuestionId })
                 .Index(t => t.SelectionId);
-            
         }
         
         public override void Down()

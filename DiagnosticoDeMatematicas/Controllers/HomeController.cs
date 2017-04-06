@@ -1,48 +1,56 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using DiagnosticoDeMatematicas.DAL;
-using DiagnosticoDeMatematicas.Helpers;
-using DiagnosticoDeMatematicas.Models;
-using DiagnosticoDeMatematicas.Models.ViewModels;
-using DiagnosticoDeMatematicas.Services;
+using DiagnosticoDeMatematicas.Models.ViewModels.Home;
+using DiagnosticoDeMatematicas.Services.HomeService;
 
 namespace DiagnosticoDeMatematicas.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly SiteContext _db = new SiteContext();
-        private readonly HomeService _service;
+        private readonly IHomeService _service;
 
         public HomeController()
         {
-            _service = new HomeService(_db);
+            _service = new HomeService(new SiteContext());
+        }
+
+        public HomeController(IHomeService service)
+        {
+            _service = service;
         }
 
         public ActionResult Index()
         {
-            return View(_db.Exams.Where(m => m.Active).ToList());
+            return View(_service.GetActiveExams());
         }
 
-        public ActionResult SignIn(string email, string password)
+        public ActionResult SignIn()
         {
-            if (!SessionValidator.IsSignedIn && !SessionManager.TrySignIn(email, password))
-            {
-                return View();
-            }
+            return View(new SignInViewModel());
+        }
 
-            return RedirectToAction("Index");
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SignIn(SignInViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _service.GetUser(model.UserName, model.Password);
+                if (user != null)
+                {
+                    _service.LoginUser(user);
+                    return RedirectToAction("Index");
+                }
+            }
+            ModelState.AddModelError("", "Usuario o contraseña inválidos");
+            return View(model);
         }
         
+        [Authorize]
         public ActionResult SignOut()
         {
-            SessionManager.SignOut();
+            _service.SignOut();
             return RedirectToAction("Index");
-        }
-
-        public ActionResult AccessDenied()
-        {
-            return View();
         }
 
         public PartialViewResult Evaluations()
@@ -51,25 +59,15 @@ namespace DiagnosticoDeMatematicas.Controllers
             return PartialView("_Evaluations", evaluations);
         }
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult ChangeEvaluation(int evaluation)
         {
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
-
-            ViewBag.ExamID = new SelectList(_db.Exams, "ID", "Name", string.Empty);
-
+            ViewBag.ExamID = new SelectList(_service.GetExams(), "ID", "Name", string.Empty);
             return View(new ChangeEvaluationViewModel {Evaluation = evaluation, ExamId = 0});
         }
-
+        
         public ActionResult Exam()
         {
-            if (!SessionValidator.IsSignedIn)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
-
             return View();
         }
 
@@ -89,7 +87,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ExamID = new SelectList(_db.Exams, "ID", "Name", string.Empty);
+            ViewBag.ExamID = new SelectList(_service.GetExams(), "ID", "Name", string.Empty);
 
             return View(model);
         }
