@@ -1,14 +1,21 @@
 ﻿using System.Web.Mvc;
-using DiagnosticoDeMatematicas.DAL;
-using DiagnosticoDeMatematicas.Helpers.IEvaluator;
-using System.Data.Entity;
-using System.Linq;
+using DiagnosticoDeMatematicas.Services.QuestionsService;
 
 namespace DiagnosticoDeMatematicas.Controllers
 {
     public class QuestionsController : Controller
     {
-        private readonly SiteContext _db = new SiteContext();
+        private readonly IQuestionsService _service;
+
+        public QuestionsController()
+        {
+            _service = new QuestionsService(new DAL.SiteContext());
+        }
+
+        public QuestionsController(QuestionsService service)
+        {
+            _service = service;
+        }
 
         public PartialViewResult CreateNew(int examId)
         {
@@ -19,18 +26,16 @@ namespace DiagnosticoDeMatematicas.Controllers
         {
             if (disposing)
             {
-                _db.Dispose();
+                _service.DisposeDb();
             }
             base.Dispose(disposing);
         }
 
         public ActionResult TestCombinations(int questionId)
         {
-            var question = _db.Questions.Include(q => q.Variables).Single(q => q.Id == questionId);
-
-            var combinations = SpectrumEvaluator.Evaluate(question, question.Variables.ToList());
-
-            ViewBag.Notation = new NotationlessEvaluator().Evaluate(question);
+            var question = _service.FindQuestion(questionId);
+            var combinations = _service.GetCombinations(question);
+            ViewBag.Notation = _service.EvaluateNotationless(question);
 
             return View(combinations);
         }

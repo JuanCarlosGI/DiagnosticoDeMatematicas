@@ -10,6 +10,7 @@ namespace DiagnosticoDeMatematicas.Models.ViewModels.Home
         [Display(Name = "Contraseña")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
         public bool Success { get; set; } = false;
     }
 }
