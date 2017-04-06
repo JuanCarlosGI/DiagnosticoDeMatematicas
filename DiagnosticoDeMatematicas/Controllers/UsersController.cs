@@ -9,34 +9,32 @@ using DiagnosticoDeMatematicas.DAL;
 using DiagnosticoDeMatematicas.Helpers;
 using DiagnosticoDeMatematicas.Models;
 using DiagnosticoDeMatematicas.Models.ViewModels;
+using DiagnosticoDeMatematicas.Models.ViewModels.Users;
 using DiagnosticoDeMatematicas.Services;
 
 namespace DiagnosticoDeMatematicas.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly SiteContext _db = new SiteContext();
+        private readonly SiteContext _db;
         private readonly UsersService _service;
 
         public UsersController()
         {
+            _db = new SiteContext();
             _service = new UsersService(_db);
+        }
+
+        public UsersController(UsersService service)
+        {
+            _service = service;
         }
 
         // GET: Users
         public ActionResult Index()
         {
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
-            }
-
-            return View(_db.Users.ToList());
+            var model = _service.GetUsersWithRoles();
+            return View(model);
         }
 
         // GET: Users/Details/5
@@ -47,21 +45,10 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (!SessionValidator.IsSignedIn)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
-
-            User user = _db.Users.Find(id);
+            User user = _service.GetUser(id);
             if (user == null)
             {
                 return HttpNotFound();
-            }
-
-            if (!SessionValidator.IsAdminSignedIn &&
-                user.Email != SessionService.User.Email)
-            {
-                return RedirectToAction("AccessDenied", "Home");
             }
 
             var responses = user.Responses.Where(r => r.Exam.Active).ToList();
@@ -77,6 +64,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                             .SingleOrDefault(e => e.QuestionId == answer.QuestionId && e.ResponseId == answer.ResponseId));
                     }
                 }
+
             user.Responses = responses;
 
             return View(new UserDetailsViewModel(user, _db.Exams.Where(e => e.Active)) {ExamGrades = _service.ExamGrades(user.Email) });
@@ -85,8 +73,8 @@ namespace DiagnosticoDeMatematicas.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
-            var user = new User { Role = Role.Usuario, DateOfBirth = DateTime.Now };
-            return View(user);
+            var model = new CreateUserViewModel { DateOfBirth = DateTime.Now };
+            return View(model);
         }
 
         // POST: Users/Create
@@ -94,20 +82,22 @@ namespace DiagnosticoDeMatematicas.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Email,Role,FirstName,LastName,Password,DateOfBirth,Gender,Interest,Facility,Liking")] User user)
+        public ActionResult Create([Bind(Include = "Email,FirstName,LastName,Password,DateOfBirth,Gender,Interest,Facility,Liking,UserName,RepeatPassword")] CreateUserViewModel model)
         {
             if (ModelState.IsValid)
             {
-                HashAlgorithm hashAlgo = new SHA256Managed();
-                byte[] plainTextBytes = Encoding.Unicode.GetBytes(user.Password);
-                byte[] hash = hashAlgo.ComputeHash(plainTextBytes);
-                user.Password = Encoding.Unicode.GetString(hash);
-                _db.Users.Add(user);
-                _db.SaveChanges();
-                return RedirectToAction("SignIn", "Home");
+                var result = _service.AddUser(model);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("SignIn", "Home");
+                }
+                
+                foreach (var error in result.Errors)
+                    ModelState.AddModelError("", error);
             }
 
-            return View(user);
+            return View(model);
         }
 
         // GET: Users/Edit/5
@@ -118,21 +108,10 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (!SessionValidator.IsSignedIn)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
-
-            User user = _db.Users.Find(id);
+            User user = _service.GetUser(id);
             if (user == null)
             {
                 return HttpNotFound();
-            }
-
-            if (!SessionValidator.IsAdminSignedIn &&
-                user.Email != SessionService.User.Email)
-            {
-                return RedirectToAction("AccessDenied", "Home");
             }
 
             return View(user);
@@ -163,17 +142,7 @@ namespace DiagnosticoDeMatematicas.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (!SessionValidator.IsAdminSignedIn)
-            {
-                if (SessionValidator.IsSignedIn)
-                {
-                    return RedirectToAction("AccessDenied", "Home");
-                }
-
-                return RedirectToAction("SignIn", "Home");
-            }
-
-            User user = _db.Users.Find(id);
+            User user = _service.GetUser(id);
             if (user == null)
             {
                 return HttpNotFound();
